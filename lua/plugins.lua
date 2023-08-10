@@ -1,13 +1,12 @@
 --[[
   File: plugins.lua
   Description: Load plugin list into lazy.nvim and load plugins.
-  Info: Use <zo> and <zc> to open and close foldings
   Ref: https://github.com/folke/lazy.nvim
 ]]
 require "helpers/globals"
 
 return {
-  -- Mason {{{
+  -- Mason
   {
     "williamboman/mason.nvim",
     build = ":MasonUpdate",
@@ -19,9 +18,8 @@ return {
       require "extensions.mason"
     end
   },
-  -- }}}
 
-  -- Neo Tree {{{
+  -- Neo Tree
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v2.x",
@@ -33,9 +31,8 @@ return {
       require "extensions.neotree"
     end
   },
-  -- }}}
 
-  -- Telescope {{{
+  -- Telescope
   {
     'nvim-telescope/telescope.nvim',
     tag = '0.1.1',
@@ -48,9 +45,8 @@ return {
       require "extensions.telescope"
     end
   },
-  -- }}}
 
-  -- CMP {{{
+  -- CMP
   {
     'hrsh7th/nvim-cmp',
     event = "InsertEnter",
@@ -68,9 +64,8 @@ return {
       require "extensions.cmp"
     end
   },
-  -- }}}
 
-  -- LSP Kind {{{
+  -- LSP Kind
   {
     'onsails/lspkind-nvim',
     lazy = true,
@@ -78,9 +73,8 @@ return {
       require "extensions.lspkind"
     end
   },
-  -- }}}
 
-  -- Git Signs{{{
+  -- Git Signs
   {
     'lewis6991/gitsigns.nvim',
     lazy = false,
@@ -88,9 +82,8 @@ return {
       require "extensions.gitsigns"
     end
   },
-  -- }}}
 
-  -- Trouble {{{
+  -- Trouble
   {
     "folke/trouble.nvim",
     lazy = true,
@@ -99,9 +92,8 @@ return {
       require "extensions.trouble"
     end,
   },
-  -- }}}
 
-  -- TreeSitter {{{
+  -- TreeSitter
   {
     "nvim-treesitter/nvim-treesitter",
     lazy = false,
@@ -111,9 +103,8 @@ return {
       require "extensions.treesitter"
     end
   },
-  -- }}}
 
-  -- Theme: Sonokai {{{
+  -- Theme: Tokyodark
   {
     "tiagovla/tokyodark.nvim",
     lazy = false,
@@ -121,8 +112,4 @@ return {
       require "extensions.colorscheme.tokyodark"
     end
   },
-  -- }}}
-
 }
-
--- vim:tabstop=2 shiftwidth=2 expandtab syntax=lua foldmethod=marker foldlevelstart=0 foldlevel=0
