@@ -22,9 +22,6 @@ local options = {
   clipboard = 'unnamedplus',        -- Use system clipboard
   fixeol = false,                   -- Turn off appending new line in the end of a file
 
-  -- Folding
-  foldmethod = 'syntax',
-
   -- Search
   ignorecase = true,                -- Ignore case if all characters in lower case
   joinspaces = false,               -- Join multiple spaces in search
