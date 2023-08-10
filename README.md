@@ -15,8 +15,8 @@ Minimalist and organised neovim config [based on this.](https://github.com/tokio
 
 ## Requirements
 - [Basic understanding of lua](https://learnxinyminutes.com/docs/lua/)
-TODO Think this may need some sort of icon install, nerdfont?
-TODO Ripgrep?
+- TODO Think this may need some sort of icon install, nerdfont?
+- TODO Ripgrep?
 
 ## Use it
 ```bash
@@ -37,4 +37,4 @@ TODO Ripgrep?
 - [sonokai](https://github.com/sainnhe/sonokai)
 
 ## Cheatsheet
-TODO Generated automatically by running `./cheat.sh`.
+- TODO Generated automatically by running `./cheat.sh`.
