@@ -1,16 +1,21 @@
 ## Description
-[Based on this.](https://github.com/tokiory/neovim-boilerplate)
+Minimalist and organised neovim config [based on this.](https://github.com/tokiory/neovim-boilerplate)
 
-Designed with the following aims. It should:
-- Be as simple as is reasonably practicable
-- Use as few plugins as possible
-- Document everything that is used
-- Keep rebinding to a minimum
-- Work with a [moonlander mk1 keyboard, with this layout](https://configure.zsa.io/moonlander/layouts/d7lan/latest/0)
-
-[This is the entry point for understanding what is going on.](https://github.com/alunturner/neovim/blob/main/init.lua)
+## Aims
+- Simplicity
+  - As simple as reasonably practicable for an IDE experience
+  - Use as few plugins as possible
+- Good documentation
+  - Commented lua files
+  - Up to date cheatsheet for reference
+- Go with the grain
+  - Try to follow the vim philosophy
+  - Although optimised for [this moonlander layout](https://configure.zsa.io/moonlander/layouts/d7lan/latest/0)
+, should be usable on any regular keyboard
+  as simple as is reasonably practicable
 
 ## Requirements
+- [Basic understanding of lua](https://learnxinyminutes.com/docs/lua/)
 TODO Think this may need some sort of icon install, nerdfont?
 TODO Ripgrep?
 
