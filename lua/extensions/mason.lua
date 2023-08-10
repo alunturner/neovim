@@ -11,17 +11,17 @@ local lspconfig = require("lspconfig")
 mason.setup()
 mason_lspconfig.setup({
   ensure_installed = {
-    "lua_ls",             -- LSP for Lua language
-    "tsserver",           -- LSP for Typescript and Javascript
-    "emmet_ls",           -- LSP for Emmet (Vue, HTML, CSS)
-    "cssls",              -- LSP for CSS
-    "pyright",            -- LSP for Python
-    "volar",              -- LSP for Vue
-    "gopls",              -- LSP for Go
-  }
+    "lua_ls",             -- Lua 
+    "tsserver",           -- Typescript and Javascript
+    "emmet_ls",           -- Emmet (Vue, HTML, CSS)
+    "cssls",              -- CSS
+    "rust_analyzer",      -- Rust
+    "eslint"              -- ESLint
+  },
+  automatic_installation = true
 });
 
--- Setup every needed language server in lspconfig
+-- Individual lsp config can be added here
 mason_lspconfig.setup_handlers {
   function (server_name)
     lspconfig[server_name].setup {}
