@@ -12,7 +12,6 @@ Minimalist and organised neovim config [based on this.](https://github.com/tokio
   - Try to follow the vim philosophy
   - Although optimised for [this moonlander layout](https://configure.zsa.io/moonlander/layouts/d7lan/latest/0)
 , should be usable on any regular keyboard
-  as simple as is reasonably practicable
 
 ## Requirements
 - [Basic understanding of lua](https://learnxinyminutes.com/docs/lua/)
