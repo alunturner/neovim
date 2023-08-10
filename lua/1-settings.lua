@@ -1,9 +1,8 @@
 --[[
-  File: settings.lua
-  Description: Base settings for neovim
+  File: 1-settings.lua
+  Description: Number indicates order of execution in init.lua. Base settings for neovim.
   Info: Use <zo> and <zc> to open and close foldings
 ]]
-
 require "helpers/globals"
 
 -- Set associating between turned on plugins and filetype
@@ -16,7 +15,7 @@ cmd[[autocmd FileType * setlocal formatoptions-=cro]]
 opt.expandtab = true                -- Use spaces by default
 opt.shiftwidth = 2                  -- Set amount of space characters, when we press "<" or ">"
 opt.tabstop = 2                     -- 1 tab equal 2 spaces
-opt.smartindent = true              -- Turn on smart indentation. See in the docs for more info
+opt.smartindent = true              -- Turn on smart indentation
 -- }}}
 
 -- Clipboard {{{
@@ -41,7 +40,7 @@ opt.splitright = true               -- Put new vertical splits to right
 -- }}}
 
 -- Wild Menu {{{
-opt.wildmenu = true
+opt.wildmenu = true                 -- Tab autocomplete for commands in the bottom bar
 opt.wildmode = "longest:full,full"
 -- }}}
 
