@@ -19,10 +19,9 @@ Minimalist and organised neovim config [based on this.](https://github.com/tokio
 - TODO Ripgrep?
 
 ## Use it
-```bash
-[ -d $HOME/.config/nvim ] && mv $HOME/.config/{nvim,nvim.old}; \
-    git clone https://github.com/alunturner/neovim $HOME/.config/nvim
-```
+- Remove your current config: `rm -rf $HOME/.config/nvim`
+- Make a directory to house your config: `mkdir $HOME/.config/nvim`
+- Put this config in that folder: `git clone https://github.com/alunturner/neovim $HOME/.config/nvim`
 
 ## Plugins
 - [lazy.nvim](https://github.com/folke/lazy.nvim)
