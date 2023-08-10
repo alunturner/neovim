@@ -8,7 +8,7 @@ Designed with the following aims. It should:
 - Keep rebinding to a minimum
 - Work with a [moonlander mk1 keyboard, with this layout](https://configure.zsa.io/moonlander/layouts/d7lan/latest/0)
 
-(This is the entry point for understanding what is going on.)[https://github.com/alunturner/neovim/blob/main/init.lua].
+[This is the entry point for understanding what is going on.](https://github.com/alunturner/neovim/blob/main/init.lua)
 
 ## Use it
 ```bash
