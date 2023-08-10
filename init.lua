@@ -1,14 +1,15 @@
 --[[
   File: init.lua
   Description: Entry point file for neovim
+  Info: Use <zo> and <zc> to open and close foldings
 ]]
 
 -- Bootstrap plugin manager
-require "lazy-bootstrap"
+require "0-bootstrap-lazy"
 
 -- Settings
-require "settings"
-require "keybindings"
+require "1-settings"
+require "2-keybindings"
 
 -- Plugin management {{{
 local lazy = require("lazy")
