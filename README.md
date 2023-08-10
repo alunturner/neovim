@@ -10,6 +10,10 @@ Designed with the following aims. It should:
 
 [This is the entry point for understanding what is going on.](https://github.com/alunturner/neovim/blob/main/init.lua)
 
+## Requirements
+TODO Think this may need some sort of icon install, nerdfont?
+TODO Ripgrep?
+
 ## Use it
 ```bash
 [ -d $HOME/.config/nvim ] && mv $HOME/.config/{nvim,nvim.old}; \
@@ -29,4 +33,4 @@ Designed with the following aims. It should:
 - [sonokai](https://github.com/sainnhe/sonokai)
 
 ## Cheatsheet
-Generated automatically by running `./cheat.sh`.
+TODO Generated automatically by running `./cheat.sh`.
