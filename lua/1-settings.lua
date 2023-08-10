@@ -3,13 +3,11 @@
   Description: Number indicates order of execution in init.lua. Base settings for neovim.
 ]]
 
-require "helpers/globals"
-
 -- Set associating between turned on plugins and filetype
-cmd[[filetype plugin on]]
+vim.cmd[[filetype plugin on]]
 
 -- Disable comments on pressing Enter
-cmd[[autocmd FileType * setlocal formatoptions-=cro]]
+vim.cmd[[autocmd FileType * setlocal formatoptions-=cro]]
 
 local options = {
   -- Tabs
@@ -46,7 +44,7 @@ local options = {
 
 -- Set options from table
 for option, val in pairs(options) do
-  opt[option] = val
+  vim.opt[option] = val
 end
 
 -- Default Plugins
