@@ -1,8 +1,16 @@
-![image](https://user-images.githubusercontent.com/101672047/235722220-dbf567c4-4e8f-4bb1-8f9a-1d6a221cda33.png)
+<details>
+<summary>
+## Description
+</summary>
+Based on the excellent starting point found [here](https://github.com/tokiory/neovim-boilerplate)[https://github.com/tokiory/neovim-boilerplate].
 
-Boilerplate for Neovim. A simple, well-documented template to start building your own configuration. I've created a lot of configurations before neovim introduced Lua. From time to time I saw repeating patterns: creating directories, importing the same files, and much more. I decided to create a boilerplate so that when creating a new configuration, I didn’t have to write everything from the very beginning.
-
-Also, this boilerplate will be useful for beginners who do not know where to start writing their configuration. All files are well documented, at the top of each file you can find a frontmatter with the necessary data.
+Designed with the following aims. It should:
+- Be as simple as is reasonably practicable
+- Use as few plugins as possible
+- Document everything that is used
+- Keep rebinding to a minimum
+- Work with a [moonlander mk1 keyboard, with this layout](https://configure.zsa.io/moonlander/layouts/d7lan/latest/0)
+</details>
 
 ## Use it
 You can use this template with the following command:
@@ -32,7 +40,7 @@ You can use this template with the following command:
 └── README.md
 ```
 
-# Packed Plugins
+# Plugins
 
 - [lazy.nvim](https://github.com/folke/lazy.nvim)
 - [mason.nvim](https://github.com/williamboman/mason.nvim)
