@@ -3,7 +3,7 @@
   Description: Entry point file for neovim
 ]]
 
--- Bootsraping plugin manager
+-- Bootstrap plugin manager
 require "lazy-bootstrap"
 
 -- Settings
