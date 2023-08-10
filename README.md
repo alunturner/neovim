@@ -1,6 +1,6 @@
 <details>
 <summary>
-## Description
+<h2>Description</h2>
 </summary>
 Based on the excellent starting point found [here](https://github.com/tokiory/neovim-boilerplate)[https://github.com/tokiory/neovim-boilerplate].
 
@@ -12,16 +12,24 @@ Designed with the following aims. It should:
 - Work with a [moonlander mk1 keyboard, with this layout](https://configure.zsa.io/moonlander/layouts/d7lan/latest/0)
 </details>
 
-## Use it
-You can use this template with the following command:
+<details>
+<summary>
+<h2>Use it</h2>
+</summary>
+<Based on the excellent starting point found [here](https://github.com/tokiory/neovim-boilerplate)[https://github.com/tokiory/neovim-boilerplate].
 
-```bash
-[ -d $HOME/.config/nvim ] && mv $HOME/.config/{nvim,nvim.old}; \
-    git clone https://github.com/tokiory/neovim-boilerplate $HOME/.config/nvim
-```
+Designed with the following aims. It should:
+- Be as simple as is reasonably practicable
+- Use as few plugins as possible
+- Document everything that is used
+- Keep rebinding to a minimum
+- Work with a [moonlander mk1 keyboard, with this layout](https://configure.zsa.io/moonlander/layouts/d7lan/latest/0)
+</details>
 
-# Structure
-
+#<details>
+<summary>
+<h2>Structure/h2>
+</summary>
 ```
 .
 ├── init.lua                  -- Entry point
@@ -39,9 +47,11 @@ You can use this template with the following command:
 │  └── settings.lua           -- Settings for neovim
 └── README.md
 ```
+</details> 
+
+
 
 # Plugins
-
 - [lazy.nvim](https://github.com/folke/lazy.nvim)
 - [mason.nvim](https://github.com/williamboman/mason.nvim)
 - [neo-tree](https://github.com/nvim-tree/nvim-tree.lua)
