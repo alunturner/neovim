@@ -1,8 +1,8 @@
 --[[
   File: 1-settings.lua
   Description: Number indicates order of execution in init.lua. Base settings for neovim.
-  Info: Use <zo> and <zc> to open and close foldings
 ]]
+
 require "helpers/globals"
 
 -- Set associating between turned on plugins and filetype
@@ -76,5 +76,5 @@ local disabled_built_ins = {
 
 -- Set disabled plugins from table
 for _, plugin in pairs(disabled_built_ins) do
-    g["loaded_" .. plugin] = 1
+    vim.g["loaded_" .. plugin] = 1
 end

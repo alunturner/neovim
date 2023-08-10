@@ -1,3 +1,8 @@
+--[[
+  File: globals.lua
+  Description: Exposes globals from the vim object
+]]
+
 cmd = vim.cmd; -- Command function
 api = vim.api; -- Neovim API
 lsp = vim.lsp; -- LSP API

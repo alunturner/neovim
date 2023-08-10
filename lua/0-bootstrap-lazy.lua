@@ -1,7 +1,6 @@
 --[[
   File: 0-bootstrap-lazy.lua
   Description: Number indicates order of execution in init.lua. Bootstraps lazy.
-  Info: Use <zo> and <zc> to open and close foldings
 ]]
 -- TODO fix the vim warnings
 

@@ -12,5 +12,4 @@ require "1-settings"
 require "2-keybindings"
 
 -- Setup plugins
-local lazy = require("lazy")
-lazy.setup("plugins")
+require("lazy").setup("plugins")
