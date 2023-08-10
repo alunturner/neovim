@@ -7,13 +7,10 @@
 -- Bootstrap plugin manager
 require "0-bootstrap-lazy"
 
--- Settings
+-- Apply settings and bindings
 require "1-settings"
 require "2-keybindings"
 
--- Plugin management {{{
+-- Setup plugins
 local lazy = require("lazy")
 lazy.setup("plugins")
--- }}}
-
--- vim:tabstop=2 shiftwidth=2 expandtab syntax=lua foldmethod=marker foldlevelstart=0 foldlevel=0
