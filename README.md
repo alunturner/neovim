@@ -15,7 +15,7 @@ Minimalist and organised neovim config [based on this.](https://github.com/tokio
 
 ## Requirements
 - [Basic understanding of lua](https://learnxinyminutes.com/docs/lua/)
-- TODO Think this may need some sort of icon install, nerdfont?
+- [Have nerd font installed on your system and in your terminal](https://webinstall.dev/nerdfont/)
 - TODO Ripgrep?
 
 ## Use it
