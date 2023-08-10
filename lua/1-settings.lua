@@ -11,38 +11,53 @@ cmd[[filetype plugin on]]
 -- Disable comments on pressing Enter
 cmd[[autocmd FileType * setlocal formatoptions-=cro]]
 
--- Tabs {{{
-opt.expandtab = true                -- Use spaces by default
-opt.shiftwidth = 2                  -- Set amount of space characters, when we press "<" or ">"
-opt.tabstop = 2                     -- 1 tab equal 2 spaces
-opt.smartindent = true              -- Turn on smart indentation
--- }}}
+local options = {
+  -- Tabs {{{
+  expandtab = true,                 -- Use spaces by default
+  shiftwidth = 4,                   -- Set amount of space characters, when we press "<" or ">"
+  tabstop = 4,                      -- 1 tab equal 2 spaces
+  smartindent = true,               -- Turn on smart indentation
+  -- }}}	
 
--- Clipboard {{{
-opt.clipboard = 'unnamedplus' -- Use system clipboard
-opt.fixeol = false -- Turn off appending new line in the end of a file
--- }}}
+  -- Clipboard {{{
+  clipboard = 'unnamedplus',        -- Use system clipboard
+  fixeol = false,                   -- Turn off appending new line in the end of a file
+  -- }}}
 
--- Folding {{{
-opt.foldmethod = 'syntax'
--- }}}
+  -- Folding {{{
+  foldmethod = 'syntax',
+  -- }}}
 
--- Search {{{
-opt.ignorecase = true               -- Ignore case if all characters in lower case
-opt.joinspaces = false              -- Join multiple spaces in search
-opt.smartcase = true                -- When there is a one capital letter search for exact match
-opt.showmatch = true                -- Highlight search instances
--- }}}
+  -- Search {{{
+  ignorecase = true,                -- Ignore case if all characters in lower case
+  joinspaces = false,               -- Join multiple spaces in search
+  smartcase = true,                 -- When there is a one capital letter search for exact match
+  showmatch = true,                 -- Highlight search instances
+  -- }}}
 
--- Window {{{
-opt.splitbelow = true               -- Put new windows below current
-opt.splitright = true               -- Put new vertical splits to right
--- }}}
+  -- Window {{{
+  splitbelow = true,                -- Put new windows below current
+  splitright = true,                -- Put new vertical splits to right
+  -- }}}
 
--- Wild Menu {{{
-opt.wildmenu = true                 -- Tab autocomplete for commands in the bottom bar
-opt.wildmode = "longest:full,full"
--- }}}
+  -- Wild Menu {{{
+  wildmenu = true,                  -- Tab autocomplete for commands in the bottom bar
+  wildmode = "longest:full,full",
+  -- }}}
+
+  -- Appearance {{{
+  wrap = false,                     -- Turn word wrap off
+  termguicolors = true,             -- Use plenty of colours
+  number = true,                    -- Show line numbers
+  relativenumber = true,            -- Show relative line numbers
+  scrolloff = 8                     -- Scroll when cursor is within eight lines of top/bottom
+  --}}}
+}
+
+-- Set options from table
+for option, val in pairs(options) do
+	opt[option] = val
+end
 
 -- Default Plugins {{{
 local disabled_built_ins = {
@@ -71,4 +86,4 @@ for _, plugin in pairs(disabled_built_ins) do
 end
 -- }}}
 
--- vim: tabstop=2 shiftwidth=2 expandtab syntax=lua foldmethod=marker foldlevelstart=1
+-- vim: tabstop=4 shiftwidth=4 expandtab syntax=lua foldmethod=marker foldlevelstart=1
