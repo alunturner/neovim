@@ -23,8 +23,9 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v2.x",
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
+        "nvim-lua/plenary.nvim",
+        "nvim-tree/nvim-web-devicons",
+        "MunifTanjim/nui.nvim",
     },
     config = function ()
       require "extensions.neotree"
@@ -71,16 +72,6 @@ return {
     config = function()
       require "extensions.gitsigns"
     end
-  },
-
-  -- Trouble
-  {
-    "folke/trouble.nvim",
-    lazy = true,
-    dependencies = "nvim-tree/nvim-web-devicons",
-    config = function()
-      require "extensions.trouble"
-    end,
   },
 
   -- TreeSitter
