@@ -34,3 +34,6 @@ nm('gr', '<cmd>Trouble lsp_references<CR>')                                     
 
 -- Neo Tree
 nm('<leader>v', '<cmd>NeoTreeFocusToggle<CR>')                                        -- Toggle file explorer
+
+-- Loader
+nm('<leader>L', '<cmd>Lazy show')                                                 -- to keep everything together,
