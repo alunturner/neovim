@@ -10,11 +10,9 @@ return {
             "neovim/nvim-lspconfig",
         },
         config = function()
-            local mason = require("mason")
-            local mason_lspconfig = require("mason-lspconfig")
-            local lspconfig = require("lspconfig")
+            require("mason").setup()
 
-            mason.setup()
+            local mason_lspconfig = require("mason-lspconfig")
             mason_lspconfig.setup({
                 ensure_installed = {
                     "lua_ls",
@@ -23,16 +21,17 @@ return {
                     "cssls",
                     "rust_analyzer",
                     "eslint"},
-                automatic_installation = true
+                    automatic_installation = true
             });
 
             -- Individual lsp config can be added here
-            mason_lspconfig.setup_handlers {
+            local lspconfig = require("lspconfig")
+            mason_lspconfig.setup_handlers({
                 function (server_name)
                     lspconfig[server_name].setup {}
                 end,
                 ["lua_ls"] = function ()
-                    lspconfig.lua_ls.setup {
+                    lspconfig.lua_ls.setup({
                         settings = {
                             Lua = {
                                 diagnostics = {
@@ -40,9 +39,9 @@ return {
                                 }
                             }
                         }
-                    }
+                    })
                 end,
-            }
+            })
         end
     },
     {
