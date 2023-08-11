@@ -1,7 +1,6 @@
 --!structure: sets up a loader and loads plugins
 --!uses: lazy::folke/lazy.nvim
 
-
 -- Install lazy if not installed
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then

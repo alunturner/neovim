@@ -1,7 +1,6 @@
 --!structure: contains all remappings for plugins and customisation
 
 local map = require("helpers.keys").map
-
 -- TODO personal mappings for plugins
 -- [a]utocomplete
 -- [e]xplore
