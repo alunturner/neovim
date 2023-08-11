@@ -3,10 +3,9 @@
   Description: Number indicates order of execution in init.lua. Keybindings for plugins and other remaps.
 ]]
 
-require "helpers/globals"
 local nm = require("helpers.keyboard").nm
 
-g.mapleader = ' '                                                                 -- Use space as <leader>
+vim.g.mapleader = ' '                                                                 -- Use space as <leader>
 -- TODO check and verify mappings 
 -- LSP
 nm('K', '<cmd>lua vim.lsp.buf.hover()<CR>' )                                      -- Hover object

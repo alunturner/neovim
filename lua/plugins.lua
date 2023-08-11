@@ -3,7 +3,6 @@
   Description: Load plugin list into lazy.nvim and load plugins.
   Ref: https://github.com/folke/lazy.nvim
 ]]
-require "helpers/globals"
 
 return {
   -- Mason
