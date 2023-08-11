@@ -4,8 +4,9 @@
 ]]
 
 local map = require("helpers.keys").map
+local set_leader = require("helpers.keys").set_leader
 
-vim.g.mapleader = ' '                                                                 -- Use space as <leader>
+set_leader(' ') -- TODO remove this as it is going to be called prior to setting up lazy
 -- TODO check and verify mappings 
 -- LSP
 map('n', 'K', '<cmd>lua vim.lsp.buf.hover<CR>', 'description')                                      -- Hover object
@@ -13,7 +14,7 @@ map('n', 'ga', '<cmd>lua vim.lsp.buf.code_action<CR>', 'description')           
 map('n', 'gR', '<cmd>lua vim.lsp.buf.rename<CR>', 'description')                                     -- Rename an object
 map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration<cr>', 'description')                                -- Go to declaration
 
--- TODO check and verify mappings 
+-- TODO check and verify mappings
 -- Telescope
 map('n', 'gd', '<cmd>Telescope lsp_definitions<CR>', 'description')                                    -- Goto declaration
 map('n', '<leader>p', '<cmd>Telescope oldfiles<CR>', 'description')                                    -- Show recent files
