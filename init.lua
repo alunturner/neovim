@@ -1,6 +1,4 @@
---[[
-    Doc: Entry point    
-]]
+-- Doc: Entry point    
 
 -- Bootstrap plugin manager
 require "0-bootstrap-lazy"
