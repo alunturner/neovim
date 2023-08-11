@@ -9,3 +9,11 @@ require "2-keybindings"
 
 -- Setup plugins
 require("lazy").setup("plugins")
+
+--[[
+What we are aiming for
+-- Run the loader, remaps, settings
+require("core.loader")
+require("core.remaps")
+require("core.settings")
+]]
