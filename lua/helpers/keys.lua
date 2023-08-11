@@ -1,6 +1,4 @@
---[[
-    Doc: Utils for mapping keys
-]]
+--!structure: util functions for setting keys
 
 local M = {}
 

@@ -1,3 +1,6 @@
+--!structure: sets up and applies a theme 
+--!uses: tokyodark::tiagovla/tokyodark.nvim
+
 return {
     "tiagovla/tokyodark.nvim",
     lazy = false,

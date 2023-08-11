@@ -1,3 +1,5 @@
+--!structure: personal vim.options
+
 local options = {
 	-- Tabs
 	expandtab = true,                 -- Use spaces by default

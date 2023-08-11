@@ -1,9 +1,14 @@
--- Desc: TODO
+--!structure: contains all remappings for plugins and customisation
 
 local map = require("helpers.keys").map
-local set_leader = require("helpers.keys").set_leader
 
-set_leader(' ') -- TODO remove this as it is going to be called prior to setting up lazy
+-- TODO personal mappings for plugins
+-- [a]utocomplete
+-- [e]xplore
+-- [f]ind
+-- [g]it
+-- [l]sp
+-- theme
 -- TODO check and verify mappings 
 -- LSP
 map('n', 'K', '<cmd>lua vim.lsp.buf.hover<CR>', 'description')                                      -- Hover object

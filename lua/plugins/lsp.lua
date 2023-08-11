@@ -1,3 +1,6 @@
+--!structure: sets up the lsps 
+--!uses: mason::williamboman/mason.nvim, treesitter::nvim-treesitter/nvim-treesitter"
+
 return {
     {
         "williamboman/mason.nvim",

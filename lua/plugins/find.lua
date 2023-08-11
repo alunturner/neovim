@@ -1,3 +1,6 @@
+--!structure: sets up a fuzzy finder
+--!uses: telescope::nvim-telescope/telescope.nvim
+
 return {
     {
         'nvim-telescope/telescope.nvim',

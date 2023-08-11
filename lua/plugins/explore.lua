@@ -1,3 +1,6 @@
+--!structure: sets up a file tree
+--!uses: neo-tree::nvim-neo-tree/neo-tree.nvim
+
 return {
     {
         "nvim-neo-tree/neo-tree.nvim",

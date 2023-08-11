@@ -1,4 +1,6 @@
---!structure: sets up a (loader)[https://github.com/folke/lazy.nvim.git] and loads plugins
+--!structure: sets up a loader and loads plugins
+--!uses: lazy::folke/lazy.nvim
+
 
 -- Install lazy if not installed
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
