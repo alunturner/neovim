@@ -5,7 +5,6 @@
 ]]
 
 local cmp = require('cmp')
-local lspkind = require('lspkind')
 
 cmp.setup{
   snippet = {
@@ -43,12 +42,7 @@ cmp.setup{
     { name = "emoji" },                   -- Emoji
   }, {
   }),
-  formatting = {
-    format = lspkind.cmp_format({
-      mode = 'symbol', -- Show only symbol annotations
-      maxwidth = 50,   -- Prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-    })
-  }
+  formatting = {}
 }
 
 -- Add snippets from Friendly Snippets

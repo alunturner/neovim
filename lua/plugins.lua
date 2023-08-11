@@ -64,15 +64,6 @@ return {
     end
   },
 
-  -- LSP Kind
-  {
-    'onsails/lspkind-nvim',
-    lazy = true,
-    config = function()
-      require "extensions.lspkind"
-    end
-  },
-
   -- Git Signs
   {
     'lewis6991/gitsigns.nvim',
