@@ -1,7 +1,6 @@
 --[[
-  File: init.lua
-  Description: Entry point file for neovim
-  Info: Use <zo> and <zc> to open and close foldings
+    Doc: Entry point    
+    Ref: (self)[https://github.com/folke/lazy.nvim] 
 ]]
 
 -- Bootstrap plugin manager
