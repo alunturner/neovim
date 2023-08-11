@@ -1,6 +1,11 @@
---!structure: contains all vim remappings
+--!structure: contains vim remappings
 
 local map = require("helpers.keys").map
+
+map('n', '<leader>L', '<cmd>Lazy show<CR>', 'Show the package manager')
+
+
+
 
 -- TODO check and move to plugins
 -- LSP
@@ -26,7 +31,4 @@ map('n', '<leader>t', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>', 'descr
 -- Neo Tree
 map('n', '<leader>v', '<cmd>NeoTreeFocusToggle<CR>', 'description')                                        -- Toggle file explorer
 
--- TODO check and move to plugins
--- Loader
-map('n', '<leader>L', '<cmd>Lazy show<CR>', 'description')                                                 -- to keep everything together,
 
