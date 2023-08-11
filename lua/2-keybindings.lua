@@ -27,11 +27,6 @@ map('n', '<leader>q', '<cmd>Telescope buffers<CR>', 'description')              
 map('n', '<leader>a', '<cmd>Telescope<CR>', 'description')                                             -- Show all commands
 map('n', '<leader>t', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>', 'description')               -- Search for dynamic symbols
 
--- TODO check and verify mappings 
--- Trouble
-map('n', '<leader>x', '<cmd>TroubleToggle<CR>', 'description')                                         -- Show all problems in project (with help of LSP)
-map('n', 'gr', '<cmd>Trouble lsp_references<CR>', 'description')                                       -- Show use of object in project
-
 -- Neo Tree
 map('n', '<leader>v', '<cmd>NeoTreeFocusToggle<CR>', 'description')                                        -- Toggle file explorer
 

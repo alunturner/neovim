@@ -73,16 +73,6 @@ return {
     end
   },
 
-  -- Trouble
-  {
-    "folke/trouble.nvim",
-    lazy = true,
-    dependencies = "nvim-tree/nvim-web-devicons",
-    config = function()
-      require "extensions.trouble"
-    end,
-  },
-
   -- TreeSitter
   {
     "nvim-treesitter/nvim-treesitter",
