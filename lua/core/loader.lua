@@ -1,7 +1,4 @@
---[[
-    Doc: Setup loader, load plugins
-    Ref: (lazy.nvim)[https://github.com/folke/lazy.nvim] 
-]]
+--!structure: sets up a (loader)[https://github.com/folke/lazy.nvim.git] and loads plugins
 
 -- Install lazy if not installed
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -17,7 +14,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- We have to set the leader key before loading plugins
+-- Set the leader key before loading plugins
 local keys = require("helpers.keys")
 keys.set_leader(" ")
 
@@ -27,5 +24,5 @@ if not ok then
     return
 end
 
--- Load plugins from specifications
+-- Load plugins from the plugins folder
 lazy.setup("plugins")
