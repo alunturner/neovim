@@ -24,7 +24,7 @@ return {
                     automatic_installation = true
             });
 
-            -- Individual lsp config can be added here
+            -- Individual lsp configs can be added here
             local lspconfig = require("lspconfig")
             mason_lspconfig.setup_handlers({
                 function (server_name)
@@ -63,11 +63,9 @@ return {
                 sync_install = false,
                 highlight = {
                     enable = true,
-                    disable = {},
                 },
                 indent = {
                     enable = false,
-                    disable = {},
                 }
             })
         end
