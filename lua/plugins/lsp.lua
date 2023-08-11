@@ -17,13 +17,12 @@ return {
             mason.setup()
             mason_lspconfig.setup({
                 ensure_installed = {
-                    "lua_ls",             -- Lua 
-                    "tsserver",           -- Typescript and Javascript
-                    "emmet_ls",           -- Emmet (Vue, HTML, CSS)
-                    "cssls",              -- CSS
-                    "rust_analyzer",      -- Rust
-                    "eslint"              -- ESLint
-                },
+                    "lua_ls",
+                    "tsserver",
+                    "emmet_ls",
+                    "cssls",
+                    "rust_analyzer",
+                    "eslint"},
                 automatic_installation = true
             });
 
@@ -53,9 +52,8 @@ return {
         event = { "BufReadPost", "BufNewFile" },
         config = function()
             require('nvim-treesitter.configs').setup({
-
-                -- Needed parsers
                 ensure_installed = {
+                    "css",
                     "lua",
                     "typescript",
                     "javascript",
@@ -63,19 +61,12 @@ return {
                     "vim",
                     "vimdoc"
                 },
-
-                -- Install all parsers synchronously
                 sync_install = false,
-
-                -- Подсветка
                 highlight = {
-                    -- Enabling highlight for all files
                     enable = true,
                     disable = {},
                 },
-
                 indent = {
-                    -- Disabling indentation for all files
                     enable = false,
                     disable = {},
                 }
