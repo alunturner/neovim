@@ -23,17 +23,8 @@ Designed for use with a moonlander keyboard [current layout](https://configure.z
 - Make a directory to house your config: `mkdir $HOME/.config/nvim`
 - Put this config in that folder: `git clone https://github.com/alunturner/neovim $HOME/.config/nvim`
 
-## Plugins
-- [lazy.nvim](https://github.com/folke/lazy.nvim)
-- [mason.nvim](https://github.com/williamboman/mason.nvim)
-- [neo-tree](https://github.com/nvim-tree/nvim-tree.lua)
-- [telescope](https://github.com/nvim-telescope/telescope.nvim)
-- [cmp](https://github.com/hrsh7th/nvim-cmp)
-- [lspkind](https://github.com/onsails/lspkind.nvim)
-- [Git Signs](https://github.com/lewis6991/gitsigns.nvim)
-- [trouble.nvim](https://github.com/folke/trouble.nvim)
-- [Tree Sitter](https://github.com/tree-sitter/tree-sitter)
-- [sonokai](https://github.com/sainnhe/sonokai)
+## Project structure
+- TODO Generate automatically
 
 ## Cheatsheet
-- TODO Generated automatically by running `./cheat.sh`.
+- TODO Generate automatically
