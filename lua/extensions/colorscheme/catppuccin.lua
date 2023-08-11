@@ -1,1 +1,0 @@
-cmd("color " .. theme)

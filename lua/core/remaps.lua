@@ -1,7 +1,4 @@
---[[
-  File: 2-keybindings.lua
-  Description: Number indicates order of execution in init.lua. Keybindings for plugins and other remaps.
-]]
+-- Desc: TODO
 
 local map = require("helpers.keys").map
 local set_leader = require("helpers.keys").set_leader
