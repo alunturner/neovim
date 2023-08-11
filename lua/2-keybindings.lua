@@ -4,7 +4,7 @@
 ]]
 
 require "helpers/globals"
-require "helpers/keyboard"
+local nm = require("helpers.keyboard").nm
 
 g.mapleader = ' '                                                                 -- Use space as <leader>
 -- TODO check and verify mappings 
