@@ -3,36 +3,36 @@
   Description: Number indicates order of execution in init.lua. Keybindings for plugins and other remaps.
 ]]
 
-local nm = require("helpers.keyboard").nm
+local map = require("helpers.keyboard").map
 
 vim.g.mapleader = ' '                                                                 -- Use space as <leader>
 -- TODO check and verify mappings 
 -- LSP
-nm('K', '<cmd>lua vim.lsp.buf.hover()<CR>' )                                      -- Hover object
-nm('ga', '<cmd>lua vim.lsp.buf.code_action()<CR>')                                -- Code actions
-nm('gR', '<cmd>lua vim.lsp.buf.rename()<CR>')                                     -- Rename an object
-nm('gD', '<cmd>lua vim.lsp.buf.declaration()<cr>')                                -- Go to declaration
+map('n', 'K', '<cmd>lua vim.lsp.buf.hover<CR>', 'description')                                      -- Hover object
+map('n', 'ga', '<cmd>lua vim.lsp.buf.code_action<CR>', 'description')                                -- Code actions
+map('n', 'gR', '<cmd>lua vim.lsp.buf.rename<CR>', 'description')                                     -- Rename an object
+map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration<cr>', 'description')                                -- Go to declaration
 
 -- TODO check and verify mappings 
 -- Telescope
-nm('gd', '<cmd>Telescope lsp_definitions<CR>')                                    -- Goto declaration
-nm('<leader>p', '<cmd>Telescope oldfiles<CR>')                                    -- Show recent files
-nm('<leader>O', '<cmd>Telescope git_files<CR>')                                   -- Search for a file in project
-nm('<leader>o', '<cmd>Telescope find_files<CR>')                                  -- Search for a file (ignoring git-ignore)
-nm('<leader>i', '<cmd>Telescope jumplist<CR>')                                    -- Show jumplist (previous locations)
-nm('<leader>b', '<cmd>Telescope git_branches<CR>')                                -- Show git branches
-nm('<leader>f', '<cmd>Telescope live_grep<CR>')                                   -- Find a string in project
-nm('<leader>q', '<cmd>Telescope buffers<CR>')                                     -- Show all buffers
-nm('<leader>a', '<cmd>Telescope<CR>')                                             -- Show all commands
-nm('<leader>t', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>')               -- Search for dynamic symbols
+map('n', 'gd', '<cmd>Telescope lsp_definitions<CR>', 'description')                                    -- Goto declaration
+map('n', '<leader>p', '<cmd>Telescope oldfiles<CR>', 'description')                                    -- Show recent files
+map('n', '<leader>O', '<cmd>Telescope git_files<CR>', 'description')                                   -- Search for a file in project
+map('n', '<leader>o', '<cmd>Telescope find_files<CR>', 'description')                                  -- Search for a file (ignoring git-ignore)
+map('n', '<leader>i', '<cmd>Telescope jumplist<CR>', 'description')                                    -- Show jumplist (previous locations)
+map('n', '<leader>b', '<cmd>Telescope git_branches<CR>', 'description')                                -- Show git branches
+map('n', '<leader>f', '<cmd>Telescope live_grep<CR>', 'description')                                   -- Find a string in project
+map('n', '<leader>q', '<cmd>Telescope buffers<CR>', 'description')                                     -- Show all buffers
+map('n', '<leader>a', '<cmd>Telescope<CR>', 'description')                                             -- Show all commands
+map('n', '<leader>t', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>', 'description')               -- Search for dynamic symbols
 
 -- TODO check and verify mappings 
 -- Trouble
-nm('<leader>x', '<cmd>TroubleToggle<CR>')                                         -- Show all problems in project (with help of LSP)
-nm('gr', '<cmd>Trouble lsp_references<CR>')                                       -- Show use of object in project
+map('n', '<leader>x', '<cmd>TroubleToggle<CR>', 'description')                                         -- Show all problems in project (with help of LSP)
+map('n', 'gr', '<cmd>Trouble lsp_references<CR>', 'description')                                       -- Show use of object in project
 
 -- Neo Tree
-nm('<leader>v', '<cmd>NeoTreeFocusToggle<CR>')                                        -- Toggle file explorer
+map('n', '<leader>v', '<cmd>NeoTreeFocusToggle<CR>', 'description')                                        -- Toggle file explorer
 
 -- Loader
-nm('<leader>L', '<cmd>Lazy show')                                                 -- to keep everything together,
+map('n', '<leader>L', '<cmd>Lazy show', 'description')                                                 -- to keep everything together,
