@@ -18,7 +18,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- Use a protected call so we don't error out on first use
-local ok = pcall(require, "lazy")
+local ok,lazy = pcall(require, "lazy")
 if not ok then
     return
 end
@@ -29,7 +29,3 @@ keys.set_leader(" ")
 
 -- Load plugins from specifications
 lazy.setup("plugins")
-
--- Might as well set up an easy-access keybinding
-
-require("helpers.keys").map("n", "<leader>L", lazy.show, "Show Lazy")
