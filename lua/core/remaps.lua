@@ -1,21 +1,15 @@
---!structure: contains all remappings for plugins and customisation
+--!structure: contains all vim remappings
 
 local map = require("helpers.keys").map
--- TODO personal mappings for plugins
--- [a]utocomplete
--- [e]xplore
--- [f]ind
--- [g]it
--- [l]sp
--- theme
--- TODO check and verify mappings 
+
+-- TODO check and move to plugins
 -- LSP
 map('n', 'K', '<cmd>lua vim.lsp.buf.hover<CR>', 'description')                                      -- Hover object
 map('n', 'ga', '<cmd>lua vim.lsp.buf.code_action<CR>', 'description')                                -- Code actions
 map('n', 'gR', '<cmd>lua vim.lsp.buf.rename<CR>', 'description')                                     -- Rename an object
 map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration<cr>', 'description')                                -- Go to declaration
 
--- TODO check and verify mappings
+-- TODO check and move to plugins
 -- Telescope
 map('n', 'gd', '<cmd>Telescope lsp_definitions<CR>', 'description')                                    -- Goto declaration
 map('n', '<leader>p', '<cmd>Telescope oldfiles<CR>', 'description')                                    -- Show recent files
@@ -28,9 +22,11 @@ map('n', '<leader>q', '<cmd>Telescope buffers<CR>', 'description')              
 map('n', '<leader>a', '<cmd>Telescope<CR>', 'description')                                             -- Show all commands
 map('n', '<leader>t', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>', 'description')               -- Search for dynamic symbols
 
+-- TODO check and move to plugins
 -- Neo Tree
 map('n', '<leader>v', '<cmd>NeoTreeFocusToggle<CR>', 'description')                                        -- Toggle file explorer
 
+-- TODO check and move to plugins
 -- Loader
 map('n', '<leader>L', '<cmd>Lazy show<CR>', 'description')                                                 -- to keep everything together,
 
