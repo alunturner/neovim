@@ -1,3 +1,7 @@
+--[[
+    Doc: Utils for mapping keys
+]]
+
 local M = {}
 
 -- WIP bring these over from lazy nvim starter, tidy up the below

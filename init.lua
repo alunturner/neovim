@@ -1,6 +1,5 @@
 --[[
     Doc: Entry point    
-    Ref: (self)[https://github.com/folke/lazy.nvim] 
 ]]
 
 -- Bootstrap plugin manager

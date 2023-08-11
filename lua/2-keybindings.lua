@@ -3,7 +3,7 @@
   Description: Number indicates order of execution in init.lua. Keybindings for plugins and other remaps.
 ]]
 
-local map = require("helpers.keyboard").map
+local map = require("helpers.keys").map
 
 vim.g.mapleader = ' '                                                                 -- Use space as <leader>
 -- TODO check and verify mappings 
