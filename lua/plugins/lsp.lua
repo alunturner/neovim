@@ -1,5 +1,5 @@
 --!structure: sets up the lsps 
---!uses: mason::williamboman/mason.nvim, treesitter::nvim-treesitter/nvim-treesitter"
+--!uses: lsp-zero::VonHeikemen/lsp-zero.nvim, treesitter::nvim-treesitter/nvim-treesitter"
 
 return {
     {
