@@ -42,9 +42,10 @@ for option, val in pairs(options) do
 	vim.opt[option] = val
 end
 
+-- enable folding but make sure everything is completely unfolded on file open
 local auto_commands = {
-open_folds = {
-{"BufReadPost,FileReadPost", "*", "normal zR"}
+    open_folds = {
+        {"BufReadPost,FileReadPost", "*", "normal zR"}
     }
 }
 
