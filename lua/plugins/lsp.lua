@@ -1,4 +1,4 @@
---!structure: sets up the lsps 
+--!structure: lsp and treesitter 
 --!uses: lsp-zero::VonHeikemen/lsp-zero.nvim, treesitter::nvim-treesitter/nvim-treesitter"
 
 local Lsp = {

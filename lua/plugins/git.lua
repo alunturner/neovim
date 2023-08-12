@@ -1,4 +1,4 @@
---!structure: sets up git symbols in files and the file tree
+--!structure: git symbols
 --!uses: gitsigns::lewis6991/gitsigns.nvim
 
 local Plugin = {

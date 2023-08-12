@@ -1,4 +1,4 @@
---!structure: sets up a file tree
+--!structure: file tree
 --!uses: neo-tree::nvim-neo-tree/neo-tree.nvim
 
 local Plugin = {

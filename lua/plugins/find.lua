@@ -1,4 +1,4 @@
---!structure: sets up a fuzzy finder
+--!structure: fuzzy finder
 --!uses: telescope::nvim-telescope/telescope.nvim
 
 local Plugin = {

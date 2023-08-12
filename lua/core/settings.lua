@@ -1,4 +1,4 @@
---!structure: personal vim.options
+--!structure: vim options
 
 local options = {
 	-- Tabs

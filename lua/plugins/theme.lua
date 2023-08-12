@@ -1,4 +1,4 @@
---!structure: sets up and applies a theme 
+--!structure: colour theme
 --!uses: tokyodark::tiagovla/tokyodark.nvim
 
 local Plugin = {

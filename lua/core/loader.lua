@@ -1,4 +1,4 @@
---!structure: sets up a loader and loads plugins
+--!structure: setup a loader and load plugins
 --!uses: lazy::folke/lazy.nvim
 
 -- Install lazy if not installed
@@ -16,8 +16,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- Set the leader key before loading plugins
-local keys = require("utils.keys")
-keys.set_leader(" ")
+require("utils.keys").set_leader(" ")
 
 -- Use a protected call so we don't error out on first use
 local ok,lazy = pcall(require, "lazy")

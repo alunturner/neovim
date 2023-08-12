@@ -1,4 +1,4 @@
---!structure: util functions for setting keys
+--!structure: for setting keys
 
 local Util = {}
 
