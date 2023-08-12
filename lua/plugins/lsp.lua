@@ -40,7 +40,7 @@ Lsp.config = function ()
 end
 
 
-Treesitter.config = function () 
+Treesitter.config = function ()
     require('nvim-treesitter.configs').setup({
         ensure_installed = {
             "css",
@@ -52,11 +52,15 @@ Treesitter.config = function ()
             "vimdoc"
         },
         sync_install = false,
+        auto_install = false,
         highlight = {
             enable = true,
+            disable = {}, -- TODO disable TS/Rust if required
+            additional_vim_regex_highlighting = false,
+
         },
         indent = {
-            enable = false,
+            enable = true,
         }
     })
 end
