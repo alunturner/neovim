@@ -1,47 +1,34 @@
 --!structure: sets up the lsps 
---!uses: mason::williamboman/mason.nvim, treesitter::nvim-treesitter/nvim-treesitter"
+--!uses: lsp-zero::VonHeikemen/lsp-zero.nvim, treesitter::nvim-treesitter/nvim-treesitter"
 
 return {
     {
-        "williamboman/mason.nvim",
-        build = ":MasonUpdate",
+        'VonHeikemen/lsp-zero.nvim',
+        branch = 'v2.x',
         dependencies = {
-            "williamboman/mason-lspconfig.nvim",
-            "neovim/nvim-lspconfig",
+            -- LSP Support
+            {'neovim/nvim-lspconfig'},             -- Required
+            {'williamboman/mason.nvim'},           -- Optional
+            {'williamboman/mason-lspconfig.nvim'}, -- Optional
+
+            -- Autocompletion
+            {'hrsh7th/nvim-cmp'},     -- Required
+            {'hrsh7th/cmp-nvim-lsp'}, -- Required
+            {'L3MON4D3/LuaSnip'},     -- Required
         },
         config = function()
-            require("mason").setup()
+            local lsp = require('lsp-zero').preset({})
 
-            local mason_lspconfig = require("mason-lspconfig")
-            mason_lspconfig.setup({
-                ensure_installed = {
-                    "lua_ls",
-                    "tsserver",
-                    "emmet_ls",
-                    "cssls",
-                    "rust_analyzer",
-                    "eslint"},
-                    automatic_installation = true
-            });
+            lsp.on_attach(function(client, bufnr)
+                -- see :help lsp-zero-keybindings
+                -- to learn the available actions
+                lsp.default_keymaps({buffer = bufnr})
+            end)
 
-            -- Individual lsp configs can be added here
-            local lspconfig = require("lspconfig")
-            mason_lspconfig.setup_handlers({
-                function (server_name)
-                    lspconfig[server_name].setup {}
-                end,
-                ["lua_ls"] = function ()
-                    lspconfig.lua_ls.setup({
-                        settings = {
-                            Lua = {
-                                diagnostics = {
-                                    globals = { "vim" }
-                                }
-                            }
-                        }
-                    })
-                end,
-            })
+            -- (Optional) Configure lua language server for neovim
+            require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+
+            lsp.setup()
         end
     },
     {

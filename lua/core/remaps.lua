@@ -4,16 +4,6 @@ local map = require("helpers.keys").map
 
 map('n', '<leader>L', '<cmd>Lazy show<CR>', 'Show the package manager')
 
-
-
-
--- TODO check and move to plugins
--- LSP
-map('n', 'K', '<cmd>lua vim.lsp.buf.hover<CR>', 'description')                                      -- Hover object
-map('n', 'ga', '<cmd>lua vim.lsp.buf.code_action<CR>', 'description')                                -- Code actions
-map('n', 'gR', '<cmd>lua vim.lsp.buf.rename<CR>', 'description')                                     -- Rename an object
-map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration<cr>', 'description')                                -- Go to declaration
-
 -- TODO check and move to plugins
 -- Telescope
 map('n', 'gd', '<cmd>Telescope lsp_definitions<CR>', 'description')                                    -- Goto declaration
