@@ -1,15 +1,14 @@
 --!structure: colour theme
---!uses: tokyodark::tiagovla/tokyodark.nvim
+--!uses: tokyonight::folke/tokyonight.nvim
 
 local Plugin = {
-    "tiagovla/tokyodark.nvim",
+    "folke/tokyonight.nvim",
     lazy = false,
+    priority = 1000,
 }
 
 Plugin.config = function ()
-    vim.g.tokyodark_enable_italic_comment = true
-    vim.g.tokyodark_enable_italic = true
-    vim.cmd("color tokyodark")
+    vim.cmd.colorscheme("tokyonight-night")
 end
 
 return { Plugin }
