@@ -16,7 +16,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- Set the leader key before loading plugins
-local keys = require("helpers.keys")
+local keys = require("utils.keys")
 keys.set_leader(" ")
 
 -- Use a protected call so we don't error out on first use
