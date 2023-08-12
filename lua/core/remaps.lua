@@ -16,9 +16,3 @@ map('n', '<leader>f', '<cmd>Telescope live_grep<CR>', 'description')            
 map('n', '<leader>q', '<cmd>Telescope buffers<CR>', 'description')                                     -- Show all buffers
 map('n', '<leader>a', '<cmd>Telescope<CR>', 'description')                                             -- Show all commands
 map('n', '<leader>t', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>', 'description')               -- Search for dynamic symbols
-
--- TODO check and move to plugins
--- Neo Tree
-map('n', '<leader>v', '<cmd>NeoTreeFocusToggle<CR>', 'description')                                        -- Toggle file explorer
-
-

@@ -12,20 +12,11 @@ local Plugin = {
 }
 
 Plugin.config = function ()
-    require("neo-tree").setup({
-        close_if_last_window = true,
-        name = {
-            trailing_slash = true,
-            use_git_status_colors = true,
-            highlight = "NeoTreeFileName",
-        },
-        window = {
-            width = 40,
-        },
-        filesystem = {
-            follow_current_file = true,
-        },
-    })
+    require("neo-tree").setup()
+
+    local map = require("utils.keys").map
+
+    map({"n","v"}, "<leader>e","<cmd>Neotree focus toggle<CR>","show [e]xplorer")
 end
 
 return { Plugin }
