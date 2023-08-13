@@ -15,5 +15,9 @@ map("n", "<C-k>", "<C-w><C-k>", "Navigate windows up")
 map("n", "<C-l>", "<C-w><C-l>", "Navigate windows to the right")
 
 -- Buffer navigation
-map("n", "<leader>bb", "<cmd>:bprevious<cr>", "[b]uffer [b]ack")
+map("n", "<leader>bp", "<cmd>:bprevious<cr>", "[b]uffer [p]revious")
 map("n", "<leader>bn", "<cmd>:bnext<cr>", "[b]uffer [n]ext")
+
+-- Diagnostic navigation
+map("n", "<leader>dp", vim.diagnostic.goto_prev, "[d]iagnostic [p]revious")
+map("n", "<leader>dn", vim.diagnostic.goto_next, "[d]iagnostic [n]ext")
