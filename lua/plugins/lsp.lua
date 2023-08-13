@@ -14,10 +14,10 @@ Plugin.config = function()
     local on_attach = function(_, bufnr)
         local map = require("utils.keys").map
 
-        map({ "n", "i", "v" }, "<F2>", vim.lsp.buf.rename, "VSCode style rename")
+        map("n", "<F2>", vim.lsp.buf.rename, "VSCode style rename")
         map("n", "<Tab>", vim.lsp.buf.code_action, "Code action")
-        map({ "n", "i", "v" }, "<F12>", vim.lsp.buf.definition, "VSCode style go to definition")
-        map({ "n", "i", "v" }, "<leader><F12>", vim.lsp.buf.type_definition, "VSCode style go to type definition")
+        map("n", "<F12>", vim.lsp.buf.definition, "VSCode style go to definition")
+        map("n", "<leader><F12>", vim.lsp.buf.type_definition, "VSCode style go to type definition")
         map("n", "K", vim.lsp.buf.hover, "Hover")
 
         -- TODO see if this can be removed, do all formtting with the formatter to avoid ESLint vs Prettier problems
