@@ -1,5 +1,5 @@
 --!structure: vim options
--- all can be looked up by doing <leader>fh{{option}}
+
 local options = {
     -- Tabs vs Spaces
     expandtab = true,
