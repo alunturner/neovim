@@ -31,22 +31,9 @@ local options = {
 	number = true,                    -- Show line numbers
 	relativenumber = true,            -- Show relative line numbers
 	scrolloff = 8,                  -- Scroll when cursor is within eight lines of top/bottom
-
-    -- Folding
-    foldmethod = "expr",
-    foldexpr = "nvim_treesitter#foldexpr()",
 }
 
 -- Set options from table
 for option, val in pairs(options) do
 	vim.opt[option] = val
 end
-
--- enable folding but make sure everything is completely unfolded on file open
-local auto_commands = {
-    open_folds = {
-        {"BufReadPost,FileReadPost", "*", "normal zR"}
-    }
-}
-
-require("utils.create_augroups").create_augroups(auto_commands)
