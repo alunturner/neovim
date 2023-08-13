@@ -9,10 +9,6 @@ local Lsp = {
         { 'williamboman/mason.nvim', config = true },
         'williamboman/mason-lspconfig.nvim',
 
-        -- Useful status updates for LSP
-        -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-        { 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
-
         -- Additional lua configuration, makes nvim stuff amazing!
         'folke/neodev.nvim',
     },
@@ -36,7 +32,7 @@ Lsp.config = function()
         end
 
         nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-        nmap('<leader>ca', vim.lsp.buf.code_acti:on, '[C]ode [A]ction')
+        nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
         nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
         nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
