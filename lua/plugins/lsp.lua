@@ -4,13 +4,16 @@
 local Plugin = {
     "neovim/nvim-lspconfig",
     dependencies = {
+        -- this is the package manager for lsps and it's bridge to nvim-lspconfig
         { "williamboman/mason.nvim", config = true },
         "williamboman/mason-lspconfig.nvim",
+        -- this is to allow easier setup for lua lsp
         "folke/neodev.nvim",
     },
 }
 
 Plugin.config = function()
+    -- this gets run when an LSP connects to a particular buffer
     local on_attach = function(_, bufnr)
         local map = require("utils.keys").map
 
@@ -28,7 +31,7 @@ Plugin.config = function()
         --]]
     end
 
-    -- this is used to define both the required servers and their initial config
+    -- this is used to define both the required servers and their initial configs
     local servers = {
         rust_analyzer = {},
         tsserver = {},
@@ -48,7 +51,7 @@ Plugin.config = function()
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
-    -- Ensure the servers above are installed
+    -- ensure the servers above are installed
     local mason_lspconfig = require("mason-lspconfig")
     mason_lspconfig.setup({
         ensure_installed = vim.tbl_keys(servers),
