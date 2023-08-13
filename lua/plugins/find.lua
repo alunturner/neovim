@@ -34,6 +34,7 @@ Plugin.config = function()
     map("n", "<leader>fh", builtin.help_tags, "[f]ind [h]elp")
     map("n", "<leader>fgc", builtin.git_commits, "[f]ind [g]it [c]ommit")
     map("n", "<leader>fgb", builtin.git_branches, "[f]ind [g]it [b]ranch")
+    map("n", "<leader>fr", builtin.lsp_references, "[f]ind [r]eferences")
 end
 
 return { Plugin }
