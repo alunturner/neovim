@@ -1,14 +1,17 @@
 --!structure: colour theme
---!uses: tokyonight::folke/tokyonight.nvim
+--!uses: sonokai::sainnhe/sonokai.nvim
 
 local Plugin = {
-    "folke/tokyonight.nvim",
+    "sainnhe/sonokai",
     lazy = false,
     priority = 1000,
 }
 
-Plugin.config = function ()
-    vim.cmd.colorscheme("tokyonight-night")
+Plugin.config = function()
+    vim.g.sonokai_style = "andromeda"
+    vim.g.sonokai_better_performance = 1
+
+    vim.cmd.colorscheme("sonokai")
 end
 
 return { Plugin }
