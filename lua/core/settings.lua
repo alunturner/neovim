@@ -37,5 +37,3 @@ local options = {
 for option, val in pairs(options) do
 	vim.opt[option] = val
 end
-
-require("utils.create_augroups").create_augroups(auto_commands)
