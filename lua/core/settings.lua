@@ -1,39 +1,41 @@
 --!structure: vim options
 
+-- all can be looked up by doing <leader>fh{{option}}
 local options = {
-	-- Tabs
-	expandtab = true,                 -- Use spaces by default
-	shiftwidth = 4,                   -- Set amount of space characters, when we press "<" or ">"
-	tabstop = 4,                      -- 1 tab equal 2 spaces
-	smartindent = true,               -- Turn on smart indentation
+    -- Tabs vs Spaces
+    expandtab = true,
+    shiftwidth = 4,
+    tabstop = 4,
+    softtabstop = 4,
+    smartindent = true,
 
-	-- Clipboard 
-	clipboard = 'unnamedplus',        -- Use system clipboard
-	fixeol = false,                   -- Turn off appending new line in the end of a file
+    -- Clipboard
+    clipboard = "unnamedplus",
 
-	-- Search
-	ignorecase = true,                -- Ignore case if all characters in lower case
-	joinspaces = false,               -- Join multiple spaces in search
-	smartcase = true,                 -- When there is a one capital letter search for exact match
-	showmatch = true,                 -- Highlight search instances
+    -- Search
+    ignorecase = true,
+    smartcase = true,
+    showmatch = true,
 
-	-- Window
-	splitbelow = true,                -- Put new windows below current
-	splitright = true,                -- Put new vertical splits to right
+    -- Window
+    splitbelow = true,
+    splitright = true,
 
-	-- Wild Menu 
-	wildmenu = true,                  -- Tab autocomplete for commands in the bottom bar
-	wildmode = "longest:full,full",
+    -- Text display
+    breakindent = true,
+    scrolloff = 8,
+    colorcolumn = "120",
+    signcolumn = "yes",
 
-	-- Appearance
-	wrap = false,                     -- Turn word wrap off
-	termguicolors = true,             -- Use plenty of colours
-	number = true,                    -- Show line numbers
-	relativenumber = true,            -- Show relative line numbers
-	scrolloff = 8,                  -- Scroll when cursor is within eight lines of top/bottom
+    -- Numbers
+    number = true,
+    relativenumber = true,
+
+    -- Theme display
+    termguicolors = true,
 }
 
--- Set options from table
+-- set options from table
 for option, val in pairs(options) do
-	vim.opt[option] = val
+    vim.opt[option] = val
 end
