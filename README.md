@@ -16,6 +16,8 @@ Designed for use with a moonlander keyboard [current layout](https://configure.z
 ## System Requirements
 - [Nerdfont (used by the filetree)](https://webinstall.dev/nerdfont/)
 - [Ripgrep (used by the fuzzy finder)](https://github.com/BurntSushi/ripgrep)
+- [StyLua (usef by the formatter)](https://github.com/JohnnyMorganz/StyLua)
+- [Prettierd (used by the formatter)](https://github.com/fsouza/prettierd)
 
 ## Use it
 - Remove your current config: `rm -rf $HOME/.config/nvim`
