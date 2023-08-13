@@ -1,5 +1,4 @@
 --!structure: vim options
-
 -- all can be looked up by doing <leader>fh{{option}}
 local options = {
     -- Tabs vs Spaces
@@ -27,12 +26,22 @@ local options = {
     colorcolumn = "120",
     signcolumn = "yes",
 
+    -- Cursor display
+    cursorline = true,
+
     -- Numbers
     number = true,
     relativenumber = true,
 
     -- Theme display
     termguicolors = true,
+
+    -- Backup
+    undofile = true,
+    updatetime = 500,
+
+    -- Mapped sequence timing
+    timeoutlen = 500,
 }
 
 -- set options from table
