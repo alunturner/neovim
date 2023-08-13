@@ -2,17 +2,30 @@
 
 local map = require("utils.keys").map
 
-map('n', '<leader>L', '<cmd>Lazy show<CR>', 'Show the package manager')
+-- Plugins
+map("n", "<leader>L", "<cmd>Lazy show<CR>", "Show the [L]oader")
 
--- TODO check and move to plugins
--- Telescope
-map('n', 'gd', '<cmd>Telescope lsp_definitions<CR>', 'description')                                    -- Goto declaration
-map('n', '<leader>p', '<cmd>Telescope oldfiles<CR>', 'description')                                    -- Show recent files
-map('n', '<leader>O', '<cmd>Telescope git_files<CR>', 'description')                                   -- Search for a file in project
-map('n', '<leader>o', '<cmd>Telescope find_files<CR>', 'description')                                  -- Search for a file (ignoring git-ignore)
-map('n', '<leader>i', '<cmd>Telescope jumplist<CR>', 'description')                                    -- Show jumplist (previous locations)
-map('n', '<leader>b', '<cmd>Telescope git_branches<CR>', 'description')                                -- Show git branches
-map('n', '<leader>f', '<cmd>Telescope live_grep<CR>', 'description')                                   -- Find a string in project
-map('n', '<leader>q', '<cmd>Telescope buffers<CR>', 'description')                                     -- Show all buffers
-map('n', '<leader>a', '<cmd>Telescope<CR>', 'description')                                             -- Show all commands
-map('n', '<leader>t', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>', 'description')               -- Search for dynamic symbols
+-- Allow VSCode style shifting around of lines
+map("v", "J", ":m '>+1<CR>gv=gv", "Shift line(s) down")
+map("v", "K", ":m '<-2<CR>gv=gv", "Shift line(s) up")
+
+-- Quick way to remove highlighting
+map("n", "<Esc>", "<cmd>nohl<cr>", "Clear highlights")
+
+-- Buffer navigation
+map("n", "<leader>bp", "<cmd>:bprevious<cr>", "[b]uffer [p]revious")
+map("n", "<leader>bn", "<cmd>:bnext<cr>", "[b]uffer [n]ext")
+
+-- Diagnostic navigation
+map("n", "<leader>dp", vim.diagnostic.goto_prev, "[d]iagnostic [p]revious")
+map("n", "<leader>dn", vim.diagnostic.goto_next, "[d]iagnostic [n]ext")
+
+-- Keep cursor centred when moving the screen
+map("n", "<C-d>", "<C-d>zz", "Centre cursor after move")
+map("n", "<C-u>", "<C-u>zz", "Centre cursor after move")
+
+-- Window navigation
+map("n", "<C-h>", "<C-w>h", "Move to window on left")
+map("n", "<C-j>", "<C-w>j", "Move to window below")
+map("n", "<C-k>", "<C-w>k", "Move to window above")
+map("n", "<C-l>", "<C-w>l", "Move to window on right")
