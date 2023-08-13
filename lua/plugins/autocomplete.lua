@@ -1,5 +1,5 @@
---!structure: TODO update this
---!uses: TODO update this
+--!structure: available completion options
+--!uses: nvim-cmp::hrsh7th/nvim-cmp
 
 local Plugin = {
     -- Autocompletion

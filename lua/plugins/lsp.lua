@@ -1,5 +1,5 @@
---!structure: TODO update this
---!uses: TODO update this
+--!structure: language server protocols
+--!uses: nvim-lspconfig::neovim/nvim-lspconfig 
 
 local Plugin = {
     -- LSP Configuration & Plugins

@@ -1,5 +1,5 @@
---!structure: TODO update this
---!uses: TODO update this
+--!structure: better highlighting and navigation
+--!uses: treesitter::nvim-treesitter/nvim-treesitter
 
 local Plugin = {
     "nvim-treesitter/nvim-treesitter",
