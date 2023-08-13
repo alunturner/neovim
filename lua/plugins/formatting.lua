@@ -51,6 +51,14 @@ Plugin.config = function()
     local map = require("utils.keys").map
 
     map("n", "<leader>s", "<cmd>Format<CR>", "[s]tyle my buffer")
+
+    -- setup the autocmd that will format on save, taken from formatter documentation
+    vim.cmd([[
+    augroup FormatAutogroup
+    autocmd!
+    autocmd BufWritePost * FormatWrite
+    augroup end
+    ]])
 end
 
 return { Plugin }
