@@ -33,9 +33,6 @@ Plugin.config = function()
             rust = {
                 require("formatter.filetypes.rust").rustfmt,
             },
-            sh = {
-                require("formatter.filetypes.sh").shfmt,
-            },
             typescript = {
                 require("formatter.filetypes.typescript").prettierd,
             },
