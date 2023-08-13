@@ -32,13 +32,11 @@ Plugin.config = function()
                 luasnip.lsp_expand(args.body)
             end,
         },
-        -- add basic mappings for position control and auto insertion of first item on <C-Space>
+        -- add basic mappings for position control and auto insertion of first item on <Tab>
         mapping = cmp.mapping.preset.insert({
             ["<C-j>"] = cmp.mapping.select_next_item(),
             ["<C-k>"] = cmp.mapping.select_prev_item(),
-            ["<Tab>"] = cmp.mapping.select_next_item(),
-            ["<S-Tab>"] = cmp.mapping.select_prev_item(),
-            ["<C-Space>"] = cmp.mapping.confirm({
+            ["<Tab>"] = cmp.mapping.confirm({
                 behavior = cmp.ConfirmBehavior.Replace,
                 select = true,
             }),
