@@ -1,5 +1,5 @@
 --!structure: per file type formatting rules
---!uses: formatter::mhartington/formatter.nvim_
+--!uses: formatter::mhartington/formatter.nvim
 
 local Plugin = {
     "mhartington/formatter.nvim",
