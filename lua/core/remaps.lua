@@ -21,3 +21,11 @@ map("n", "<leader>bn", "<cmd>:bnext<cr>", "[b]uffer [n]ext")
 -- Diagnostic navigation
 map("n", "<leader>dp", vim.diagnostic.goto_prev, "[d]iagnostic [p]revious")
 map("n", "<leader>dn", vim.diagnostic.goto_next, "[d]iagnostic [n]ext")
+
+-- Keep cursor centred when moving the screen
+map("n", "<C-d>", "<C-d>zz", "Centre cursor after move")
+map("n", "<C-u>", "<C-u>zz", "Centre cursor after move")
+
+-- Allow VSCode style shifting around of lines
+map("v", "J", ":m '>+1<CR>gv=gv", "Shift line(s) down")
+map("v", "K", ":m '<-2<CR>gv=gv", "Shift line(s) up")
