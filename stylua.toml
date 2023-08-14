@@ -1,4 +1,3 @@
-#!some identifier
 indent_type = "Spaces"
 call_parentheses = "Always"
 
