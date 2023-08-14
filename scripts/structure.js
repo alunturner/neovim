@@ -76,6 +76,7 @@ function createTreeItems(path) {
 function createDisplayItems(treeItem, index, array) {
     const { name, depth } = treeItem;
     const isLastOfDepth =
+        array.at(index + 1)?.depth < depth ||
         array.findLastIndex((item) => item.depth === depth) === index;
     const nextItems = array.slice(index + 1);
     const needsRunners = nextItems.find((item) => item.depth === depth - 1);
