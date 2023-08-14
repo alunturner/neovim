@@ -6,6 +6,16 @@ const configDirectory = node_path.join(__dirname, "..");
 const FILE = "file";
 const FOLDER = "folder";
 
+const spacer = "    ";
+const runner = "│   ";
+const lastPointer = "└── ";
+const normalPointer = "├── ";
+
+function updateStructureMarkdown() {
+    const content = generateStructureText(configDirectory);
+    fs.writeFileSync(node_path.join(__dirname, "structure.md"), content);
+}
+
 function generateStructureText(path) {
     return getAllFilesAndFolders(path)
         .filter(shouldRenderPath)
@@ -35,17 +45,9 @@ function createTreeItems(path) {
     return { name, depth, path, type };
 }
 
-const spacer = "    ";
-const runner = "│   ";
-const lastPointer = "└── ";
-const normalPointer = "├── ";
-
 function createDisplayLines(treeItem, index, array) {
     const { name, depth, type, path } = treeItem;
-    let description = "";
-    if (type === FILE) {
-        description = getDescriptionForFile(path);
-    }
+    const description = getDescriptionForTreeItem(treeItem);
 
     // we use the elbow when either the next line is less nested, or
     // we are looking at the last item at that level
@@ -74,7 +76,9 @@ function createDisplayLines(treeItem, index, array) {
     return display;
 }
 
-function getDescriptionForFile(path) {
+function getDescriptionForTreeItem({ path, type }) {
+    if (type === FOLDER) return "";
+
     const file = fs.readFileSync(node_path.join(__dirname, "..", path), "utf8");
     const structureRegex = /--!structure::(?<comment>.*)/;
     const usesRegex = /\s*"(?<url>.*)".*--!uses::(?<displayName>.*)/;
@@ -99,4 +103,5 @@ function getDescriptionForFile(path) {
 
     return description;
 }
-console.log(generateStructureText(configDirectory));
+
+updateStructureMarkdown();
