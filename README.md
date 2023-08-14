@@ -21,6 +21,7 @@ Designed for use with a moonlander keyboard [current layout](https://configure.z
 -   [Ripgrep (used by the fuzzy finder)](https://github.com/BurntSushi/ripgrep)
 -   [StyLua (used by the formatter)](https://github.com/JohnnyMorganz/StyLua)
 -   [Prettierd (used by the formatter)](https://github.com/fsouza/prettierd)
+-   [Shfmt (used by the formatter)](https://formulae.brew.sh/formula/shfmt)
 
 ## Use it
 
