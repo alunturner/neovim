@@ -75,13 +75,18 @@ function createTreeItems(path) {
 
 function createDisplayItems(treeItem, index, array) {
     const { name, depth } = treeItem;
-
-    const spacer = "    ";
-
-    // special case to find when we should display the └
     const isLastOfDepth =
         array.findLastIndex((item) => item.depth === depth) === index;
+    const nextItems = array.slice(index + 1);
+    const needsRunners = nextItems.find((item) => item.depth === depth - 1);
+
+    const spacer = " ".repeat(4);
     const pointer = isLastOfDepth ? "└── " : "├── ";
+    const runner = "│   ";
+
+    if (needsRunners) {
+        return spacer + runner.repeat(Math.max(depth - 2, 0)) + pointer + name;
+    }
 
     const display = spacer.repeat(Math.max(depth - 1, 0)) + pointer + name;
 
