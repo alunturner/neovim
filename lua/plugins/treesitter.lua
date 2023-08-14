@@ -1,8 +1,7 @@
---!structure: better highlighting and navigation
---!uses: treesitter::nvim-treesitter/nvim-treesitter
+--!structure::better highlighting and navigation
 
 local Plugin = {
-    "nvim-treesitter/nvim-treesitter",
+    "nvim-treesitter/nvim-treesitter", --!uses::treesitter
     lazy = false,
     dependencies = {
         "nvim-treesitter/nvim-treesitter-textobjects",

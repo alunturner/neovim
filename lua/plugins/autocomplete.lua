@@ -1,8 +1,7 @@
---!structure: available completion options
---!uses: nvim-cmp::hrsh7th/nvim-cmp
+--!structure::available completion options
 
 local Plugin = {
-    "hrsh7th/nvim-cmp",
+    "hrsh7th/nvim-cmp", --!uses::nvim-cmp
     dependencies = {
         -- Snippet Engine & its associated nvim-cmp source
         "L3MON4D3/LuaSnip",

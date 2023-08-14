@@ -1,8 +1,7 @@
---!structure: per file type formatting rules
---!uses: formatter::mhartington/formatter.nvim
+--!structure::per file type formatting rules
 
 local Plugin = {
-    "mhartington/formatter.nvim",
+    "mhartington/formatter.nvim", --!uses::formatter
     lazy = false,
 }
 
@@ -32,9 +31,6 @@ Plugin.config = function()
             },
             rust = {
                 require("formatter.filetypes.rust").rustfmt,
-            },
-            sh = {
-                require("formatter.filetypes.sh").shfmt,
             },
             typescript = {
                 require("formatter.filetypes.typescript").prettierd,

@@ -1,18 +1,17 @@
---!structure: git symbols
---!uses: gitsigns::lewis6991/gitsigns.nvim
+--!structure::git symbols
 
 local Plugin = {
-    'lewis6991/gitsigns.nvim',
+    "lewis6991/gitsigns.nvim", --!uses::gitsigns
     lazy = false,
 }
 
-Plugin.config = function ()
-    require('gitsigns').setup({
+Plugin.config = function()
+    require("gitsigns").setup({
         current_line_blame_opts = {
             -- do not need a delay as will toggle manually
             delay = 0,
-            virt_text_pos = "right_align"
-        }
+            virt_text_pos = "right_align",
+        },
     })
 
     local map = require("utils.keys").map

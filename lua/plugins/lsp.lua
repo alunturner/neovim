@@ -1,8 +1,7 @@
---!structure: language server protocols
---!uses: nvim-lspconfig::neovim/nvim-lspconfig
+--!structure::language server protocols
 
 local Plugin = {
-    "neovim/nvim-lspconfig",
+    "neovim/nvim-lspconfig", --!uses::nvim-lsp-config
     dependencies = {
         -- this is the package manager for lsps and it's bridge to nvim-lspconfig
         { "williamboman/mason.nvim", config = true },

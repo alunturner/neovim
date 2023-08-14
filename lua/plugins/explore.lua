@@ -1,8 +1,7 @@
---!structure: file tree
---!uses: neo-tree::nvim-neo-tree/neo-tree.nvim
+--!structure::file tree
 
 local Plugin = {
-    "nvim-neo-tree/neo-tree.nvim",
+    "nvim-neo-tree/neo-tree.nvim", --!uses::neo-tree
     branch = "v2.x",
     dependencies = {
         "nvim-lua/plenary.nvim",
@@ -11,12 +10,12 @@ local Plugin = {
     },
 }
 
-Plugin.config = function ()
+Plugin.config = function()
     require("neo-tree").setup()
 
     local map = require("utils.keys").map
 
-    map({"n","v"}, "<leader>e","<cmd>Neotree focus toggle<CR>","show [e]xplorer")
+    map({ "n", "v" }, "<leader>e", "<cmd>Neotree focus toggle<CR>", "show [e]xplorer")
 end
 
 return { Plugin }

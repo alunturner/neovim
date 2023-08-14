@@ -1,4 +1,4 @@
---!structure: vim remappings
+--!structure::vim remappings
 
 local map = require("utils.keys").map
 
