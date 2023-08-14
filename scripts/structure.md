@@ -1,3 +1,4 @@
+```
 ├── init.lua - entry point
 └── lua
     ├── core
@@ -15,3 +16,4 @@
     │   └── treesitter.lua - better highlighting and navigation, uses [treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
     └── utils
         └── keys.lua - for setting keys
+```
