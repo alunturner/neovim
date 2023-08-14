@@ -2,55 +2,14 @@ const fs = require("fs");
 const path = require("path");
 
 const configDirectory = path.join(__dirname, "..");
-const excludedFolders = [".git", "scripts"];
 
-const V = "│";
-const T = "├";
-const H = "─";
-const L = "└";
-
-const spacer = "    ";
-const runner = "   ";
-const pointer = "─── ";
-
-function shouldRenderFile(file) {
-    return file.name.endsWith(".lua");
-}
-
-function shouldRenderDirectory(folder) {
-    return !excludedFolders.includes(folder.name);
-}
-
-function renderItem(item, index, array) {
-    const isLastOfDepth = index === array.length - 1;
-    const depth = this;
-
-    let start = "├";
-    if (isLastOfDepth) start = "└";
-
-    if (item.isFile()) {
-        console.log(
-            `${depth > 1 ? spacer : ""}${runner.repeat(
-                Math.max(depth - 2, 0),
-            )}${start}${pointer}${item.name}`,
-        );
-    } else if (item.isDirectory()) {
-        console.log(
-            `${depth > 1 ? spacer : ""}${runner.repeat(
-                Math.max(depth - 2, 0),
-            )}${start}${pointer}${item.name}`,
-        );
-        recursivelyRenderFolder(`${item.path}/${item.name}`, depth + 1);
-    }
-}
-
-// ***
 function getFolderStructure(path) {
     return getAllFilesAndFolders(path)
         .filter(shouldRenderPath)
         .sort()
         .map(createTreeItems)
-        .map(createDisplayItems);
+        .map(createDisplayLines)
+        .join("\n");
 }
 
 function getAllFilesAndFolders(path) {
@@ -61,8 +20,7 @@ function getAllFilesAndFolders(path) {
 }
 
 function shouldRenderPath(path) {
-    if (path.startsWith("lua") || path.endsWith(".lua")) return true;
-    return false;
+    return path.startsWith("lua") || path.endsWith(".lua");
 }
 
 function createTreeItems(path) {
@@ -70,26 +28,34 @@ function createTreeItems(path) {
     const depth = parts.length;
     const name = parts.pop();
 
-    return { parts, depth, name };
+    return { name, depth };
 }
+const spacer = "    ";
+const runner = "│   ";
+const lastPointer = "└── ";
+const normalPointer = "├── ";
 
-function createDisplayItems(treeItem, index, array) {
+function createDisplayLines(treeItem, index, array) {
     const { name, depth } = treeItem;
+
+    // we use the elbow when either the next line is less nested, or
+    // we are looking at the last item at that level
     const isLastOfDepth =
         array.at(index + 1)?.depth < depth ||
         array.findLastIndex((item) => item.depth === depth) === index;
+
+    // we need runners to track the vertical lines for nested files, to do
+    // this we look ahead to see if there is a next item that is less nested
     const nextItems = array.slice(index + 1);
     const needsRunners = nextItems.find((item) => item.depth === depth - 1);
 
-    const spacer = " ".repeat(4);
-    const pointer = isLastOfDepth ? "└── " : "├── ";
-    const runner = "│   ";
+    const pointer = isLastOfDepth ? lastPointer : normalPointer;
 
+    let display = spacer.repeat(Math.max(depth - 1, 0)) + pointer + name;
     if (needsRunners) {
-        return spacer + runner.repeat(Math.max(depth - 2, 0)) + pointer + name;
+        display =
+            spacer + runner.repeat(Math.max(depth - 2, 0)) + pointer + name;
     }
-
-    const display = spacer.repeat(Math.max(depth - 1, 0)) + pointer + name;
 
     return display;
 }
