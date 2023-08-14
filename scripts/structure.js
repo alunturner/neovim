@@ -77,7 +77,11 @@ function createDisplayItems(treeItem, index, array) {
     const { name, depth } = treeItem;
 
     const spacer = "    ";
-    const pointer = "├── ";
+
+    // special case to find when we should display the └
+    const isLastOfDepth =
+        array.findLastIndex((item) => item.depth === depth) === index;
+    const pointer = isLastOfDepth ? "└── " : "├── ";
 
     const display = spacer.repeat(Math.max(depth - 1, 0)) + pointer + name;
 
