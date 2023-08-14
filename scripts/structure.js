@@ -69,12 +69,19 @@ function createTreeItems(path) {
     const parts = path.split("/");
     const depth = parts.length;
     const name = parts.pop();
-    const display = "    ".repeat(depth) + name;
-    return { parts, depth, name, display };
+
+    return { parts, depth, name };
 }
 
-function createDisplayItems(treeItem) {
-    return treeItem.display;
+function createDisplayItems(treeItem, index, array) {
+    const { name, depth } = treeItem;
+
+    const spacer = "    ";
+    const pointer = "├── ";
+
+    const display = spacer.repeat(Math.max(depth - 1, 0)) + pointer + name;
+
+    return display;
 }
 
 console.log(getFolderStructure(configDirectory));
