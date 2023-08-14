@@ -13,7 +13,10 @@ const normalPointer = "├── ";
 
 function updateStructureMarkdown() {
     const content = generateStructureText(configDirectory);
-    fs.writeFileSync(node_path.join(__dirname, "structure.md"), content);
+    fs.writeFileSync(
+        node_path.join(__dirname, "/templates/structure.md"),
+        content,
+    );
 }
 
 function generateStructureText(path) {
