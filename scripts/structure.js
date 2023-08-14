@@ -17,12 +17,14 @@ function updateStructureMarkdown() {
 }
 
 function generateStructureText(path) {
-    return getAllFilesAndFolders(path)
+    const rawContent = getAllFilesAndFolders(path)
         .filter(shouldRenderPath)
         .sort()
         .map(createTreeItems)
         .map(createDisplayLines)
         .join("\n");
+
+    return "```\n" + rawContent + "\n```";
 }
 
 function getAllFilesAndFolders(path) {
