@@ -6,7 +6,7 @@ const configDirectory = node_path.join(__dirname, "..");
 const FILE = "file";
 const FOLDER = "folder";
 
-function getFolderStructure(path) {
+function generateStructureText(path) {
     return getAllFilesAndFolders(path)
         .filter(shouldRenderPath)
         .sort()
@@ -60,10 +60,15 @@ function createDisplayLines(treeItem, index, array) {
 
     const pointer = isLastOfDepth ? lastPointer : normalPointer;
 
-    let display = spacer.repeat(Math.max(depth - 1, 0)) + pointer + name;
+    let display =
+        spacer.repeat(Math.max(depth - 1, 0)) + pointer + name + description;
     if (needsRunners) {
         display =
-            spacer + runner.repeat(Math.max(depth - 2, 0)) + pointer + name;
+            spacer +
+            runner.repeat(Math.max(depth - 2, 0)) +
+            pointer +
+            name +
+            description;
     }
 
     return display;
@@ -71,5 +76,27 @@ function createDisplayLines(treeItem, index, array) {
 
 function getDescriptionForFile(path) {
     const file = fs.readFileSync(node_path.join(__dirname, "..", path), "utf8");
+    const structureRegex = /--!structure::(?<comment>.*)/;
+    const usesRegex = /\s*"(?<url>.*)".*--!uses::(?<displayName>.*)/;
+
+    let description = "";
+
+    file.split("\n").forEach((line) => {
+        const structureMatches = line.match(structureRegex);
+        const usesMatches = line.match(usesRegex);
+        if (structureMatches) {
+            description += " - " + structureMatches.groups.comment;
+        } else if (usesMatches) {
+            const githubUrl = "https://github.com/";
+            const { url, displayName } = usesMatches.groups;
+            const displayUrl = url.startsWith(githubUrl)
+                ? url
+                : githubUrl + url.trim();
+
+            description += `, uses [${displayName}](${displayUrl})`;
+        }
+    });
+
+    return description;
 }
-console.log(getFolderStructure(configDirectory));
+console.log(generateStructureText(configDirectory));
