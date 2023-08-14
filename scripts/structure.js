@@ -4,26 +4,21 @@ const path = require("path");
 const configDirectory = path.join(__dirname, "..");
 const excludedFolders = [".git", "scripts"];
 
-const spacer = "    ";
-const runner = "│   ";
-const pointer = "─── ";
-(".├ ─ └ │ ");
+const V = "│";
+const T = "├";
+const H = "─";
+const L = "└";
 
-function recursivelyRenderFolder(path, depth = 1) {
-    const items = fs.readdirSync(path, {
-        encoding: "utf8",
-        withFileTypes: true,
-    });
-    items
-        .sort(showFilesBeforeFolders)
-        .filter(shouldRenderItem)
-        .forEach(renderItem, depth);
+const spacer = "    ";
+const runner = "   ";
+const pointer = "─── ";
+
+function shouldRenderFile(file) {
+    return file.name.endsWith(".lua");
 }
 
-function showFilesBeforeFolders(a, z) {
-    if (a.isFile() && z.isDirectory()) return -1;
-    else if (a.isDirectory() && z.isFile()) return 1;
-    else return 0;
+function shouldRenderDirectory(folder) {
+    return !excludedFolders.includes(folder.name);
 }
 
 function renderItem(item, index, array) {
@@ -49,19 +44,37 @@ function renderItem(item, index, array) {
     }
 }
 
-function shouldRenderItem(item) {
-    if (item.isFile()) return shouldRenderFile(item);
-    else if (item.isDirectory()) return shouldRenderDirectory(item);
+// ***
+function getFolderStructure(path) {
+    return getAllFilesAndFolders(path)
+        .filter(shouldRenderPath)
+        .sort()
+        .map(createTreeItems)
+        .map(createDisplayItems);
+}
+
+function getAllFilesAndFolders(path) {
+    return fs.readdirSync(path, {
+        encoding: "utf8",
+        recursive: true,
+    });
+}
+
+function shouldRenderPath(path) {
+    if (path.startsWith("lua") || path.endsWith(".lua")) return true;
     return false;
 }
 
-function shouldRenderFile(file) {
-    return file.name.endsWith(".lua");
+function createTreeItems(path) {
+    const parts = path.split("/");
+    const depth = parts.length;
+    const name = parts.pop();
+    const display = "    ".repeat(depth) + name;
+    return { parts, depth, name, display };
 }
 
-function shouldRenderDirectory(folder) {
-    return !excludedFolders.includes(folder.name);
+function createDisplayItems(treeItem) {
+    return treeItem.display;
 }
 
-console.log(".");
-recursivelyRenderFolder(configDirectory);
+console.log(getFolderStructure(configDirectory));
