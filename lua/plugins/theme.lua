@@ -1,8 +1,7 @@
---!structure: colour theme
---!uses: sonokai::sainnhe/sonokai.nvim
+--!structure::colour theme
 
 local Plugin = {
-    "sainnhe/sonokai",
+    "sainnhe/sonokai", --!uses::sonokai
     lazy = false,
     priority = 1000,
 }

@@ -1,8 +1,7 @@
---!structure: per file type formatting rules
---!uses: formatter::mhartington/formatter.nvim
+--!structure::per file type formatting rules
 
 local Plugin = {
-    "mhartington/formatter.nvim",
+    "mhartington/formatter.nvim", --!uses::formatter
     lazy = false,
 }
 

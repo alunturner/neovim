@@ -1,8 +1,7 @@
---!structure: fuzzy finder
---!uses: telescope::nvim-telescope/telescope.nvim
+--!structure::fuzzy finder
 
 local Plugin = {
-    "nvim-telescope/telescope.nvim",
+    "nvim-telescope/telescope.nvim", --!uses::telescope
     branch = "0.1.x",
     lazy = false,
     dependencies = {

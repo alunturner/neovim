@@ -1,4 +1,4 @@
---!structure: vim options
+--!structure::vim options
 
 local options = {
     -- Tabs vs Spaces

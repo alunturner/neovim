@@ -1,7 +1,10 @@
 const fs = require("fs");
-const path = require("path");
+const node_path = require("path");
 
-const configDirectory = path.join(__dirname, "..");
+const configDirectory = node_path.join(__dirname, "..");
+
+const FILE = "file";
+const FOLDER = "folder";
 
 function getFolderStructure(path) {
     return getAllFilesAndFolders(path)
@@ -27,16 +30,22 @@ function createTreeItems(path) {
     const parts = path.split("/");
     const depth = parts.length;
     const name = parts.pop();
+    const type = name.endsWith(".lua") ? FILE : FOLDER;
 
-    return { name, depth };
+    return { name, depth, path, type };
 }
+
 const spacer = "    ";
 const runner = "│   ";
 const lastPointer = "└── ";
 const normalPointer = "├── ";
 
 function createDisplayLines(treeItem, index, array) {
-    const { name, depth } = treeItem;
+    const { name, depth, type, path } = treeItem;
+    let description = "";
+    if (type === FILE) {
+        description = getDescriptionForFile(path);
+    }
 
     // we use the elbow when either the next line is less nested, or
     // we are looking at the last item at that level
@@ -60,4 +69,7 @@ function createDisplayLines(treeItem, index, array) {
     return display;
 }
 
+function getDescriptionForFile(path) {
+    const file = fs.readFileSync(node_path.join(__dirname, "..", path), "utf8");
+}
 console.log(getFolderStructure(configDirectory));

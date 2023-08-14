@@ -1,5 +1,4 @@
---!structure: setup a loader and load plugins
---!uses: lazy::folke/lazy.nvim
+--!structure::setup a loader and load plugins
 
 -- Install lazy if not installed
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -8,7 +7,7 @@ if not vim.loop.fs_stat(lazypath) then
         "git",
         "clone",
         "--filter=blob:none",
-        "https://github.com/folke/lazy.nvim.git",
+        "https://github.com/folke/lazy.nvim.git", --!uses::lazy
         "--branch=stable", -- latest stable release
         lazypath,
     })
@@ -19,7 +18,7 @@ vim.opt.rtp:prepend(lazypath)
 require("utils.keys").set_leader(" ")
 
 -- Use a protected call so we don't error out on first use
-local ok,lazy = pcall(require, "lazy")
+local ok, lazy = pcall(require, "lazy")
 if not ok then
     return
 end
