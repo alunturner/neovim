@@ -1,6 +1,6 @@
 --!structure::entry point
 
--- Run the loader, remaps and settings files
+-- set global vim settings, run the loader, then remap keys
+require("core.settings")
 require("core.loader")
 require("core.remaps")
-require("core.settings")

@@ -6,6 +6,7 @@ local Plugin = {
     lazy = false,
     dependencies = {
         "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope-file-browser.nvim",
     },
 }
 
@@ -16,11 +17,19 @@ Plugin.config = function()
                 i = {
                     ["<C-j>"] = "move_selection_next",
                     ["<C-k"] = "move_selection_previous",
-                    ["<Esc>"] = "close",
                 },
             },
         },
+        extensions = {
+            file_browser = {
+                theme = "dropdown",
+                hijack_netrw = true,
+            },
+        },
     })
+
+    -- load the file browser so that we can map keys to it
+    require("telescope").load_extension("file_browser")
 
     local map = require("utils.keys").map
     local builtin = require("telescope.builtin")

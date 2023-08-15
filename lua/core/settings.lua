@@ -42,6 +42,9 @@ local options = {
 
     -- Mapped sequence timing
     timeoutlen = 500,
+
+    -- Split config
+    laststatus = 3
 }
 
 -- set options from table

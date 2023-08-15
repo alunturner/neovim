@@ -41,6 +41,9 @@ Plugin.config = function()
     -- setup neovim lua configuration
     require("neodev").setup()
 
+    -- get the capabilities for handler setup
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+
     -- ensure the servers above are installed
     local mason_lspconfig = require("mason-lspconfig")
     mason_lspconfig.setup({
