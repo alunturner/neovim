@@ -17,11 +17,13 @@ Designed for use with a moonlander keyboard [current layout](https://configure.z
 
 ## System Requirements
 
--   [Nerdfont (used by the filetree)](https://webinstall.dev/nerdfont/)
--   [Ripgrep (used by the fuzzy finder)](https://github.com/BurntSushi/ripgrep)
--   [StyLua (used by the formatter)](https://github.com/JohnnyMorganz/StyLua)
--   [Prettierd (used by the formatter)](https://github.com/fsouza/prettierd)
--   [Shfmt (used by the formatter)](https://formulae.brew.sh/formula/shfmt)
+-   [Nerdfont (for displaying symbols)](https://webinstall.dev/nerdfont/)
+-   [Ripgrep (for the fuzzy finder)](https://github.com/BurntSushi/ripgrep)
+-   For formatting and linting
+    -   [StyLua](https://github.com/JohnnyMorganz/StyLua)
+    -   [prettierd](https://github.com/fsouza/prettierd)
+    -   [shfmt](https://formulae.brew.sh/formula/shfmt)
+    -   [eslint_d](https://github.com/mantoni/eslint_d.js/) 
 
 ## Use it
 
