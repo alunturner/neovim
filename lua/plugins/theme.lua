@@ -1,16 +1,15 @@
 --!structure::colour theme
 
 local Plugin = {
-    "sainnhe/sonokai", --!uses::sonokai
-    lazy = false,
+    "rockyzhang24/arctic.nvim", --!uses::arctic
+    dependencies = { "rktjmp/lush.nvim" },
+    name = "arctic",
+    branch = "main",
     priority = 1000,
 }
 
 Plugin.config = function()
-    vim.g.sonokai_style = "andromeda"
-    vim.g.sonokai_better_performance = 1
-
-    vim.cmd.colorscheme("sonokai")
+    vim.cmd("colorscheme arctic")
 end
 
 return { Plugin }
