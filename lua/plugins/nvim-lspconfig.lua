@@ -3,34 +3,29 @@
 local Plugin = {
     "neovim/nvim-lspconfig", --!uses::nvim-lsp-config
     dependencies = {
-        -- this is the package manager for lsps and it's bridge to nvim-lspconfig
+        -- package manager for lsps
         { "williamboman/mason.nvim", config = true },
+        -- bridge mason to nvim-lspconfig
         "williamboman/mason-lspconfig.nvim",
-        -- this is to allow easier setup for lua lsp
+        -- allow easier setup for lua lsp
         "folke/neodev.nvim",
     },
 }
 
 Plugin.config = function()
     -- this gets run when an LSP connects to a particular buffer
-    local on_attach = function(_, bufnr)
+    local on_attach = function(_client, _bufnr)
         local map = require("utils.keys").map
 
+        map("n", "<leader>f", vim.lsp.buf.format, "[f]ormat the file")
         map("n", "<F2>", vim.lsp.buf.rename, "VSCode style rename")
         map("n", "<Tab>", vim.lsp.buf.code_action, "Code action")
         map("n", "<F12>", vim.lsp.buf.definition, "VSCode style go to definition")
         map("n", "<leader><F12>", vim.lsp.buf.type_definition, "VSCode style go to type definition")
         map("n", "K", vim.lsp.buf.hover, "Hover")
-
-        -- TODO see if this can be removed, do all formtting with the formatter to avoid ESLint vs Prettier problems
-        --[[ Create a command `:Format` local to the LSP buffer
-        vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
-            vim.lsp.buf.format()
-        end, { desc = "Format current buffer with LSP" })
-        --]]
     end
 
-    -- this is used to define both the required servers and their initial configs
+    -- define required servers and their initial configs
     local servers = {
         rust_analyzer = {},
         tsserver = {},
@@ -46,9 +41,8 @@ Plugin.config = function()
     -- setup neovim lua configuration
     require("neodev").setup()
 
-    -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
+    -- get the capabilities for handler setup
     local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
     -- ensure the servers above are installed
     local mason_lspconfig = require("mason-lspconfig")
