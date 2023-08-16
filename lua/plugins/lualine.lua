@@ -17,12 +17,12 @@ Plugin.config = function()
         },
         winbar = {
             lualine_a = { "mode" },
-            lualine_b = { },
+            lualine_b = {},
             lualine_c = {},
             lualine_x = {},
             lualine_y = { "filename" },
-            lualine_z = { "mode" }
-        }
+            lualine_z = { "mode" },
+        },
     })
 end
 
