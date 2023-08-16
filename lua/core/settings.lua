@@ -44,7 +44,10 @@ local options = {
     timeoutlen = 500,
 
     -- Split config
-    laststatus = 3
+laststatus = 3,
+
+-- remove the command line beneath the lualine
+cmdheight = 0
 }
 
 -- set options from table
