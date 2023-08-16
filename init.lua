@@ -1,4 +1,4 @@
---!structure::entry pointinit
+--!structure::entry point
 
 -- Run the loader, remaps and settings files
 require("core.loader")
