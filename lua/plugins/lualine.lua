@@ -7,6 +7,11 @@ local Plugin = {
 
 Plugin.config = function()
     require("lualine").setup({
+        options = {
+            disabled_filetypes = {
+                statusline = {"no-neck-pain"}
+            },
+        },
         sections = {
             lualine_a = { "mode" },
             lualine_b = { "diagnostics" },
