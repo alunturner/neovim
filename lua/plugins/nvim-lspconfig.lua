@@ -14,7 +14,7 @@ local Plugin = {
 
 Plugin.config = function()
     -- this gets run when an LSP connects to a particular buffer
-    local on_attach = function(client, bufnr)
+    local on_attach = function(_client, _bufnr)
         local map = require("utils.keys").map
 
         map("n", "<leader>f", vim.lsp.buf.format, "[f]ormat the file")

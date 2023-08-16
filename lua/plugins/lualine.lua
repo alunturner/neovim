@@ -5,7 +5,7 @@ local Plugin = {
   requires = { 'nvim-tree/nvim-web-devicons', opt = true }}
 
 Plugin.config = function()
-    require("lualine").setup()
+    require("lualine").setup({})
 end
 
 return { Plugin }

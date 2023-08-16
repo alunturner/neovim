@@ -20,16 +20,7 @@ Plugin.config = function()
                 },
             },
         },
-        extensions = {
-            file_browser = {
-                theme = "dropdown",
-                hijack_netrw = true,
-            },
-        },
     })
-
-    -- load the file browser so that we can map keys to it
-    require("telescope").load_extension("file_browser")
 
     local map = require("utils.keys").map
     local builtin = require("telescope.builtin")
