@@ -3,7 +3,6 @@
 local Plugin = {
     "rockyzhang24/arctic.nvim", --!uses::arctic
     dependencies = { "rktjmp/lush.nvim" },
-    name = "arctic",
     branch = "main",
     priority = 1000,
 }
