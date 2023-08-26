@@ -10,7 +10,14 @@ Plugin.config = function()
     lspconfig.tsserver.setup({}) 
 
     -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#eslint
-    lspconfig.eslint.setup({}) 
+    lspconfig.eslint.setup({
+        on_attach = function(client, bufnr)
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                buffer = bufnr, 
+                command = "EslintFixAll",
+            })
+        end,
+    }) 
 
     -- Global mappings.
     -- See `:help vim.diagnostic.*` for documentation on any of the below functions
