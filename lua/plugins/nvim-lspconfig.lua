@@ -19,6 +19,9 @@ Plugin.config = function()
         end,
     }) 
 
+    -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#lua_ls
+    lspconfig.lua_ls.setup({})
+
     -- Global mappings.
     -- See `:help vim.diagnostic.*` for documentation on any of the below functions
     vim.keymap.set("n", "<space>d", vim.diagnostic.open_float)
