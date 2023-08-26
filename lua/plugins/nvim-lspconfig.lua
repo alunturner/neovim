@@ -1,5 +1,6 @@
 local Plugin = {
     "neovim/nvim-lspconfig",
+    dependencies = { "ckipp01/stylua-nvim" },
     lazy = false,
 }
 
@@ -20,8 +21,15 @@ Plugin.config = function()
     })
 
     -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#lua_ls
-    -- TODO figure out how to get stylua running on save
     lspconfig.lua_ls.setup({
+        on_attach = function(client, bufnr)
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                buffer = bufnr,
+                callback = function()
+                    require("stylua-nvim").format_file()
+                end,
+            })
+        end,
         settings = {
             Lua = {
                 diagnostics = {
