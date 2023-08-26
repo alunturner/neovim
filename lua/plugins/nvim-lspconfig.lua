@@ -1,63 +1,71 @@
---!structure::language server protocols
-
 local Plugin = {
-    "neovim/nvim-lspconfig", --!uses::nvim-lsp-config
-    dependencies = {
-        -- package manager for lsps
-        { "williamboman/mason.nvim", config = true },
-        -- bridge mason to nvim-lspconfig
-        "williamboman/mason-lspconfig.nvim",
-        -- allow easier setup for lua lsp
-        "folke/neodev.nvim",
-    },
+    "neovim/nvim-lspconfig",
+    lazy = false,
 }
 
 Plugin.config = function()
-    -- this gets run when an LSP connects to a particular buffer
-    local on_attach = function(_client, _bufnr)
-        local map = require("utils.keys").map
+    local lspconfig = require("lspconfig")
 
-        map("n", "<leader>f", vim.lsp.buf.format, "[f]ormat the file")
-        map("n", "<F2>", vim.lsp.buf.rename, "VSCode style rename")
-        map("n", "<Tab>", vim.lsp.buf.code_action, "Code action")
-        map("n", "<F12>", vim.lsp.buf.definition, "VSCode style go to definition")
-        map("n", "<leader><F12>", vim.lsp.buf.type_definition, "VSCode style go to type definition")
-        map("n", "K", vim.lsp.buf.hover, "Hover")
-    end
+    -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#tsserver
+    lspconfig.tsserver.setup({})
 
-    -- define required servers and their initial configs
-    local servers = {
-        rust_analyzer = {},
-        tsserver = {},
-        html = { filetypes = { "html" } },
-        lua_ls = {
-            Lua = {
-                workspace = { checkThirdParty = false },
-                telemetry = { enable = false },
-            },
-        },
-    }
-
-    -- setup neovim lua configuration
-    require("neodev").setup()
-
-    -- get the capabilities for handler setup
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-
-    -- ensure the servers above are installed
-    local mason_lspconfig = require("mason-lspconfig")
-    mason_lspconfig.setup({
-        ensure_installed = vim.tbl_keys(servers),
+    -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#eslint
+    lspconfig.eslint.setup({
+        on_attach = function(client, bufnr)
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                buffer = bufnr,
+                command = "EslintFixAll",
+            })
+        end,
     })
 
-    mason_lspconfig.setup_handlers({
-        function(server_name)
-            require("lspconfig")[server_name].setup({
-                capabilities = capabilities,
-                on_attach = on_attach,
-                settings = servers[server_name],
-                filetypes = (servers[server_name] or {}).filetypes,
-            })
+    -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#lua_ls
+    -- TODO figure out how to get stylua running on save
+    lspconfig.lua_ls.setup({
+        settings = {
+            Lua = {
+                diagnostics = {
+                    globals = { "vim" },
+                },
+            },
+        },
+    })
+
+    -- Global mappings.
+    -- See `:help vim.diagnostic.*` for documentation on any of the below functions
+    vim.keymap.set("n", "<space>d", vim.diagnostic.open_float)
+    vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
+    vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
+    vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist)
+
+    -- Use LspAttach autocommand to only map the following keys
+    -- after the language server attaches to the current buffer
+    vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+        callback = function(ev)
+            -- Enable completion triggered by <c-x><c-o>
+            vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
+
+            -- Buffer local mappings.
+            -- See `:help vim.lsp.*` for documentation on any of the below functions
+            local opts = { buffer = ev.buf }
+            vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+            vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+            vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+            vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+            vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+            vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
+            --vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
+            --vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
+            --vim.keymap.set("n", "<space>wl", function()
+            --    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+            --end, opts)
+            vim.keymap.set("n", "<space>t", vim.lsp.buf.type_definition, opts)
+            vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
+            vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
+            vim.keymap.set("n", "<space>f", function()
+                vim.lsp.buf.format({ async = true })
+            end, opts)
         end,
     })
 end

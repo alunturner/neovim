@@ -4,6 +4,7 @@ local map = require("utils.keys").map
 
 -- Plugins
 map("n", "<leader>L", "<cmd>Lazy show<CR>", "Show the [L]oader")
+map("n", "<leader>e", "<cmd>Telescope file_browser path=%:p:h select_buffer=true<CR>", "[e]xplore files")
 
 -- Allow VSCode style shifting around of lines
 map("v", "J", ":m '>+1<CR>gv=gv", "Shift line(s) down")
