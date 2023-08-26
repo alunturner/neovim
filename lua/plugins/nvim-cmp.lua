@@ -52,9 +52,13 @@ Plugin.config = function()
 
     cmp.setup({
         enabled = function()
+            local disabled = false
             local context = require("cmp.config.context")
-            -- disable completion in comments
-            return not context.in_treesitter_capture("comment") and not context.in_syntax_group("Comment")
+            -- disable completion in comments like
+            disabled = disabled or context.in_treesitter_capture("comment")
+            disabled = disabled or context.in_syntax_group("Comment")
+            disabled = disabled or (vim.api.nvim_buf_get_option(0, "buftype") == "prompt")
+            return not disabled
         end,
         snippet = {
             expand = function(args)
@@ -64,7 +68,7 @@ Plugin.config = function()
         mapping = cmp.mapping.preset.insert({
             ["<C-k>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
             ["<C-j>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-            ["<C-l>"] = cmp.mapping(function(fallback)
+            ["<C-l>"] = cmp.mapping(function(_)
                 if cmp.visible_docs() then
                     cmp.close_docs()
                 else
