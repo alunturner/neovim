@@ -20,14 +20,15 @@ Plugin.config = function()
     })
 
     -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#lua_ls
+    -- TODO figure out how to get stylua running on save
     lspconfig.lua_ls.setup({
         settings = {
             Lua = {
                 diagnostics = {
-                    globals = { "vim" }
-                }
-            }
-        }
+                    globals = { "vim" },
+                },
+            },
+        },
     })
 
     -- Global mappings.
