@@ -7,20 +7,28 @@ Plugin.config = function()
     local lspconfig = require("lspconfig")
 
     -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#tsserver
-    lspconfig.tsserver.setup({}) 
+    lspconfig.tsserver.setup({})
 
     -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#eslint
     lspconfig.eslint.setup({
         on_attach = function(client, bufnr)
             vim.api.nvim_create_autocmd("BufWritePre", {
-                buffer = bufnr, 
+                buffer = bufnr,
                 command = "EslintFixAll",
             })
         end,
-    }) 
+    })
 
     -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#lua_ls
-    lspconfig.lua_ls.setup({})
+    lspconfig.lua_ls.setup({
+        settings = {
+            Lua = {
+                diagnostics = {
+                    globals = { "vim" }
+                }
+            }
+        }
+    })
 
     -- Global mappings.
     -- See `:help vim.diagnostic.*` for documentation on any of the below functions
