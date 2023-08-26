@@ -62,8 +62,15 @@ Plugin.config = function()
             end,
         },
         mapping = cmp.mapping.preset.insert({
-            ["<C-k>"] = cmp.mapping.select_prev_item(),
-            ["<C-j>"] = cmp.mapping.select_next_item(),
+            ["<C-k>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+            ["<C-j>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+            ["<C-l>"] = cmp.mapping(function(fallback)
+                if cmp.visible_docs() then
+                    cmp.close_docs()
+                else
+                    cmp.open_docs()
+                end
+            end),
             ["<CR>"] = cmp.mapping.confirm({
                 select = false,
             }),
@@ -88,7 +95,7 @@ Plugin.config = function()
             fields = { "kind", "abbr", "menu" },
             format = function(entry, vim_item)
                 -- Kind icons
-                vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
+                vim_item.kind = string.format(" %s", kind_icons[vim_item.kind])
                 vim_item.menu = ({
                     nvim_lsp = "[LSP]",
                     luasnip = "[Snippet]",
@@ -108,6 +115,13 @@ Plugin.config = function()
             docs = {
                 auto_open = false,
             },
+        },
+        window = {
+            completion = cmp.config.window.bordered({
+                scrollbar = true,
+                winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
+            }),
+            documentation = cmp.config.window.bordered(),
         },
         experimental = {
             ghost_text = true,
