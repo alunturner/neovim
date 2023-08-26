@@ -5,7 +5,12 @@ local Plugin = {
 
 Plugin.config = function()
     local lspconfig = require("lspconfig")
-    lspconfig.tsserver.setup({})
+
+    -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#tsserver
+    lspconfig.tsserver.setup({}) 
+
+    -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#eslint
+    lspconfig.eslint.setup({}) 
 
     -- Global mappings.
     -- See `:help vim.diagnostic.*` for documentation on any of the below functions
