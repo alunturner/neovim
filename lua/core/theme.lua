@@ -183,6 +183,7 @@ end
 local hl = vim.api.nvim_set_hl
 local theme = {}
 
+-- TODO next step is remove the unneeded colour settings
 theme.set_highlights = function(opts)
     local c = colors.get_colors()
     local isDark = vim.o.background == "dark"
