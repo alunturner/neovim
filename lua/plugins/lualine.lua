@@ -2,7 +2,7 @@
 -- Copyright (c) 2020-2021 Mofiqul Islam
 -- MIT license, see LICENSE for more details.
 local config = require("core.theme").config
-local custom_dark_plus = {}
+local dark_plus = {}
 local colors = {}
 
 if vim.o.background == "dark" then
@@ -29,42 +29,42 @@ else
     colors.pink = "#FFA3A3"
 end
 
-custom_dark_plus.normal = {
+dark_plus.normal = {
     a = { fg = vim.o.background == "dark" and colors.fg or colors.bg, bg = colors.blue, gui = "bold" },
     b = { fg = colors.blue, bg = config.opts.transparent and "NONE" or colors.bg2 },
     c = { fg = colors.fg, bg = config.opts.transparent and "NONE" or colors.bg },
 }
 
-custom_dark_plus.visual = {
+dark_plus.visual = {
     a = { fg = colors.bg, bg = colors.yellow, gui = "bold" },
     b = { fg = colors.yellow, bg = config.opts.transparent and "NONE" or colors.bg },
 }
 
-custom_dark_plus.inactive = {
+dark_plus.inactive = {
     a = { fg = colors.fg, bg = colors.bg, gui = "bold" },
     b = { fg = colors.inactive, bg = config.opts.transparent and "NONE" or colors.bg },
     c = { fg = colors.inactive, bg = config.opts.transparent and "NONE" or colors.bg },
 }
 
-custom_dark_plus.replace = {
+dark_plus.replace = {
     a = { fg = vim.o.background == "dark" and colors.bg or colors.fg, bg = colors.red, gui = "bold" },
     b = { fg = colors.red, bg = config.opts.transparent and "NONE" or colors.bg2 },
     c = { fg = colors.fg, bg = config.opts.transparent and "NONE" or colors.bg },
 }
 
-custom_dark_plus.insert = {
+dark_plus.insert = {
     a = { fg = vim.o.background == "dark" and colors.bg or colors.fg, bg = colors.green, gui = "bold" },
     b = { fg = colors.green, bg = config.opts.transparent and "NONE" or colors.bg2 },
     c = { fg = colors.fg, bg = config.opts.transparent and "NONE" or colors.bg },
 }
 
-custom_dark_plus.terminal = {
+dark_plus.terminal = {
     a = { fg = vim.o.background == "dark" and colors.bg or colors.fg, bg = colors.green, gui = "bold" },
     b = { fg = colors.fg, bg = config.opts.transparent and "NONE" or colors.bg2 },
     c = { fg = colors.fg, bg = config.opts.transparent and "NONE" or colors.bg },
 }
 
-custom_dark_plus.command = {
+dark_plus.command = {
     a = { fg = vim.o.background == "dark" and colors.bg or colors.fg, bg = colors.pink, gui = "bold" },
     b = { fg = colors.pink, bg = config.opts.transparent and "NONE" or colors.bg2 },
     c = { fg = colors.fg, bg = config.opts.transparent and "NONE" or colors.bg },
@@ -78,7 +78,7 @@ local Plugin = {
 Plugin.config = function()
     require("lualine").setup({
         options = {
-            theme = custom_dark_plus,
+            theme = dark_plus,
             disabled_filetypes = {
                 statusline = { "no-neck-pain" },
             },

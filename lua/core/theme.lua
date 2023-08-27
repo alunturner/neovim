@@ -808,7 +808,7 @@ theme.set_highlights = function()
     end
 end
 
-theme.link_highlight = function()
+theme.link_highlights = function()
     -- Legacy groups for official git.vim and diff.vim syntax
     hl(0, "diffAdded", { link = "DiffAdd" })
     hl(0, "diffChanged", { link = "DiffChange" })
@@ -847,7 +847,7 @@ vim.o.termguicolors = true
 vim.g.colors_name = "dark_plus"
 
 theme.set_highlights()
-theme.link_highlight()
+theme.link_highlights()
 
 -- hacky way to get the config across to lualine - can go when the config goes
 M.config = config
