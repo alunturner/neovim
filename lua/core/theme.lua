@@ -836,9 +836,6 @@ theme.link_highlight = function()
     hl(0, "CmpItemKindTypeParameter", { link = "@parameter" })
 end
 
--- Pass setup to config module
-vscode.setup = config.setup
-
 -- Load colorscheme with a given or default style
 ---@param style? string
 vscode.load = function(style)
