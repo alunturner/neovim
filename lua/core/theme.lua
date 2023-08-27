@@ -8,7 +8,7 @@ local DARK = "dark"
 local LIGHT = "light"
 
 vim.o.background = DARK
-local isDark = vim.o.background == LIGHT
+local isDark = vim.o.background == DARK
 
 -- hacky way to get the config into lualine - this can go when config goes
 local M = {}
@@ -192,6 +192,7 @@ local theme = {}
 -- this is where we set the highlight groups for neovim and it's installed plugins
 theme.set_highlights = function(opts)
     local c = colors
+    local isDark = vim.o.background == "dark"
 
     hl(0, "Normal", { fg = c.vscFront, bg = c.vscBack })
     hl(0, "ColorColumn", { fg = "NONE", bg = c.vscCursorDarkDark })
