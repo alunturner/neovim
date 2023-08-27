@@ -2,7 +2,8 @@
 -- Copyright (c) 2020-2021 Mofiqul Islam
 -- MIT license, see LICENSE for more details.
 -- not an error! need to have required the core.theme to make sure lualine
--- displays properly
+-- displays properly, we can sort the ordering of this when we bring the
+-- status line design in house
 require("core.theme")
 local dark_plus = {}
 local colors = {
