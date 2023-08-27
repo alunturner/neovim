@@ -61,7 +61,7 @@ dark_plus.command = {
 }
 
 local Plugin = {
-    "nvim-lualine/lualine.nvim", --!uses::lualine
+    "nvim-lualine/lualine.nvim",
     requires = { "nvim-tree/nvim-web-devicons", opt = true },
 }
 

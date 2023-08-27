@@ -3,9 +3,11 @@
 -- By http://github.com/mofiqul
 -- shamelessly pillaged from https://github.com/Mofiqul/vscode.nvim/tree/main
 
+-- >>> CONFIG
+local use_italic_comments = true
+
 -- >>> START OF COLORS FILE
 -- we're only keeping the dark scheme
-
 local colors = {
     vscNone = "NONE",
     vscFront = "#D4D4D4",
@@ -86,22 +88,6 @@ local colors = {
 -- >>> START OF NORMAL SETUP
 -- this part of the file represents the equivalent of the setup steps in the readme,
 -- but it replaces any "require" calls with the actual code it was requiring in
-local config = {} -- nb this is required in the lualine theme file
-
--- initialize the config to the defaults
-config.opts = {
-    transparent = false, -- nb with removed overrides, need to figure out setting vscBack to none
-    italic_comments = false,
-    color_overrides = {},
-    group_overrides = {},
-    disable_nvimtree_bg = true,
-}
--- TODO move this logic up to the top
--- setting transparent to true removes the default background
-if config.opts.transparent then
-    config.opts.color_overrides.vscBack = "NONE"
-end
-
 local hl = vim.api.nvim_set_hl
 local theme = {}
 
@@ -110,7 +96,6 @@ local theme = {}
 -- https://github.com/Mofiqul/vscode.nvim/blob/main/lua/vscode/theme.lua
 theme.set_highlights = function()
     local c = colors
-    local opts = config.opts
     -- TODO create a helper function to manage all of this repetition
     -- Neovim
     hl(0, "Normal", { fg = c.vscFront, bg = c.vscBack })
@@ -144,7 +129,7 @@ theme.set_highlights = function()
     hl(0, "Search", { fg = c.vscNone, bg = c.vscSearch })
     hl(0, "SpecialKey", { fg = c.vscBlue, bg = c.vscNone })
     hl(0, "StatusLine", { fg = c.vscFront, bg = c.vscLeftMid })
-    hl(0, "StatusLineNC", { fg = c.vscFront, bg = opts.transparent and c.vscBack or c.vscLeftDark })
+    hl(0, "StatusLineNC", { fg = c.vscFront, bg = c.vscLeftDark })
     hl(0, "TabLine", { fg = c.vscFront, bg = c.vscTabOther })
     hl(0, "TabLineFill", { fg = c.vscFront, bg = c.vscTabOutside })
     hl(0, "TabLineSel", { fg = c.vscFront, bg = c.vscTabCurrent })
@@ -153,7 +138,7 @@ theme.set_highlights = function()
     hl(0, "VisualNOS", { fg = c.vscNone, bg = c.vscSelection })
     hl(0, "WarningMsg", { fg = c.vscRed, bg = c.vscBack, bold = true })
     hl(0, "WildMenu", { fg = c.vscNone, bg = c.vscSelection })
-    hl(0, "Comment", { fg = c.vscGreen, bg = "NONE", italic = opts.italic_comments })
+    hl(0, "Comment", { fg = c.vscGreen, bg = "NONE", italic = use_italic_comments })
     hl(0, "Constant", { fg = c.vscBlue, bg = "NONE" })
     hl(0, "String", { fg = c.vscOrange, bg = "NONE" })
     hl(0, "Character", { fg = c.vscOrange, bg = "NONE" })
@@ -198,7 +183,7 @@ theme.set_highlights = function()
     hl(0, "@error", { fg = c.vscRed, bg = "NONE" })
     hl(0, "@punctuation.bracket", { fg = c.vscFront, bg = "NONE" })
     hl(0, "@punctuation.special", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "@comment", { fg = c.vscGreen, bg = "NONE", italic = opts.italic_comments })
+    hl(0, "@comment", { fg = c.vscGreen, bg = "NONE", italic = use_italic_comments })
     hl(0, "@constant", { fg = c.vscAccentBlue, bg = "NONE" })
     hl(0, "@constant.builtin", { fg = c.vscBlue, bg = "NONE" })
     hl(0, "@constant.macro", { fg = c.vscBlueGreen, bg = "NONE" })
@@ -613,6 +598,3 @@ vim.g.colors_name = "dark_plus"
 theme.set_highlights()
 theme.link_highlights()
 -- >>> END OF SETUP PHASE
-
--- hacky way to get the config across to lualine
-return config
