@@ -102,8 +102,6 @@ end
 -- https://github.com/Mofiqul/vscode.nvim/blob/main/lua/vscode/theme.lua
 theme.set_highlights = function()
     local c = colors
-    -- TODO create a helper function to manage all of this repetition
-    -- Neovim
     local Neovim = {
         Normal = { fg = c.vscFront, bg = c.vscBack },
         ColorColumn = { fg = "NONE", bg = c.vscCursorDarkDark },
