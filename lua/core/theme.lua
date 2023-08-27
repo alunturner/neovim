@@ -1,3 +1,6 @@
+-- vscode.nvim color scheme
+-- Lua port of https://github.com/tomasiser/vim-code-dark
+-- By http://github.com/mofiqul
 -- shamelessly pillaged from https://github.com/Mofiqul/vscode.nvim/tree/main
 
 -- can set vim.o.background = "light" here for the light theme if desired,
@@ -160,9 +163,8 @@ colors.vscUiBlue = "#084671"
 colors.vscUiOrange = "#f28b25"
 colors.vscPopupHighlightLightBlue = "#d7eafe"
 
--- vscode.nvim color scheme
--- Lua port of https://github.com/tomasiser/vim-code-dark
--- By http://github.com/mofiqul
+-- this part of the file represents the equivalent of the setup steps in the readme,
+-- but it replaces any "require" calls with the actual code it was requiring in
 local vscode = {}
 local config = {} -- nb this is required in the lualine theme file
 
