@@ -9,6 +9,7 @@ local DARK = "dark"
 vim.o.background = DARK
 local isDark = vim.o.background == DARK
 
+-- >>> START OF COLORS FILE
 -- colors used to set highlights inside theme.set_highlights function
 -- this is no longer set by a function, we simply have an object that is set depending on
 -- the value of vim.o.background (default dark)
@@ -162,7 +163,9 @@ end
 colors.vscUiBlue = "#084671"
 colors.vscUiOrange = "#f28b25"
 colors.vscPopupHighlightLightBlue = "#d7eafe"
+-- >>> END OF COLORS FILE
 
+-- >>> START OF NORMAL SETUP
 -- this part of the file represents the equivalent of the setup steps in the readme,
 -- but it replaces any "require" calls with the actual code it was requiring in
 local config = {} -- nb this is required in the lualine theme file
@@ -846,6 +849,7 @@ vim.g.colors_name = "dark_plus"
 -- could easily be removed
 theme.set_highlights()
 theme.link_highlights()
+-- >>> END OF SETUP PHASE
 
 -- hacky way to get the config across to lualine
 return config
