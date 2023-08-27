@@ -189,9 +189,9 @@ local hl = vim.api.nvim_set_hl
 local theme = {}
 
 -- this is where we set the highlight groups for neovim and it's installed plugins
-theme.set_highlights = function(opts)
+theme.set_highlights = function()
     local c = colors
-    local isDark = vim.o.background == "dark"
+    local opts = config.opts
 
     hl(0, "Normal", { fg = c.vscFront, bg = c.vscBack })
     hl(0, "ColorColumn", { fg = "NONE", bg = c.vscCursorDarkDark })
@@ -844,9 +844,9 @@ if vim.fn.exists("syntax_on") then
 end
 
 vim.o.termguicolors = true
-vim.g.colors_name = "vscode"
+vim.g.colors_name = "dark_plus"
 
-theme.set_highlights(config.opts)
+theme.set_highlights()
 theme.link_highlight()
 
 -- hacky way to get the config across to lualine - can go when the config goes
