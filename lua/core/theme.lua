@@ -188,6 +188,8 @@ local hl = vim.api.nvim_set_hl
 local theme = {}
 
 -- this is where we set the highlight groups for neovim and it's installed plugins
+-- nb a _lot_ of stuff was deleted from here. original ref is at
+-- https://github.com/Mofiqul/vscode.nvim/blob/main/lua/vscode/theme.lua
 theme.set_highlights = function()
     local c = colors
     local opts = config.opts
@@ -613,68 +615,7 @@ theme.set_highlights = function()
     hl(0, "yamlKey", { fg = c.vscBlue, bg = "NONE" })
     hl(0, "yamlConstant", { fg = c.vscBlue, bg = "NONE" })
 
-    -- Gitgutter
-    hl(0, "GitGutterAdd", { fg = c.vscGreen, bg = "NONE" })
-    hl(0, "GitGutterChange", { fg = c.vscYellow, bg = "NONE" })
-    hl(0, "GitGutterDelete", { fg = c.vscRed, bg = "NONE" })
-
-    -- Git Signs
-    hl(0, "GitSignsAdd", { fg = c.vscGreen, bg = "NONE" })
-    hl(0, "GitSignsChange", { fg = c.vscYellow, bg = "NONE" })
-    hl(0, "GitSignsDelete", { fg = c.vscRed, bg = "NONE" })
-    hl(0, "GitSignsAddLn", { fg = c.vscBack, bg = c.vscGreen })
-    hl(0, "GitSignsChangeLn", { fg = c.vscBack, bg = c.vscYellow })
-    hl(0, "GitSignsDeleteLn", { fg = c.vscBack, bg = c.vscRed })
-
-    -- NvimTree
-    hl(0, "NvimTreeRootFolder", { fg = c.vscFront, bg = "NONE", bold = true })
-    hl(0, "NvimTreeGitDirty", { fg = c.vscYellow, bg = "NONE" })
-    hl(0, "NvimTreeGitNew", { fg = c.vscGreen, bg = "NONE" })
-    hl(0, "NvimTreeImageFile", { fg = c.vscViolet, bg = "NONE" })
-    hl(0, "NvimTreeEmptyFolderName", { fg = c.vscGray, bg = "NONE" })
-    hl(0, "NvimTreeFolderName", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "NvimTreeSpecialFile", { fg = c.vscPink, bg = "NONE", underline = true })
-    hl(0, "NvimTreeNormal", { fg = c.vscFront, bg = opts.disable_nvimtree_bg and c.vscBack or c.vscLeftDark })
-    hl(0, "NvimTreeCursorLine", { fg = "NONE", bg = opts.disable_nvimtree_bg and c.vscCursorDarkDark or c.vscLeftMid })
-    hl(0, "NvimTreeVertSplit", { fg = opts.disable_nvimtree_bg and c.vscSplitDark or c.vscBack, bg = c.vscBack })
-    hl(0, "NvimTreeEndOfBuffer", { fg = opts.disable_nvimtree_bg and c.vscCursorDarkDark or c.vscLeftDark })
-    hl(
-        0,
-        "NvimTreeOpenedFolderName",
-        { fg = "NONE", bg = opts.disable_nvimtree_bg and c.vscCursorDarkDark or c.vscLeftDark }
-    )
-    hl(0, "NvimTreeGitRenamed", { fg = c.vscGitRenamed, bg = "NONE" })
-    hl(0, "NvimTreeGitIgnored", { fg = c.vscGitIgnored, bg = "NONE" })
-    hl(0, "NvimTreeGitDeleted", { fg = c.vscGitDeleted, bg = "NONE" })
-    hl(0, "NvimTreeGitStaged", { fg = c.vscGitStageModified, bg = "NONE" })
-    hl(0, "NvimTreeGitMerge", { fg = c.vscGitUntracked, bg = "NONE" })
-    hl(0, "NvimTreeGitDirty", { fg = c.vscGitModified, bg = "NONE" })
-    hl(0, "NvimTreeGitNew", { fg = c.vscGitAdded, bg = "NONE" })
-
-    -- Bufferline
-    hl(0, "BufferLineIndicatorSelected", { fg = c.vscLeftDark, bg = "NONE" })
-    hl(0, "BufferLineFill", { fg = "NONE", bg = opts.transparent and c.vscBack or c.vscLeftDark })
-
-    -- BarBar
-    hl(0, "BufferCurrent", { fg = c.vscFront, bg = c.vscTabCurrent })
-    hl(0, "BufferCurrentIndex", { fg = c.vscFront, bg = c.vscTabCurrent })
-    hl(0, "BufferCurrentMod", { fg = c.vscYellowOrange, bg = c.vscTabCurrent })
-    hl(0, "BufferCurrentSign", { fg = c.vscFront, bg = c.vscTabCurrent })
-    hl(0, "BufferCurrentTarget", { fg = c.vscRed, bg = c.vscTabCurrent })
-    hl(0, "BufferVisible", { fg = c.vscGray, bg = c.vscTabCurrent })
-    hl(0, "BufferVisibleIndex", { fg = c.vscGray, bg = c.vscTabCurrent })
-    hl(0, "BufferVisibleMod", { fg = c.vscYellowOrange, bg = c.vscTabCurrent })
-    hl(0, "BufferVisibleSign", { fg = c.vscGray, bg = c.vscTabCurrent })
-    hl(0, "BufferVisibleTarget", { fg = c.vscRed, bg = c.vscTabCurrent })
-    hl(0, "BufferInactive", { fg = c.vscGray, bg = c.vscTabOther })
-    hl(0, "BufferInactiveIndex", { fg = c.vscGray, bg = c.vscTabOther })
-    hl(0, "BufferInactiveMod", { fg = c.vscYellowOrange, bg = c.vscTabOther })
-    hl(0, "BufferInactiveSign", { fg = c.vscGray, bg = c.vscTabOther })
-    hl(0, "BufferInactiveTarget", { fg = c.vscRed, bg = c.vscTabOther })
-    hl(0, "BufferTabpages", { fg = c.vscFront, bg = c.vscTabOther })
-    hl(0, "BufferTabpagesFill", { fg = c.vscFront, bg = c.vscTabOther })
-
-    -- IndentBlankLine
+    -- IndentBlankLine -- leaving this in case I do add it
     hl(0, "IndentBlanklineContextChar", { fg = c.vscContextCurrent, bg = "NONE", nocombine = true })
     hl(0, "IndentBlanklineContextStart", { sp = c.vscContextCurrent, bg = "NONE", nocombine = true, underline = true })
     hl(0, "IndentBlanklineChar", { fg = c.vscContext, bg = "NONE", nocombine = true })
@@ -694,12 +635,8 @@ theme.set_highlights = function()
     hl(0, "LspReferenceRead", { fg = "NONE", bg = isDark and c.vscPopupHighlightGray or c.vscPopupHighlightLightBlue })
     hl(0, "LspReferenceWrite", { fg = "NONE", bg = isDark and c.vscPopupHighlightGray or c.vscPopupHighlightLightBlue })
 
-    -- COC.nvim
-    hl(0, "CocHighlightText", { fg = "NONE", bg = isDark and c.vscPopupHighlightGray or c.vscPopupHighlightLightBlue })
-    hl(0, "CocHighlightRead", { fg = "NONE", bg = isDark and c.vscPopupHighlightGray or c.vscPopupHighlightLightBlue })
-    hl(0, "CocHighlightWrite", { fg = "NONE", bg = isDark and c.vscPopupHighlightGray or c.vscPopupHighlightLightBlue })
-
-    -- Nvim compe
+    -- Nvim compe -- leaving this for reference to read across to
+    -- either mini completion or my own autocomplete
     hl(0, "CmpItemKindVariable", { fg = c.vscLightBlue, bg = "NONE" })
     hl(0, "CmpItemKindInterface", { fg = c.vscLightBlue, bg = "NONE" })
     hl(0, "CmpItemKindText", { fg = c.vscLightBlue, bg = "NONE" })
@@ -715,35 +652,11 @@ theme.set_highlights = function()
     hl(0, "CmpItemAbbrMatch", { fg = isDark and c.vscMediumBlue or c.vscDarkBlue, bg = "NONE", bold = true })
     hl(0, "CmpItemAbbrMatchFuzzy", { fg = isDark and c.vscMediumBlue or c.vscDarkBlue, bg = "NONE", bold = true })
 
-    -- Dashboard
-    hl(0, "DashboardHeader", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "DashboardDesc", { fg = c.vscYellowOrange, bg = "NONE" })
-    hl(0, "DashboardIcon", { fg = c.vscYellowOrange, bg = "NONE" })
-    hl(0, "DashboardShortCut", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "DashboardKey", { fg = c.vscWhite, bg = "NONE" })
-    hl(0, "DashboardFooter", { fg = c.vscBlue, bg = "NONE", italic = true })
-
     if isDark then
-        hl(0, "NvimTreeFolderIcon", { fg = c.vscBlue, bg = "NONE" })
-        hl(0, "NvimTreeIndentMarker", { fg = c.vscLineNumber, bg = "NONE" })
-
+        -- find out if this is an internal, I think it probably is, or perhaps
+        -- it is used by nvim lsp config? who knows
         hl(0, "LspFloatWinNormal", { fg = c.vscFront, bg = "NONE" })
         hl(0, "LspFloatWinBorder", { fg = c.vscLineNumber, bg = "NONE" })
-        hl(0, "LspSagaHoverBorder", { fg = c.vscLineNumber, bg = "NONE" })
-        hl(0, "LspSagaSignatureHelpBorder", { fg = c.vscLineNumber, bg = "NONE" })
-        hl(0, "LspSagaCodeActionBorder", { fg = c.vscLineNumber, bg = "NONE" })
-        hl(0, "LspSagaDefPreviewBorder", { fg = c.vscLineNumber, bg = "NONE" })
-        hl(0, "LspLinesDiagBorder", { fg = c.vscLineNumber, bg = "NONE" })
-        hl(0, "LspSagaRenameBorder", { fg = c.vscLineNumber, bg = "NONE" })
-        hl(0, "LspSagaBorderTitle", { fg = c.vscCursorDark, bg = "NONE" })
-        hl(0, "LSPSagaDiagnosticTruncateLine", { fg = c.vscLineNumber, bg = "NONE" })
-        hl(0, "LspSagaDiagnosticBorder", { fg = c.vscLineNumber, bg = "NONE" })
-        hl(0, "LspSagaDiagnosticBorder", { fg = c.vscLineNumber, bg = "NONE" })
-        hl(0, "LspSagaShTruncateLine", { fg = c.vscLineNumber, bg = "NONE" })
-        hl(0, "LspSagaShTruncateLine", { fg = c.vscLineNumber, bg = "NONE" })
-        hl(0, "LspSagaDocTruncateLine", { fg = c.vscLineNumber, bg = "NONE" })
-        hl(0, "LspSagaRenameBorder", { fg = c.vscLineNumber, bg = "NONE" })
-        hl(0, "LspSagaLspFinderBorder", { fg = c.vscLineNumber, bg = "NONE" })
 
         hl(0, "TelescopePromptBorder", { fg = c.vscLineNumber, bg = "NONE" })
         hl(0, "TelescopeResultsBorder", { fg = c.vscLineNumber, bg = "NONE" })
@@ -759,26 +672,8 @@ theme.set_highlights = function()
         hl(0, "FocusedSymbol", { fg = "#ffffff", bg = c.vscUiBlue })
         hl(0, "SymbolsOutlineConnector", { fg = c.vscLineNumber, bg = "NONE" })
     else
-        hl(0, "NvimTreeFolderIcon", { fg = c.vscDarkBlue, bg = "NONE" })
-        hl(0, "NvimTreeIndentMarker", { fg = c.vscTabOther, bg = "NONE" })
-
         hl(0, "LspFloatWinNormal", { fg = c.vscFront, bg = "NONE" })
         hl(0, "LspFloatWinBorder", { fg = c.vscTabOther, bg = "NONE" })
-        hl(0, "LspSagaHoverBorder", { fg = c.vscTabOther, bg = "NONE" })
-        hl(0, "LspSagaSignatureHelpBorder", { fg = c.vscTabOther, bg = "NONE" })
-        hl(0, "LspSagaCodeActionBorder", { fg = c.vscTabOther, bg = "NONE" })
-        hl(0, "LspSagaDefPreviewBorder", { fg = c.vscTabOther, bg = "NONE" })
-        hl(0, "LspLinesDiagBorder", { fg = c.vscTabOther, bg = "NONE" })
-        hl(0, "LspSagaRenameBorder", { fg = c.vscTabOther, bg = "NONE" })
-        hl(0, "LspSagaBorderTitle", { fg = c.vscCursorDark, bg = "NONE" })
-        hl(0, "LSPSagaDiagnosticTruncateLine", { fg = c.vscTabOther, bg = "NONE" })
-        hl(0, "LspSagaDiagnosticBorder", { fg = c.vscTabOther, bg = "NONE" })
-        hl(0, "LspSagaDiagnosticBorder", { fg = c.vscTabOther, bg = "NONE" })
-        hl(0, "LspSagaShTruncateLine", { fg = c.vscTabOther, bg = "NONE" })
-        hl(0, "LspSagaShTruncateLine", { fg = c.vscTabOther, bg = "NONE" })
-        hl(0, "LspSagaDocTruncateLine", { fg = c.vscTabOther, bg = "NONE" })
-        hl(0, "LspSagaRenameBorder", { fg = c.vscTabOther, bg = "NONE" })
-        hl(0, "LspSagaLspFinderBorder", { fg = c.vscTabOther, bg = "NONE" })
 
         hl(0, "TelescopePromptBorder", { fg = c.vscTabOther, bg = "NONE" })
         hl(0, "TelescopeResultsBorder", { fg = c.vscTabOther, bg = "NONE" })
@@ -789,12 +684,7 @@ theme.set_highlights = function()
         hl(0, "TelescopeMatching", { fg = "orange", bg = "NONE", bold = true, nil })
         hl(0, "TelescopePromptPrefix", { fg = c.vscFront, bg = "NONE" })
 
-        -- COC.nvim
-        hl(0, "CocFloating", { fg = "NONE", bg = c.vscPopupBack })
-        hl(0, "CocMenuSel", { fg = "#FFFFFF", bg = "#285EBA" })
-        hl(0, "CocSearch", { fg = "#2A64B9", bg = "NONE" })
-
-        -- Pmenu
+        -- Pmenu - definitely built in
         hl(0, "Pmenu", { fg = "NONE", bg = c.vscPopupBack })
         hl(0, "PmenuSel", { fg = "#FFFFFF", bg = "#285EBA" })
 
@@ -810,26 +700,6 @@ theme.link_highlights = function()
     hl(0, "diffAdded", { link = "DiffAdd" })
     hl(0, "diffChanged", { link = "DiffChange" })
     hl(0, "diffRemoved", { link = "DiffDelete" })
-    -- Nvim compe
-    hl(0, "CompeDocumentation", { link = "Pmenu" })
-    hl(0, "CompeDocumentationBorder", { link = "Pmenu" })
-    hl(0, "CmpItemKind", { link = "Pmenu" })
-    hl(0, "CmpItemKindClass", { link = "CmpItemKindConstructor" })
-    hl(0, "CmpItemKindModule", { link = "CmpItemKindKeyword" })
-    hl(0, "CmpItemKindOperator", { link = "@operator" })
-    hl(0, "CmpItemKindReference", { link = "@parameter.reference" })
-    hl(0, "CmpItemKindValue", { link = "@field" })
-    hl(0, "CmpItemKindField", { link = "@field" })
-    hl(0, "CmpItemKindEnum", { link = "@field" })
-    hl(0, "CmpItemKindSnippet", { link = "@text" })
-    hl(0, "CmpItemKindColor", { link = "cssColor" })
-    hl(0, "CmpItemKindFile", { link = "@text.uri" })
-    hl(0, "CmpItemKindFolder", { link = "@text.uri" })
-    hl(0, "CmpItemKindEvent", { link = "@constant" })
-    hl(0, "CmpItemKindEnumMember", { link = "@field" })
-    hl(0, "CmpItemKindConstant", { link = "@constant" })
-    hl(0, "CmpItemKindStruct", { link = "@structure" })
-    hl(0, "CmpItemKindTypeParameter", { link = "@parameter" })
 end
 
 -- Load colorscheme with a given or default style
