@@ -95,15 +95,24 @@ end
 vim.g.colors_name = "pax"
 
 -- HELPER
+-- TODO - this looks good with all the none's filtered out, so let's remove them all
+-- to make this file less noisy
 local function set_highlights(highlights)
-    for name, val in pairs(highlights) do
-        vim.api.nvim_set_hl(0, name, val)
+    for hl_name, hl_val in pairs(highlights) do
+        local filtered_hl_val = {}
+        -- just try filtering out the "NONE"s and see if it makes a difference
+        for k, v in pairs(hl_val) do
+            if v ~= "NONE" then
+                filtered_hl_val[k] = v
+            end
+        end
+        vim.api.nvim_set_hl(0, hl_name, filtered_hl_val)
     end
 end
 
 -- HIGHLIGHT GROUPS
 -- nb a _lot_ of stuff was deleted from here. original ref is at
--- https://github.com/Mofiqul/ode.nvim/blob/main/lua.ode/theme.lua
+-- https://github.com/Mofiqul/vscode.nvim/blob/main/lua.vscode/theme.lua
 local c = colors
 
 -- We split by area here - expect these will be pulled out into separate files
