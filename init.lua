@@ -8,3 +8,4 @@ require("core.remaps")
 require("core.settings")
 
 -- Apply custom design files here.
+require("core.theme")
