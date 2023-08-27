@@ -168,7 +168,6 @@ colors.vscPopupHighlightLightBlue = "#d7eafe"
 
 -- this part of the file represents the equivalent of the setup steps in the readme,
 -- but it replaces any "require" calls with the actual code it was requiring in
-local vscode = {}
 local config = {} -- nb this is required in the lualine theme file
 
 -- initialize the config to the defaults
