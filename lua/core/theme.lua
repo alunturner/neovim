@@ -1,10 +1,10 @@
 -- PAX scheme, influenced heavily by the vs code dark plus theme,
 -- shamelessly pillaged from https://github.com/Mofiqul/vscode.nvim/tree/main
 
--- >>> CONFIG
+-- CONFIG
 local use_italic_comments = true
 
--- >>> START OF COLORS FILE
+-- COLORS
 local colors = {
     vscNone = "NONE",
     vscFront = "#D4D4D4",
@@ -80,525 +80,455 @@ local colors = {
     vscUiOrange = "#f28b25",
     vscPopupHighlightLightBlue = "#d7eafe",
 }
--- >>> END OF COLORS FILE
 
--- >>> START OF NORMAL SETUP
--- this part of the file represents the equivalent of the setup steps in the readme,
--- but it replaces any "require" calls with the actual code it was requiring in
-local hl = vim.api.nvim_set_hl
 local theme = {}
 
+-- I think that this clears anything that exists, which is perhaps redundant
+-- given that I think the way hl() is called blasts existing config away.
+-- Probably sensible to keep this though as I'd hope it would make it clear
+-- when we have items that need a bit of attention in new plugins.
+vim.cmd("hi clear")
+if vim.fn.exists("syntax_on") then
+    vim.cmd("syntax reset")
+end
+
+vim.g.colors_name = "pax"
+
+-- HELPER
 local function set_highlights(highlights)
     for name, val in pairs(highlights) do
         vim.api.nvim_set_hl(0, name, val)
     end
 end
 
--- this is where we set the highlight groups for neovim and it's installed plugins
+-- HIGHLIGHT GROUPS
 -- nb a _lot_ of stuff was deleted from here. original ref is at
 -- https://github.com/Mofiqul/vscode.nvim/blob/main/lua/vscode/theme.lua
-theme.set_highlights = function()
-    local c = colors
-    local Neovim = {
-        Normal = { fg = c.vscFront, bg = c.vscBack },
-        ColorColumn = { fg = "NONE", bg = c.vscCursorDarkDark },
-        Cursor = { fg = c.vscCursorDark, bg = c.vscCursorLight },
-        CursorLine = { bg = c.vscCursorDarkDark },
-        CursorColumn = { fg = "NONE", bg = c.vscCursorDarkDark },
-        Directory = { fg = c.vscBlue, bg = c.vscBack },
-        DiffAdd = { fg = "NONE", bg = c.vscDiffGreenLight },
-        DiffChange = { fg = "NONE", bg = c.vscDiffRedDark },
-        DiffDelete = { fg = "NONE", bg = c.vscDiffRedLight },
-        DiffText = { fg = "NONE", bg = c.vscDiffRedLight },
-        EndOfBuffer = { fg = c.vscBack, bg = "NONE" },
-        ErrorMsg = { fg = c.vscRed, bg = c.vscBack },
-        VertSplit = { fg = c.vscSplitDark, bg = c.vscBack },
-        Folded = { fg = "NONE", bg = c.vscFoldBackground },
-        FoldColumn = { fg = c.vscLineNumber, bg = c.vscBack },
-        SignColumn = { fg = "NONE", bg = c.vscBack },
-        IncSearch = { fg = c.vscNone, bg = c.vscSearchCurrent },
-        LineNr = { fg = c.vscLineNumber, bg = c.vscBack },
-        CursorLineNr = { fg = c.vscPopupFront, bg = c.vscBack },
-        MatchParen = { fg = c.vscNone, bg = c.vscCursorDark },
-        ModeMsg = { fg = c.vscFront, bg = c.vscLeftDark },
-        MoreMsg = { fg = c.vscFront, bg = c.vscLeftDark },
-        NonText = { fg = c.vscLineNumber, bg = c.vscNone },
-        Pmenu = { fg = c.vscPopupFront, bg = c.vscPopupBack },
-        PmenuSel = { fg = c.vscPopupFront, bg = c.vscPopupHighlightBlue },
-        PmenuSbar = { fg = "NONE", bg = c.vscPopupHighlightGray },
-        PmenuThumb = { fg = "NONE", bg = c.vscPopupFront },
-        Question = { fg = c.vscBlue, bg = c.vscBack },
-        Search = { fg = c.vscNone, bg = c.vscSearch },
-        SpecialKey = { fg = c.vscBlue, bg = c.vscNone },
-        StatusLine = { fg = c.vscFront, bg = c.vscLeftMid },
-        StatusLineNC = { fg = c.vscFront, bg = c.vscLeftDark },
-        TabLine = { fg = c.vscFront, bg = c.vscTabOther },
-        TabLineFill = { fg = c.vscFront, bg = c.vscTabOutside },
-        TabLineSel = { fg = c.vscFront, bg = c.vscTabCurrent },
-        Title = { fg = c.vscNone, bg = c.vscNone, bold = true },
-        Visual = { fg = c.vscNone, bg = c.vscSelection },
-        VisualNOS = { fg = c.vscNone, bg = c.vscSelection },
-        WarningMsg = { fg = c.vscRed, bg = c.vscBack, bold = true },
-        WildMenu = { fg = c.vscNone, bg = c.vscSelection },
-        Comment = { fg = c.vscGreen, bg = "NONE", italic = use_italic_comments },
-        Constant = { fg = c.vscBlue, bg = "NONE" },
-        String = { fg = c.vscOrange, bg = "NONE" },
-        Character = { fg = c.vscOrange, bg = "NONE" },
-        Number = { fg = c.vscLightGreen, bg = "NONE" },
-        Boolean = { fg = c.vscBlue, bg = "NONE" },
-        Float = { fg = c.vscLightGreen, bg = "NONE" },
-        Identifier = { fg = c.vscLightBlue, bg = "NONE" },
-        Function = { fg = c.vscYellow, bg = "NONE" },
-        Statement = { fg = c.vscPink, bg = "NONE" },
-        Conditional = { fg = c.vscPink, bg = "NONE" },
-        Repeat = { fg = c.vscPink, bg = "NONE" },
-        Label = { fg = c.vscPink, bg = "NONE" },
-        Operator = { fg = c.vscFront, bg = "NONE" },
-        Keyword = { fg = c.vscPink, bg = "NONE" },
-        Exception = { fg = c.vscPink, bg = "NONE" },
-        PreProc = { fg = c.vscPink, bg = "NONE" },
-        Include = { fg = c.vscPink, bg = "NONE" },
-        Define = { fg = c.vscPink, bg = "NONE" },
-        Macro = { fg = c.vscPink, bg = "NONE" },
-        Type = { fg = c.vscBlue, bg = "NONE" },
-        StorageClass = { fg = c.vscBlue, bg = "NONE" },
-        Structure = { fg = c.vscBlueGreen, bg = "NONE" },
-        Typedef = { fg = c.vscBlue, bg = "NONE" },
-        Special = { fg = c.vscYellowOrange, bg = "NONE" },
-        SpecialChar = { fg = c.vscFront, bg = "NONE" },
-        Tag = { fg = c.vscFront, bg = "NONE" },
-        Delimiter = { fg = c.vscFront, bg = "NONE" },
-        SpecialComment = { fg = c.vscGreen, bg = "NONE" },
-        Debug = { fg = c.vscFront, bg = "NONE" },
-        Underlined = { fg = c.vscNone, bg = "NONE", underline = true },
-        Conceal = { fg = c.vscFront, bg = c.vscBack },
-        Ignore = { fg = c.vscFront, bg = "NONE" },
-        Error = { fg = c.vscRed, bg = c.vscBack, undercurl = true, sp = c.vscRed },
-        Todo = { fg = c.vscYellowOrange, bg = c.vscBack, bold = true },
-        SpellBad = { fg = c.vscRed, bg = c.vscBack, undercurl = true, sp = c.vscRed },
-        SpellCap = { fg = c.vscRed, bg = c.vscBack, undercurl = true, sp = c.vscRed },
-        SpellRare = { fg = c.vscRed, bg = c.vscBack, undercurl = true, sp = c.vscRed },
-        SpellLocal = { fg = c.vscRed, bg = c.vscBack, undercurl = true, sp = c.vscRed },
-        Whitespace = { fg = c.vscLineNumber },
-    }
-    set_highlights(Neovim)
+local c = colors
 
-    -- Treesitter
-    hl(0, "@error", { fg = c.vscRed, bg = "NONE" })
-    hl(0, "@punctuation.bracket", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "@punctuation.special", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "@comment", { fg = c.vscGreen, bg = "NONE", italic = use_italic_comments })
-    hl(0, "@constant", { fg = c.vscAccentBlue, bg = "NONE" })
-    hl(0, "@constant.builtin", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "@constant.macro", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "@string.regex", { fg = c.vscOrange, bg = "NONE" })
-    hl(0, "@string", { fg = c.vscOrange, bg = "NONE" })
-    hl(0, "@character", { fg = c.vscOrange, bg = "NONE" })
-    hl(0, "@number", { fg = c.vscLightGreen, bg = "NONE" })
-    hl(0, "@boolean", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "@float", { fg = c.vscLightGreen, bg = "NONE" })
-    hl(0, "@annotation", { fg = c.vscYellow, bg = "NONE" })
-    hl(0, "@attribute", { fg = c.vscYellow, bg = "NONE" })
-    hl(0, "@attribute.builtin", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "@namespace", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "@function.builtin", { fg = c.vscYellow, bg = "NONE" })
-    hl(0, "@function", { fg = c.vscYellow, bg = "NONE" })
-    hl(0, "@function.macro", { fg = c.vscYellow, bg = "NONE" })
-    hl(0, "@parameter", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "@parameter.reference", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "@method", { fg = c.vscYellow, bg = "NONE" })
-    hl(0, "@field", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "@property", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "@constructor", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "@conditional", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "@repeat", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "@label", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "@keyword", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "@keyword.function", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "@keyword.operator", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "@operator", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "@exception", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "@type", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "@type.builtin", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "@type.qualifier", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "@storageClass", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "@structure", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "@include", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "@variable", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "@variable.builtin", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "@text", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "@text.underline", { fg = c.vscYellowOrange, bg = "NONE" })
-    hl(0, "@tag", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "@tag.delimiter", { fg = c.vscGray, bg = "NONE" })
-    hl(0, "@tag.attribute", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "@text.title", { fg = c.vscBlue, bold = true })
-    hl(0, "@text.literal", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "@text.literal.markdown", { fg = c.vscOrange, bg = "NONE" })
-    hl(0, "@text.literal.markdown_inline", { fg = c.vscOrange, bg = "NONE" })
-    hl(0, "@text.emphasis", { fg = c.vscFront, bg = "NONE", italic = true })
-    hl(0, "@text.strong", { fg = c.vscBlue, bold = true })
-    hl(0, "@text.uri", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "@textReference", { fg = c.vscOrange })
-    hl(0, "@punctuation.delimiter", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "@stringEscape", { fg = c.vscOrange, bold = true })
-    hl(0, "@text.note", { fg = c.vscBlueGreen, bg = "NONE", bold = true })
-    hl(0, "@text.warning", { fg = c.vscYellowOrange, bg = "NONE", bold = true })
-    hl(0, "@text.danger", { fg = c.vscRed, bg = "NONE", bold = true })
-    hl(0, "@text.diff.add", { link = "DiffAdd" })
-    hl(0, "@text.diff.delete", { link = "DiffDelete" })
-
-    -- LSP semantic tokens
-    hl(0, "@lsp.typemod.type.defaultLibrary", { link = "@type.builtin" })
-    hl(0, "@lsp.type.type", { link = "@type" })
-    hl(0, "@lsp.type.typeParameter", { link = "@type" })
-    hl(0, "@lsp.type.macro", { link = "@constant" })
-    hl(0, "@lsp.type.enumMember", { link = "@constant" })
-    hl(0, "@event", { link = "Identifier" })
-    hl(0, "@interface", { link = "Identifier" })
-    hl(0, "@modifier", { link = "Identifier" })
-    hl(0, "@regexp", { fg = c.vscRed, bg = "NONE" })
-    hl(0, "@decorator", { link = "Identifier" })
-
-    -- Markdown
-    hl(0, "markdownBold", { fg = c.vscBlue, bold = true })
-    hl(0, "markdownCode", { fg = c.vscOrange, bg = "NONE" })
-    hl(0, "markdownRule", { fg = c.vscBlue, bold = true })
-    hl(0, "markdownCodeDelimiter", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "markdownHeadingDelimiter", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "markdownFootnote", { fg = c.vscOrange, bg = "NONE" })
-    hl(0, "markdownFootnoteDefinition", { fg = c.vscOrange })
-    hl(0, "markdownUrl", { fg = c.vscFront, bg = "NONE", underline = true })
-    hl(0, "markdownLinkText", { fg = c.vscOrange })
-    hl(0, "markdownEscape", { fg = c.vscOrange })
-
-    -- Asciidoc
-    hl(0, "asciidocAttributeEntry", { fg = c.vscYellowOrange })
-    hl(0, "asciidocAttributeList", { fg = c.vscPink })
-    hl(0, "asciidocAttributeRef", { fg = c.vscYellowOrange })
-    hl(0, "asciidocHLabel", { fg = c.vscBlue, bold = true })
-    hl(0, "asciidocListingBlock", { fg = c.vscOrange })
-    hl(0, "asciidocMacroAttributes", { fg = c.vscYellowOrange })
-    hl(0, "asciidocOneLineTitle", { fg = c.vscBlue, bold = true })
-    hl(0, "asciidocPassthroughBlock", { fg = c.vscBlue })
-    hl(0, "asciidocQuotedMonospaced", { fg = c.vscOrange })
-    hl(0, "asciidocTriplePlusPassthrough", { fg = c.vscYellow })
-    hl(0, "asciidocMacro", { fg = c.vscPink })
-    hl(0, "asciidocAdmonition", { fg = c.vscOrange })
-    hl(0, "asciidocQuotedEmphasized", { fg = c.vscBlue, italic = true })
-    hl(0, "asciidocQuotedEmphasized2", { fg = c.vscBlue, italic = true })
-    hl(0, "asciidocQuotedEmphasizedItalic", { fg = c.vscBlue, italic = true })
-    hl(0, "asciidocBackslash", { link = "Keyword" })
-    hl(0, "asciidocQuotedBold", { link = "markdownBold" })
-    hl(0, "asciidocQuotedMonospaced2", { link = "asciidocQuotedMonospaced" })
-    hl(0, "asciidocQuotedUnconstrainedBold", { link = "asciidocQuotedBold" })
-    hl(0, "asciidocQuotedUnconstrainedEmphasized", { link = "asciidocQuotedEmphasized" })
-    hl(0, "asciidocURL", { link = "markdownUrl" })
-
-    -- JSON
-    hl(0, "jsonKeyword", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "jsonEscape", { fg = c.vscYellowOrange, bg = "NONE" })
-    hl(0, "jsonNull", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "jsonBoolean", { fg = c.vscBlue, bg = "NONE" })
-
-    -- HTML
-    hl(0, "htmlTag", { fg = c.vscGray, bg = "NONE" })
-    hl(0, "htmlEndTag", { fg = c.vscGray, bg = "NONE" })
-    hl(0, "htmlTagName", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "htmlSpecialTagName", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "htmlArg", { fg = c.vscLightBlue, bg = "NONE" })
-
-    -- PHP
-    hl(0, "phpStaticClasses", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "phpMethod", { fg = c.vscYellow, bg = "NONE" })
-    hl(0, "phpClass", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "phpFunction", { fg = c.vscYellow, bg = "NONE" })
-    hl(0, "phpInclude", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "phpUseClass", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "phpRegion", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "phpMethodsVar", { fg = c.vscLightBlue, bg = "NONE" })
-
-    -- CSS
-    hl(0, "cssBraces", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "cssInclude", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "cssTagName", { fg = c.vscYellowOrange, bg = "NONE" })
-    hl(0, "cssClassName", { fg = c.vscYellowOrange, bg = "NONE" })
-    hl(0, "cssPseudoClass", { fg = c.vscYellowOrange, bg = "NONE" })
-    hl(0, "cssPseudoClassId", { fg = c.vscYellowOrange, bg = "NONE" })
-    hl(0, "cssPseudoClassLang", { fg = c.vscYellowOrange, bg = "NONE" })
-    hl(0, "cssIdentifier", { fg = c.vscYellowOrange, bg = "NONE" })
-    hl(0, "cssProp", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "cssDefinition", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "cssAttr", { fg = c.vscOrange, bg = "NONE" })
-    hl(0, "cssAttrRegion", { fg = c.vscOrange, bg = "NONE" })
-    hl(0, "cssColor", { fg = c.vscOrange, bg = "NONE" })
-    hl(0, "cssFunction", { fg = c.vscOrange, bg = "NONE" })
-    hl(0, "cssFunctionName", { fg = c.vscOrange, bg = "NONE" })
-    hl(0, "cssVendor", { fg = c.vscOrange, bg = "NONE" })
-    hl(0, "cssValueNumber", { fg = c.vscOrange, bg = "NONE" })
-    hl(0, "cssValueLength", { fg = c.vscOrange, bg = "NONE" })
-    hl(0, "cssUnitDecorators", { fg = c.vscOrange, bg = "NONE" })
-    hl(0, "cssStyle", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "cssImportant", { fg = c.vscBlue, bg = "NONE" })
-
-    -- JavaScript
-    hl(0, "jsVariableDef", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "jsFuncArgs", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "jsFuncBlock", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "jsRegexpString", { fg = c.vscLightRed, bg = "NONE" })
-    hl(0, "jsThis", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "jsOperatorKeyword", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "jsDestructuringBlock", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "jsObjectKey", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "jsGlobalObjects", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "jsModuleKeyword", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "jsClassDefinition", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "jsClassKeyword", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "jsExtendsKeyword", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "jsExportDefault", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "jsFuncCall", { fg = c.vscYellow, bg = "NONE" })
-    hl(0, "jsObjectValue", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "jsParen", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "jsObjectProp", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "jsIfElseBlock", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "jsParenIfElse", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "jsSpreadOperator", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "jsSpreadExpression", { fg = c.vscLightBlue, bg = "NONE" })
-
-    -- Typescript
-    hl(0, "typescriptLabel", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "typescriptExceptions", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "typescriptBraces", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "typescriptEndColons", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "typescriptParens", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "typescriptDocTags", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "typescriptDocComment", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "typescriptLogicSymbols", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "typescriptImport", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "typescriptBOM", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "typescriptVariableDeclaration", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "typescriptVariable", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "typescriptExport", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "typescriptAliasDeclaration", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "typescriptAliasKeyword", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "typescriptClassName", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "typescriptAccessibilityModifier", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "typescriptOperator", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "typescriptArrowFunc", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "typescriptMethodAccessor", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "typescriptMember", { fg = c.vscYellow, bg = "NONE" })
-    hl(0, "typescriptTypeReference", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "typescriptTemplateSB", { fg = c.vscYellowOrange, bg = "NONE" })
-    hl(0, "typescriptArrowFuncArg", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "typescriptParamImpl", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "typescriptFuncComma", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "typescriptCastKeyword", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "typescriptCall", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "typescriptCase", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "typescriptReserved", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "typescriptDefault", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "typescriptDecorator", { fg = c.vscYellow, bg = "NONE" })
-    hl(0, "typescriptPredefinedType", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "typescriptClassHeritage", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "typescriptClassExtends", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "typescriptClassKeyword", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "typescriptBlock", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "typescriptDOMDocProp", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "typescriptTemplateSubstitution", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "typescriptClassBlock", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "typescriptFuncCallArg", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "typescriptIndexExpr", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "typescriptConditionalParen", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "typescriptArray", { fg = c.vscYellow, bg = "NONE" })
-    hl(0, "typescriptES6SetProp", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "typescriptObjectLiteral", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "typescriptTypeParameter", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "typescriptEnumKeyword", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "typescriptEnum", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "typescriptLoopParen", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "typescriptParenExp", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "typescriptModule", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "typescriptAmbientDeclaration", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "typescriptFuncTypeArrow", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "typescriptInterfaceHeritage", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "typescriptInterfaceName", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "typescriptInterfaceKeyword", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "typescriptInterfaceExtends", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "typescriptGlobal", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "typescriptAsyncFuncKeyword", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "typescriptFuncKeyword", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "typescriptGlobalMethod", { fg = c.vscYellow, bg = "NONE" })
-    hl(0, "typescriptPromiseMethod", { fg = c.vscYellow, bg = "NONE" })
-
-    -- XML
-    hl(0, "xmlTag", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "xmlTagName", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "xmlEndTag", { fg = c.vscBlue, bg = "NONE" })
-
-    -- Ruby
-    hl(0, "rubyClassNameTag", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "rubyClassName", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "rubyModuleName", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "rubyConstant", { fg = c.vscBlueGreen, bg = "NONE" })
-
-    -- Golang
-    hl(0, "goPackage", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "goImport", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "goVar", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "goConst", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "goStatement", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "goType", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "goSignedInts", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "goUnsignedInts", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "goFloats", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "goComplexes", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "goBuiltins", { fg = c.vscYellow, bg = "NONE" })
-    hl(0, "goBoolean", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "goPredefinedIdentifiers", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "goTodo", { fg = c.vscGreen, bg = "NONE" })
-    hl(0, "goDeclaration", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "goDeclType", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "goTypeDecl", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "goTypeName", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "goVarAssign", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "goVarDefs", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "goReceiver", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "goReceiverType", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "goFunctionCall", { fg = c.vscYellow, bg = "NONE" })
-    hl(0, "goMethodCall", { fg = c.vscYellow, bg = "NONE" })
-    hl(0, "goSingleDecl", { fg = c.vscLightBlue, bg = "NONE" })
-
-    -- Python
-    hl(0, "pythonStatement", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "pythonOperator", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "pythonException", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "pythonExClass", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "pythonBuiltinObj", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "pythonBuiltinType", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "pythonBoolean", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "pythonNone", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "pythonTodo", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "pythonClassVar", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "pythonClassDef", { fg = c.vscBlueGreen, bg = "NONE" })
-
-    -- TeX
-    hl(0, "texStatement", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "texBeginEnd", { fg = c.vscYellow, bg = "NONE" })
-    hl(0, "texBeginEndName", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "texOption", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "texBeginEndModifier", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "texDocType", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "texDocTypeArgs", { fg = c.vscLightBlue, bg = "NONE" })
-
-    -- Git
-    hl(0, "gitcommitHeader", { fg = c.vscGray, bg = "NONE" })
-    hl(0, "gitcommitOnBranch", { fg = c.vscGray, bg = "NONE" })
-    hl(0, "gitcommitBranch", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "gitcommitComment", { fg = c.vscGray, bg = "NONE" })
-    hl(0, "gitcommitSelectedType", { fg = c.vscGreen, bg = "NONE" })
-    hl(0, "gitcommitSelectedFile", { fg = c.vscGreen, bg = "NONE" })
-    hl(0, "gitcommitDiscardedType", { fg = c.vscRed, bg = "NONE" })
-    hl(0, "gitcommitDiscardedFile", { fg = c.vscRed, bg = "NONE" })
-    hl(0, "gitcommitOverflow", { fg = c.vscRed, bg = "NONE" })
-    hl(0, "gitcommitSummary", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "gitcommitBlank", { fg = c.vscPink, bg = "NONE" })
-
-    -- Lua
-    hl(0, "luaFuncCall", { fg = c.vscYellow, bg = "NONE" })
-    hl(0, "luaFuncArgName", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "luaFuncKeyword", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "luaLocal", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "luaBuiltIn", { fg = c.vscBlue, bg = "NONE" })
-
-    -- SH
-    hl(0, "shDeref", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "shVariable", { fg = c.vscLightBlue, bg = "NONE" })
-
-    -- SQL
-    hl(0, "sqlKeyword", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "sqlFunction", { fg = c.vscYellowOrange, bg = "NONE" })
-    hl(0, "sqlOperator", { fg = c.vscPink, bg = "NONE" })
-
-    -- YAML
-    hl(0, "yamlKey", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "yamlConstant", { fg = c.vscBlue, bg = "NONE" })
-
-    -- IndentBlankLine -- leaving this in case I do add it
-    hl(0, "IndentBlanklineContextChar", { fg = c.vscContextCurrent, bg = "NONE", nocombine = true })
-    hl(0, "IndentBlanklineContextStart", { sp = c.vscContextCurrent, bg = "NONE", nocombine = true, underline = true })
-    hl(0, "IndentBlanklineChar", { fg = c.vscContext, bg = "NONE", nocombine = true })
-    hl(0, "IndentBlanklineSpaceChar", { fg = c.vscContext, bg = "NONE", nocombine = true })
-    hl(0, "IndentBlanklineSpaceCharBlankline", { fg = c.vscContext, bg = "NONE", nocombine = true })
+-- We split by area here - expect these will be pulled out into separate files
+-- when the overall structure is decided.
+local builtins = {
+    -- General
+    Normal = { fg = c.vscFront, bg = c.vscBack },
+    ColorColumn = { fg = "NONE", bg = c.vscCursorDarkDark },
+    Cursor = { fg = c.vscCursorDark, bg = c.vscCursorLight },
+    CursorLine = { bg = c.vscCursorDarkDark },
+    CursorColumn = { fg = "NONE", bg = c.vscCursorDarkDark },
+    Directory = { fg = c.vscBlue, bg = c.vscBack },
+    DiffAdd = { fg = "NONE", bg = c.vscDiffGreenLight },
+    DiffChange = { fg = "NONE", bg = c.vscDiffRedDark },
+    DiffDelete = { fg = "NONE", bg = c.vscDiffRedLight },
+    DiffText = { fg = "NONE", bg = c.vscDiffRedLight },
+    EndOfBuffer = { fg = c.vscBack, bg = "NONE" },
+    ErrorMsg = { fg = c.vscRed, bg = c.vscBack },
+    VertSplit = { fg = c.vscSplitDark, bg = c.vscBack },
+    Folded = { fg = "NONE", bg = c.vscFoldBackground },
+    FoldColumn = { fg = c.vscLineNumber, bg = c.vscBack },
+    SignColumn = { fg = "NONE", bg = c.vscBack },
+    IncSearch = { fg = c.vscNone, bg = c.vscSearchCurrent },
+    LineNr = { fg = c.vscLineNumber, bg = c.vscBack },
+    CursorLineNr = { fg = c.vscPopupFront, bg = c.vscBack },
+    MatchParen = { fg = c.vscNone, bg = c.vscCursorDark },
+    ModeMsg = { fg = c.vscFront, bg = c.vscLeftDark },
+    MoreMsg = { fg = c.vscFront, bg = c.vscLeftDark },
+    NonText = { fg = c.vscLineNumber, bg = c.vscNone },
+    Pmenu = { fg = c.vscPopupFront, bg = c.vscPopupBack },
+    PmenuSel = { fg = c.vscPopupFront, bg = c.vscPopupHighlightBlue },
+    PmenuSbar = { fg = "NONE", bg = c.vscPopupHighlightGray },
+    PmenuThumb = { fg = "NONE", bg = c.vscPopupFront },
+    Question = { fg = c.vscBlue, bg = c.vscBack },
+    Search = { fg = c.vscNone, bg = c.vscSearch },
+    SpecialKey = { fg = c.vscBlue, bg = c.vscNone },
+    StatusLine = { fg = c.vscFront, bg = c.vscLeftMid },
+    StatusLineNC = { fg = c.vscFront, bg = c.vscLeftDark },
+    TabLine = { fg = c.vscFront, bg = c.vscTabOther },
+    TabLineFill = { fg = c.vscFront, bg = c.vscTabOutside },
+    TabLineSel = { fg = c.vscFront, bg = c.vscTabCurrent },
+    Title = { fg = c.vscNone, bg = c.vscNone, bold = true },
+    Visual = { fg = c.vscNone, bg = c.vscSelection },
+    VisualNOS = { fg = c.vscNone, bg = c.vscSelection },
+    WarningMsg = { fg = c.vscRed, bg = c.vscBack, bold = true },
+    WildMenu = { fg = c.vscNone, bg = c.vscSelection },
+    Comment = { fg = c.vscGreen, bg = "NONE", italic = use_italic_comments },
+    Constant = { fg = c.vscBlue, bg = "NONE" },
+    String = { fg = c.vscOrange, bg = "NONE" },
+    Character = { fg = c.vscOrange, bg = "NONE" },
+    Number = { fg = c.vscLightGreen, bg = "NONE" },
+    Boolean = { fg = c.vscBlue, bg = "NONE" },
+    Float = { fg = c.vscLightGreen, bg = "NONE" },
+    Identifier = { fg = c.vscLightBlue, bg = "NONE" },
+    Function = { fg = c.vscYellow, bg = "NONE" },
+    Statement = { fg = c.vscPink, bg = "NONE" },
+    Conditional = { fg = c.vscPink, bg = "NONE" },
+    Repeat = { fg = c.vscPink, bg = "NONE" },
+    Label = { fg = c.vscPink, bg = "NONE" },
+    Operator = { fg = c.vscFront, bg = "NONE" },
+    Keyword = { fg = c.vscPink, bg = "NONE" },
+    Exception = { fg = c.vscPink, bg = "NONE" },
+    PreProc = { fg = c.vscPink, bg = "NONE" },
+    Include = { fg = c.vscPink, bg = "NONE" },
+    Define = { fg = c.vscPink, bg = "NONE" },
+    Macro = { fg = c.vscPink, bg = "NONE" },
+    Type = { fg = c.vscBlue, bg = "NONE" },
+    StorageClass = { fg = c.vscBlue, bg = "NONE" },
+    Structure = { fg = c.vscBlueGreen, bg = "NONE" },
+    Typedef = { fg = c.vscBlue, bg = "NONE" },
+    Special = { fg = c.vscYellowOrange, bg = "NONE" },
+    SpecialChar = { fg = c.vscFront, bg = "NONE" },
+    Tag = { fg = c.vscFront, bg = "NONE" },
+    Delimiter = { fg = c.vscFront, bg = "NONE" },
+    SpecialComment = { fg = c.vscGreen, bg = "NONE" },
+    Debug = { fg = c.vscFront, bg = "NONE" },
+    Underlined = { fg = c.vscNone, bg = "NONE", underline = true },
+    Conceal = { fg = c.vscFront, bg = c.vscBack },
+    Ignore = { fg = c.vscFront, bg = "NONE" },
+    Error = { fg = c.vscRed, bg = c.vscBack, undercurl = true, sp = c.vscRed },
+    Todo = { fg = c.vscYellowOrange, bg = c.vscBack, bold = true },
+    SpellBad = { fg = c.vscRed, bg = c.vscBack, undercurl = true, sp = c.vscRed },
+    SpellCap = { fg = c.vscRed, bg = c.vscBack, undercurl = true, sp = c.vscRed },
+    SpellRare = { fg = c.vscRed, bg = c.vscBack, undercurl = true, sp = c.vscRed },
+    SpellLocal = { fg = c.vscRed, bg = c.vscBack, undercurl = true, sp = c.vscRed },
+    Whitespace = { fg = c.vscLineNumber },
 
     -- LSP
-    hl(0, "DiagnosticError", { fg = c.vscRed, bg = "NONE" })
-    hl(0, "DiagnosticWarn", { fg = c.vscYellow, bg = "NONE" })
-    hl(0, "DiagnosticInfo", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "DiagnosticHint", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "DiagnosticUnderlineError", { fg = "NONE", bg = "NONE", undercurl = true, sp = c.vscRed })
-    hl(0, "DiagnosticUnderlineWarn", { fg = "NONE", bg = "NONE", undercurl = true, sp = c.vscYellow })
-    hl(0, "DiagnosticUnderlineInfo", { fg = "NONE", bg = "NONE", undercurl = true, sp = c.vscBlue })
-    hl(0, "DiagnosticUnderlineHint", { fg = "NONE", bg = "NONE", undercurl = true, sp = c.vscBlue })
-    hl(0, "LspReferenceText", { fg = "NONE", bg = c.vscPopupHighlightGray })
-    hl(0, "LspReferenceRead", { fg = "NONE", bg = c.vscPopupHighlightGray })
-    hl(0, "LspReferenceWrite", { fg = "NONE", bg = c.vscPopupHighlightGray })
-
-    -- Nvim compe -- leaving this for reference to read across to
-    -- either mini completion or my own autocomplete
-    hl(0, "CmpItemKindVariable", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "CmpItemKindInterface", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "CmpItemKindText", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "CmpItemKindFunction", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "CmpItemKindMethod", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "CmpItemKindKeyword", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "CmpItemKindProperty", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "CmpItemKindUnit", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "CmpItemKindConstructor", { fg = c.vscUiOrange, bg = "NONE" })
-    hl(0, "CmpItemMenu", { fg = c.vscPopupFront, bg = "NONE" })
-    hl(0, "CmpItemAbbr", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "CmpItemAbbrDeprecated", { fg = c.vscCursorDark, bg = c.vscPopupBack, strikethrough = true })
-    hl(0, "CmpItemAbbrMatch", { fg = c.vscMediumBlue, bold = true })
-    hl(0, "CmpItemAbbrMatchFuzzy", { fg = c.vscMediumBlue, bold = true })
-
+    DiagnosticError = { fg = c.vscRed, bg = "NONE" },
+    DiagnosticWarn = { fg = c.vscYellow, bg = "NONE" },
+    DiagnosticInfo = { fg = c.vscBlue, bg = "NONE" },
+    DiagnosticHint = { fg = c.vscBlue, bg = "NONE" },
+    DiagnosticUnderlineError = { fg = "NONE", bg = "NONE", undercurl = true, sp = c.vscRed },
+    DiagnosticUnderlineWarn = { fg = "NONE", bg = "NONE", undercurl = true, sp = c.vscYellow },
+    DiagnosticUnderlineInfo = { fg = "NONE", bg = "NONE", undercurl = true, sp = c.vscBlue },
+    DiagnosticUnderlineHint = { fg = "NONE", bg = "NONE", undercurl = true, sp = c.vscBlue },
+    LspReferenceText = { fg = "NONE", bg = c.vscPopupHighlightGray },
+    LspReferenceRead = { fg = "NONE", bg = c.vscPopupHighlightGray },
+    LspReferenceWrite = { fg = "NONE", bg = c.vscPopupHighlightGray },
     -- find out if this is an internal, I think it probably is, or perhaps
     -- it is used by nvim lsp config? who knows
-    hl(0, "LspFloatWinNormal", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "LspFloatWinBorder", { fg = c.vscLineNumber, bg = "NONE" })
+    LspFloatWinNormal = { fg = c.vscFront, bg = "NONE" },
+    LspFloatWinBorder = { fg = c.vscLineNumber, bg = "NONE" },
 
-    hl(0, "TelescopePromptBorder", { fg = c.vscLineNumber, bg = "NONE" })
-    hl(0, "TelescopeResultsBorder", { fg = c.vscLineNumber, bg = "NONE" })
-    hl(0, "TelescopePreviewBorder", { fg = c.vscLineNumber, bg = "NONE" })
-    hl(0, "TelescopeNormal", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "TelescopeSelection", { fg = c.vscFront, bg = c.vscPopupHighlightBlue })
-    hl(0, "TelescopeMultiSelection", { fg = c.vscFront, bg = c.vscPopupHighlightBlue })
-    hl(0, "TelescopeMatching", { fg = c.vscMediumBlue, bg = "NONE", bold = true })
-    hl(0, "TelescopePromptPrefix", { fg = c.vscFront, bg = "NONE" })
+    -- Legacy groups for official git.vim and diff.vim syntax
+    diffAdded = { link = "DiffAdd" },
+    diffChanged = { link = "DiffChange" },
+    diffRemoved = { link = "DiffDelete" },
+}
+set_highlights(builtins)
 
+local plugins = {
+    -- Treesitter
+    ["@error"] = { fg = c.vscRed, bg = "NONE" },
+    ["@punctuation.bracket"] = { fg = c.vscFront, bg = "NONE" },
+    ["@punctuation.special"] = { fg = c.vscFront, bg = "NONE" },
+    ["@comment"] = { fg = c.vscGreen, bg = "NONE", italic = use_italic_comments },
+    ["@constant"] = { fg = c.vscAccentBlue, bg = "NONE" },
+    ["@constant.builtin"] = { fg = c.vscBlue, bg = "NONE" },
+    ["@constant.macro"] = { fg = c.vscBlueGreen, bg = "NONE" },
+    ["@string.regex"] = { fg = c.vscOrange, bg = "NONE" },
+    ["@string"] = { fg = c.vscOrange, bg = "NONE" },
+    ["@character"] = { fg = c.vscOrange, bg = "NONE" },
+    ["@number"] = { fg = c.vscLightGreen, bg = "NONE" },
+    ["@boolean"] = { fg = c.vscBlue, bg = "NONE" },
+    ["@float"] = { fg = c.vscLightGreen, bg = "NONE" },
+    ["@annotation"] = { fg = c.vscYellow, bg = "NONE" },
+    ["@attribute"] = { fg = c.vscYellow, bg = "NONE" },
+    ["@attribute.builtin"] = { fg = c.vscBlueGreen, bg = "NONE" },
+    ["@namespace"] = { fg = c.vscBlueGreen, bg = "NONE" },
+    ["@function.builtin"] = { fg = c.vscYellow, bg = "NONE" },
+    ["@function"] = { fg = c.vscYellow, bg = "NONE" },
+    ["@function.macro"] = { fg = c.vscYellow, bg = "NONE" },
+    ["@parameter"] = { fg = c.vscLightBlue, bg = "NONE" },
+    ["@parameter.reference"] = { fg = c.vscLightBlue, bg = "NONE" },
+    ["@method"] = { fg = c.vscYellow, bg = "NONE" },
+    ["@field"] = { fg = c.vscLightBlue, bg = "NONE" },
+    ["@property"] = { fg = c.vscLightBlue, bg = "NONE" },
+    ["@constructor"] = { fg = c.vscBlueGreen, bg = "NONE" },
+    ["@conditional"] = { fg = c.vscPink, bg = "NONE" },
+    ["@repeat"] = { fg = c.vscPink, bg = "NONE" },
+    ["@label"] = { fg = c.vscLightBlue, bg = "NONE" },
+    ["@keyword"] = { fg = c.vscPink, bg = "NONE" },
+    ["@keyword.function"] = { fg = c.vscBlue, bg = "NONE" },
+    ["@keyword.operator"] = { fg = c.vscBlue, bg = "NONE" },
+    ["@operator"] = { fg = c.vscFront, bg = "NONE" },
+    ["@exception"] = { fg = c.vscPink, bg = "NONE" },
+    ["@type"] = { fg = c.vscBlueGreen, bg = "NONE" },
+    ["@type.builtin"] = { fg = c.vscBlue, bg = "NONE" },
+    ["@type.qualifier"] = { fg = c.vscBlue, bg = "NONE" },
+    ["@storageClass"] = { fg = c.vscBlue, bg = "NONE" },
+    ["@structure"] = { fg = c.vscLightBlue, bg = "NONE" },
+    ["@include"] = { fg = c.vscPink, bg = "NONE" },
+    ["@variable"] = { fg = c.vscLightBlue, bg = "NONE" },
+    ["@variable.builtin"] = { fg = c.vscLightBlue, bg = "NONE" },
+    ["@text"] = { fg = c.vscFront, bg = "NONE" },
+    ["@text.underline"] = { fg = c.vscYellowOrange, bg = "NONE" },
+    ["@tag"] = { fg = c.vscBlue, bg = "NONE" },
+    ["@tag.delimiter"] = { fg = c.vscGray, bg = "NONE" },
+    ["@tag.attribute"] = { fg = c.vscLightBlue, bg = "NONE" },
+    ["@text.title"] = { fg = c.vscBlue, bold = true },
+    ["@text.literal"] = { fg = c.vscFront, bg = "NONE" },
+    ["@text.literal.markdown"] = { fg = c.vscOrange, bg = "NONE" },
+    ["@text.literal.markdown_inline"] = { fg = c.vscOrange, bg = "NONE" },
+    ["@text.emphasis"] = { fg = c.vscFront, bg = "NONE", italic = true },
+    ["@text.strong"] = { fg = c.vscBlue, bold = true },
+    ["@text.uri"] = { fg = c.vscFront, bg = "NONE" },
+    ["@textReference"] = { fg = c.vscOrange },
+    ["@punctuation.delimiter"] = { fg = c.vscFront, bg = "NONE" },
+    ["@stringEscape"] = { fg = c.vscOrange, bold = true },
+    ["@text.note"] = { fg = c.vscBlueGreen, bg = "NONE", bold = true },
+    ["@text.warning"] = { fg = c.vscYellowOrange, bg = "NONE", bold = true },
+    ["@text.danger"] = { fg = c.vscRed, bg = "NONE", bold = true },
+    ["@text.diff.add"] = { link = "DiffAdd" },
+    ["@text.diff.delete"] = { link = "DiffDelete" },
+
+    -- LSP semantic tokens
+    ["@lsp.typemod.type.defaultLibrary"] = { link = "@type.builtin" },
+    ["@lsp.type.type"] = { link = "@type" },
+    ["@lsp.type.typeParameter"] = { link = "@type" },
+    ["@lsp.type.macro"] = { link = "@constant" },
+    ["@lsp.type.enumMember"] = { link = "@constant" },
+    ["@event"] = { link = "Identifier" },
+    ["@interface"] = { link = "Identifier" },
+    ["@modifier"] = { link = "Identifier" },
+    ["@regexp"] = { fg = c.vscRed, bg = "NONE" },
+    ["@decorator"] = { link = "Identifier" },
+
+    -- Telescope
+    TelescopePromptBorder = { fg = c.vscLineNumber, bg = "NONE" },
+    TelescopeResultsBorder = { fg = c.vscLineNumber, bg = "NONE" },
+    TelescopePreviewBorder = { fg = c.vscLineNumber, bg = "NONE" },
+    TelescopeNormal = { fg = c.vscFront, bg = "NONE" },
+    TelescopeSelection = { fg = c.vscFront, bg = c.vscPopupHighlightBlue },
+    TelescopeMultiSelection = { fg = c.vscFront, bg = c.vscPopupHighlightBlue },
+    TelescopeMatching = { fg = c.vscMediumBlue, bg = "NONE", bold = true },
+    TelescopePromptPrefix = { fg = c.vscFront, bg = "NONE" },
+
+    -- ...Lualine?
     -- symbols-outline
     -- white fg and lualine blue bg
-    hl(0, "FocusedSymbol", { fg = "#ffffff", bg = c.vscUiBlue })
-    hl(0, "SymbolsOutlineConnector", { fg = c.vscLineNumber, bg = "NONE" })
-end
+    FocusedSymbol = { fg = "#ffffff", bg = c.vscUiBlue },
+    SymbolsOutlineConnector = { fg = c.vscLineNumber, bg = "NONE" },
+}
+set_highlights(plugins)
 
-theme.link_highlights = function()
-    -- Legacy groups for official git.vim and diff.vim syntax
-    hl(0, "diffAdded", { link = "DiffAdd" })
-    hl(0, "diffChanged", { link = "DiffChange" })
-    hl(0, "diffRemoved", { link = "DiffDelete" })
-end
+local languages = {
+    -- Markdown
+    markdownBold = { fg = c.vscBlue, bold = true },
+    markdownCode = { fg = c.vscOrange, bg = "NONE" },
+    markdownRule = { fg = c.vscBlue, bold = true },
+    markdownCodeDelimiter = { fg = c.vscFront, bg = "NONE" },
+    markdownHeadingDelimiter = { fg = c.vscBlue, bg = "NONE" },
+    markdownFootnote = { fg = c.vscOrange, bg = "NONE" },
+    markdownFootnoteDefinition = { fg = c.vscOrange },
+    markdownUrl = { fg = c.vscFront, bg = "NONE", underline = true },
+    markdownLinkText = { fg = c.vscOrange },
+    markdownEscape = { fg = c.vscOrange },
 
--- Load colorscheme with a given or default style
--- this block replaces what used to be the vscode.load function definition
--- followed by immediately calling the function
-vim.cmd("hi clear")
-if vim.fn.exists("syntax_on") then
-    vim.cmd("syntax reset")
-end
+    -- Asciidoc
+    asciidocAttributeEntry = { fg = c.vscYellowOrange },
+    asciidocAttributeList = { fg = c.vscPink },
+    asciidocAttributeRef = { fg = c.vscYellowOrange },
+    asciidocHLabel = { fg = c.vscBlue, bold = true },
+    asciidocListingBlock = { fg = c.vscOrange },
+    asciidocMacroAttributes = { fg = c.vscYellowOrange },
+    asciidocOneLineTitle = { fg = c.vscBlue, bold = true },
+    asciidocPassthroughBlock = { fg = c.vscBlue },
+    asciidocQuotedMonospaced = { fg = c.vscOrange },
+    asciidocTriplePlusPassthrough = { fg = c.vscYellow },
+    asciidocMacro = { fg = c.vscPink },
+    asciidocAdmonition = { fg = c.vscOrange },
+    asciidocQuotedEmphasized = { fg = c.vscBlue, italic = true },
+    asciidocQuotedEmphasized2 = { fg = c.vscBlue, italic = true },
+    asciidocQuotedEmphasizedItalic = { fg = c.vscBlue, italic = true },
+    asciidocBackslash = { link = "Keyword" },
+    asciidocQuotedBold = { link = "markdownBold" },
+    asciidocQuotedMonospaced2 = { link = "asciidocQuotedMonospaced" },
+    asciidocQuotedUnconstrainedBold = { link = "asciidocQuotedBold" },
+    asciidocQuotedUnconstrainedEmphasized = { link = "asciidocQuotedEmphasized" },
+    asciidocURL = { link = "markdownUrl" },
 
-vim.o.termguicolors = true
-vim.g.colors_name = "dark_plus"
+    -- JSON
+    jsonKeyword = { fg = c.vscLightBlue, bg = "NONE" },
+    jsonEscape = { fg = c.vscYellowOrange, bg = "NONE" },
+    jsonNull = { fg = c.vscBlue, bg = "NONE" },
+    jsonBoolean = { fg = c.vscBlue, bg = "NONE" },
 
--- we will keep these functions for now for separation of interests, but they
--- could easily be removed
-theme.set_highlights()
-theme.link_highlights()
--- >>> END OF SETUP PHASE
+    -- HTML
+    htmlTag = { fg = c.vscGray, bg = "NONE" },
+    htmlEndTag = { fg = c.vscGray, bg = "NONE" },
+    htmlTagName = { fg = c.vscBlue, bg = "NONE" },
+    htmlSpecialTagName = { fg = c.vscBlue, bg = "NONE" },
+    htmlArg = { fg = c.vscLightBlue, bg = "NONE" },
+
+    -- CSS
+    cssBraces = { fg = c.vscFront, bg = "NONE" },
+    cssInclude = { fg = c.vscPink, bg = "NONE" },
+    cssTagName = { fg = c.vscYellowOrange, bg = "NONE" },
+    cssClassName = { fg = c.vscYellowOrange, bg = "NONE" },
+    cssPseudoClass = { fg = c.vscYellowOrange, bg = "NONE" },
+    cssPseudoClassId = { fg = c.vscYellowOrange, bg = "NONE" },
+    cssPseudoClassLang = { fg = c.vscYellowOrange, bg = "NONE" },
+    cssIdentifier = { fg = c.vscYellowOrange, bg = "NONE" },
+    cssProp = { fg = c.vscLightBlue, bg = "NONE" },
+    cssDefinition = { fg = c.vscLightBlue, bg = "NONE" },
+    cssAttr = { fg = c.vscOrange, bg = "NONE" },
+    cssAttrRegion = { fg = c.vscOrange, bg = "NONE" },
+    cssColor = { fg = c.vscOrange, bg = "NONE" },
+    cssFunction = { fg = c.vscOrange, bg = "NONE" },
+    cssFunctionName = { fg = c.vscOrange, bg = "NONE" },
+    cssVendor = { fg = c.vscOrange, bg = "NONE" },
+    cssValueNumber = { fg = c.vscOrange, bg = "NONE" },
+    cssValueLength = { fg = c.vscOrange, bg = "NONE" },
+    cssUnitDecorators = { fg = c.vscOrange, bg = "NONE" },
+    cssStyle = { fg = c.vscLightBlue, bg = "NONE" },
+    cssImportant = { fg = c.vscBlue, bg = "NONE" },
+
+    -- JavaScript
+    jsVariableDef = { fg = c.vscLightBlue, bg = "NONE" },
+    jsFuncArgs = { fg = c.vscLightBlue, bg = "NONE" },
+    jsFuncBlock = { fg = c.vscLightBlue, bg = "NONE" },
+    jsRegexpString = { fg = c.vscLightRed, bg = "NONE" },
+    jsThis = { fg = c.vscBlue, bg = "NONE" },
+    jsOperatorKeyword = { fg = c.vscBlue, bg = "NONE" },
+    jsDestructuringBlock = { fg = c.vscLightBlue, bg = "NONE" },
+    jsObjectKey = { fg = c.vscLightBlue, bg = "NONE" },
+    jsGlobalObjects = { fg = c.vscBlueGreen, bg = "NONE" },
+    jsModuleKeyword = { fg = c.vscLightBlue, bg = "NONE" },
+    jsClassDefinition = { fg = c.vscBlueGreen, bg = "NONE" },
+    jsClassKeyword = { fg = c.vscBlue, bg = "NONE" },
+    jsExtendsKeyword = { fg = c.vscBlue, bg = "NONE" },
+    jsExportDefault = { fg = c.vscPink, bg = "NONE" },
+    jsFuncCall = { fg = c.vscYellow, bg = "NONE" },
+    jsObjectValue = { fg = c.vscLightBlue, bg = "NONE" },
+    jsParen = { fg = c.vscLightBlue, bg = "NONE" },
+    jsObjectProp = { fg = c.vscLightBlue, bg = "NONE" },
+    jsIfElseBlock = { fg = c.vscLightBlue, bg = "NONE" },
+    jsParenIfElse = { fg = c.vscLightBlue, bg = "NONE" },
+    jsSpreadOperator = { fg = c.vscLightBlue, bg = "NONE" },
+    jsSpreadExpression = { fg = c.vscLightBlue, bg = "NONE" },
+
+    -- Typescript
+    typescriptLabel = { fg = c.vscLightBlue, bg = "NONE" },
+    typescriptExceptions = { fg = c.vscLightBlue, bg = "NONE" },
+    typescriptBraces = { fg = c.vscFront, bg = "NONE" },
+    typescriptEndColons = { fg = c.vscLightBlue, bg = "NONE" },
+    typescriptParens = { fg = c.vscFront, bg = "NONE" },
+    typescriptDocTags = { fg = c.vscBlue, bg = "NONE" },
+    typescriptDocComment = { fg = c.vscBlueGreen, bg = "NONE" },
+    typescriptLogicSymbols = { fg = c.vscLightBlue, bg = "NONE" },
+    typescriptImport = { fg = c.vscPink, bg = "NONE" },
+    typescriptBOM = { fg = c.vscLightBlue, bg = "NONE" },
+    typescriptVariableDeclaration = { fg = c.vscLightBlue, bg = "NONE" },
+    typescriptVariable = { fg = c.vscBlue, bg = "NONE" },
+    typescriptExport = { fg = c.vscPink, bg = "NONE" },
+    typescriptAliasDeclaration = { fg = c.vscBlueGreen, bg = "NONE" },
+    typescriptAliasKeyword = { fg = c.vscBlue, bg = "NONE" },
+    typescriptClassName = { fg = c.vscBlueGreen, bg = "NONE" },
+    typescriptAccessibilityModifier = { fg = c.vscBlue, bg = "NONE" },
+    typescriptOperator = { fg = c.vscBlue, bg = "NONE" },
+    typescriptArrowFunc = { fg = c.vscBlue, bg = "NONE" },
+    typescriptMethodAccessor = { fg = c.vscBlue, bg = "NONE" },
+    typescriptMember = { fg = c.vscYellow, bg = "NONE" },
+    typescriptTypeReference = { fg = c.vscBlueGreen, bg = "NONE" },
+    typescriptTemplateSB = { fg = c.vscYellowOrange, bg = "NONE" },
+    typescriptArrowFuncArg = { fg = c.vscLightBlue, bg = "NONE" },
+    typescriptParamImpl = { fg = c.vscLightBlue, bg = "NONE" },
+    typescriptFuncComma = { fg = c.vscLightBlue, bg = "NONE" },
+    typescriptCastKeyword = { fg = c.vscLightBlue, bg = "NONE" },
+    typescriptCall = { fg = c.vscBlue, bg = "NONE" },
+    typescriptCase = { fg = c.vscLightBlue, bg = "NONE" },
+    typescriptReserved = { fg = c.vscPink, bg = "NONE" },
+    typescriptDefault = { fg = c.vscLightBlue, bg = "NONE" },
+    typescriptDecorator = { fg = c.vscYellow, bg = "NONE" },
+    typescriptPredefinedType = { fg = c.vscBlueGreen, bg = "NONE" },
+    typescriptClassHeritage = { fg = c.vscBlueGreen, bg = "NONE" },
+    typescriptClassExtends = { fg = c.vscBlue, bg = "NONE" },
+    typescriptClassKeyword = { fg = c.vscBlue, bg = "NONE" },
+    typescriptBlock = { fg = c.vscLightBlue, bg = "NONE" },
+    typescriptDOMDocProp = { fg = c.vscLightBlue, bg = "NONE" },
+    typescriptTemplateSubstitution = { fg = c.vscLightBlue, bg = "NONE" },
+    typescriptClassBlock = { fg = c.vscLightBlue, bg = "NONE" },
+    typescriptFuncCallArg = { fg = c.vscLightBlue, bg = "NONE" },
+    typescriptIndexExpr = { fg = c.vscLightBlue, bg = "NONE" },
+    typescriptConditionalParen = { fg = c.vscLightBlue, bg = "NONE" },
+    typescriptArray = { fg = c.vscYellow, bg = "NONE" },
+    typescriptES6SetProp = { fg = c.vscLightBlue, bg = "NONE" },
+    typescriptObjectLiteral = { fg = c.vscLightBlue, bg = "NONE" },
+    typescriptTypeParameter = { fg = c.vscBlueGreen, bg = "NONE" },
+    typescriptEnumKeyword = { fg = c.vscBlue, bg = "NONE" },
+    typescriptEnum = { fg = c.vscBlueGreen, bg = "NONE" },
+    typescriptLoopParen = { fg = c.vscLightBlue, bg = "NONE" },
+    typescriptParenExp = { fg = c.vscLightBlue, bg = "NONE" },
+    typescriptModule = { fg = c.vscLightBlue, bg = "NONE" },
+    typescriptAmbientDeclaration = { fg = c.vscBlue, bg = "NONE" },
+    typescriptFuncTypeArrow = { fg = c.vscBlue, bg = "NONE" },
+    typescriptInterfaceHeritage = { fg = c.vscBlueGreen, bg = "NONE" },
+    typescriptInterfaceName = { fg = c.vscBlueGreen, bg = "NONE" },
+    typescriptInterfaceKeyword = { fg = c.vscBlue, bg = "NONE" },
+    typescriptInterfaceExtends = { fg = c.vscBlue, bg = "NONE" },
+    typescriptGlobal = { fg = c.vscBlueGreen, bg = "NONE" },
+    typescriptAsyncFuncKeyword = { fg = c.vscBlue, bg = "NONE" },
+    typescriptFuncKeyword = { fg = c.vscBlue, bg = "NONE" },
+    typescriptGlobalMethod = { fg = c.vscYellow, bg = "NONE" },
+    typescriptPromiseMethod = { fg = c.vscYellow, bg = "NONE" },
+
+    -- XML
+    xmlTag = { fg = c.vscBlue, bg = "NONE" },
+    xmlTagName = { fg = c.vscBlue, bg = "NONE" },
+    xmlEndTag = { fg = c.vscBlue, bg = "NONE" },
+
+    -- Python
+    pythonStatement = { fg = c.vscBlue, bg = "NONE" },
+    pythonOperator = { fg = c.vscBlue, bg = "NONE" },
+    pythonException = { fg = c.vscPink, bg = "NONE" },
+    pythonExClass = { fg = c.vscBlueGreen, bg = "NONE" },
+    pythonBuiltinObj = { fg = c.vscLightBlue, bg = "NONE" },
+    pythonBuiltinType = { fg = c.vscBlueGreen, bg = "NONE" },
+    pythonBoolean = { fg = c.vscBlue, bg = "NONE" },
+    pythonNone = { fg = c.vscBlue, bg = "NONE" },
+    pythonTodo = { fg = c.vscBlue, bg = "NONE" },
+    pythonClassVar = { fg = c.vscBlue, bg = "NONE" },
+    pythonClassDef = { fg = c.vscBlueGreen, bg = "NONE" },
+
+    -- TeX
+    texStatement = { fg = c.vscBlue, bg = "NONE" },
+    texBeginEnd = { fg = c.vscYellow, bg = "NONE" },
+    texBeginEndName = { fg = c.vscLightBlue, bg = "NONE" },
+    texOption = { fg = c.vscLightBlue, bg = "NONE" },
+    texBeginEndModifier = { fg = c.vscLightBlue, bg = "NONE" },
+    texDocType = { fg = c.vscPink, bg = "NONE" },
+    texDocTypeArgs = { fg = c.vscLightBlue, bg = "NONE" },
+
+    -- Git
+    gitcommitHeader = { fg = c.vscGray, bg = "NONE" },
+    gitcommitOnBranch = { fg = c.vscGray, bg = "NONE" },
+    gitcommitBranch = { fg = c.vscPink, bg = "NONE" },
+    gitcommitComment = { fg = c.vscGray, bg = "NONE" },
+    gitcommitSelectedType = { fg = c.vscGreen, bg = "NONE" },
+    gitcommitSelectedFile = { fg = c.vscGreen, bg = "NONE" },
+    gitcommitDiscardedType = { fg = c.vscRed, bg = "NONE" },
+    gitcommitDiscardedFile = { fg = c.vscRed, bg = "NONE" },
+    gitcommitOverflow = { fg = c.vscRed, bg = "NONE" },
+    gitcommitSummary = { fg = c.vscPink, bg = "NONE" },
+    gitcommitBlank = { fg = c.vscPink, bg = "NONE" },
+
+    -- Lua
+    luaFuncCall = { fg = c.vscYellow, bg = "NONE" },
+    luaFuncArgName = { fg = c.vscLightBlue, bg = "NONE" },
+    luaFuncKeyword = { fg = c.vscPink, bg = "NONE" },
+    luaLocal = { fg = c.vscPink, bg = "NONE" },
+    luaBuiltIn = { fg = c.vscBlue, bg = "NONE" },
+
+    -- SH
+    shDeref = { fg = c.vscLightBlue, bg = "NONE" },
+    shVariable = { fg = c.vscLightBlue, bg = "NONE" },
+
+    -- SQL
+    sqlKeyword = { fg = c.vscPink, bg = "NONE" },
+    sqlFunction = { fg = c.vscYellowOrange, bg = "NONE" },
+    sqlOperator = { fg = c.vscPink, bg = "NONE" },
+
+    -- YAML
+    yamlKey = { fg = c.vscBlue, bg = "NONE" },
+    yamlConstant = { fg = c.vscBlue, bg = "NONE" },
+}
+set_highlights(languages)
