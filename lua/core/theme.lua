@@ -842,6 +842,8 @@ end
 vim.o.termguicolors = true
 vim.g.colors_name = "dark_plus"
 
+-- we will keep these functions for now for separation of interests, but they
+-- could easily be removed
 theme.set_highlights()
 theme.link_highlights()
 
