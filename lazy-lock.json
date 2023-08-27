@@ -3,6 +3,7 @@
   "lazy.nvim": { "branch": "main", "commit": "dac844ed617dda4f9ec85eb88e9629ad2add5e05" },
   "lualine.nvim": { "branch": "master", "commit": "45e27ca739c7be6c49e5496d14fcf45a303c3a63" },
   "lush.nvim": { "branch": "main", "commit": "a8f0f7b9f837887f13a61d67b40ae26188fe4d62" },
+  "mini.completion": { "branch": "main", "commit": "bae2f44ef05dbc50c5d0dd2bd5d325c5055dfd33" },
   "no-neck-pain.nvim": { "branch": "main", "commit": "fb27d3bff0834d9178250b439d46bfa04b4e1ae2" },
   "nvim-autopairs": { "branch": "master", "commit": "ae5b41ce880a6d850055e262d6dfebd362bb276e" },
   "nvim-lspconfig": { "branch": "master", "commit": "0d29cad8de3b2c654315203fc1fe12fde722a18a" },
