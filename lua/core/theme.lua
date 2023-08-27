@@ -91,6 +91,12 @@ local colors = {
 local hl = vim.api.nvim_set_hl
 local theme = {}
 
+local function themeHelper(highlights)
+    for name, val in pairs(highlights) do
+        vim.api.nvim_set_hl(0, name, val)
+    end
+end
+
 -- this is where we set the highlight groups for neovim and it's installed plugins
 -- nb a _lot_ of stuff was deleted from here. original ref is at
 -- https://github.com/Mofiqul/vscode.nvim/blob/main/lua/vscode/theme.lua
