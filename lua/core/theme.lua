@@ -845,5 +845,5 @@ vim.g.colors_name = "dark_plus"
 theme.set_highlights()
 theme.link_highlights()
 
--- hacky way to get the config across to lualine - can go when the config goes
+-- hacky way to get the config across to lualine
 return config
