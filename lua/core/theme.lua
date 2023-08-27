@@ -3,166 +3,84 @@
 -- By http://github.com/mofiqul
 -- shamelessly pillaged from https://github.com/Mofiqul/vscode.nvim/tree/main
 
--- tidy up how we handle the strings for dark and light
-local DARK = "dark"
-
-vim.o.background = DARK
-local isDark = vim.o.background == DARK
-
 -- >>> START OF COLORS FILE
--- colors used to set highlights inside theme.set_highlights function
--- this is no longer set by a function, we simply have an object that is set depending on
--- the value of vim.o.background (default dark)
-local colors = {}
+-- we're only keeping the dark scheme
 
--- colors that vary by theme
-if isDark then
-    colors = {
-        vscNone = "NONE",
-        vscFront = "#D4D4D4",
-        vscBack = "#1E1E1E",
+local colors = {
+    vscNone = "NONE",
+    vscFront = "#D4D4D4",
+    vscBack = "#1E1E1E",
 
-        vscTabCurrent = "#1E1E1E",
-        vscTabOther = "#2D2D2D",
-        vscTabOutside = "#252526",
+    vscTabCurrent = "#1E1E1E",
+    vscTabOther = "#2D2D2D",
+    vscTabOutside = "#252526",
 
-        vscLeftDark = "#252526",
-        vscLeftMid = "#373737",
-        vscLeftLight = "#636369",
+    vscLeftDark = "#252526",
+    vscLeftMid = "#373737",
+    vscLeftLight = "#636369",
 
-        vscPopupFront = "#BBBBBB",
-        vscPopupBack = "#272727",
-        vscPopupHighlightBlue = "#004b72",
-        vscPopupHighlightGray = "#343B41",
+    vscPopupFront = "#BBBBBB",
+    vscPopupBack = "#272727",
+    vscPopupHighlightBlue = "#004b72",
+    vscPopupHighlightGray = "#343B41",
 
-        vscSplitLight = "#898989",
-        vscSplitDark = "#444444",
-        vscSplitThumb = "#424242",
+    vscSplitLight = "#898989",
+    vscSplitDark = "#444444",
+    vscSplitThumb = "#424242",
 
-        vscCursorDarkDark = "#222222",
-        vscCursorDark = "#51504F",
-        vscCursorLight = "#AEAFAD",
-        vscSelection = "#264F78",
-        vscLineNumber = "#5A5A5A",
+    vscCursorDarkDark = "#222222",
+    vscCursorDark = "#51504F",
+    vscCursorLight = "#AEAFAD",
+    vscSelection = "#264F78",
+    vscLineNumber = "#5A5A5A",
 
-        vscDiffRedDark = "#4B1818",
-        vscDiffRedLight = "#6F1313",
-        vscDiffRedLightLight = "#FB0101",
-        vscDiffGreenDark = "#373D29",
-        vscDiffGreenLight = "#4B5632",
-        vscSearchCurrent = "#515c6a",
-        vscSearch = "#613315",
+    vscDiffRedDark = "#4B1818",
+    vscDiffRedLight = "#6F1313",
+    vscDiffRedLightLight = "#FB0101",
+    vscDiffGreenDark = "#373D29",
+    vscDiffGreenLight = "#4B5632",
+    vscSearchCurrent = "#515c6a",
+    vscSearch = "#613315",
 
-        vscGitAdded = "#81b88b",
-        vscGitModified = "#e2c08d",
-        vscGitDeleted = "#c74e39",
-        vscGitRenamed = "#73c991",
-        vscGitUntracked = "#73c991",
-        vscGitIgnored = "#8c8c8c",
-        vscGitStageModified = "#e2c08d",
-        vscGitStageDeleted = "#c74e39",
-        vscGitConflicting = "#e4676b",
-        vscGitSubmodule = "#8db9e2",
+    vscGitAdded = "#81b88b",
+    vscGitModified = "#e2c08d",
+    vscGitDeleted = "#c74e39",
+    vscGitRenamed = "#73c991",
+    vscGitUntracked = "#73c991",
+    vscGitIgnored = "#8c8c8c",
+    vscGitStageModified = "#e2c08d",
+    vscGitStageDeleted = "#c74e39",
+    vscGitConflicting = "#e4676b",
+    vscGitSubmodule = "#8db9e2",
 
-        vscContext = "#404040",
-        vscContextCurrent = "#707070",
+    vscContext = "#404040",
+    vscContextCurrent = "#707070",
 
-        vscFoldBackground = "#202d39",
+    vscFoldBackground = "#202d39",
 
-        -- Syntax colors
-        vscGray = "#808080",
-        vscViolet = "#646695",
-        vscBlue = "#569CD6",
-        vscAccentBlue = "#4FC1FE",
-        vscDarkBlue = "#223E55",
-        vscMediumBlue = "#18a2fe",
-        vscLightBlue = "#9CDCFE",
-        vscGreen = "#6A9955",
-        vscBlueGreen = "#4EC9B0",
-        vscLightGreen = "#B5CEA8",
-        vscRed = "#F44747",
-        vscOrange = "#CE9178",
-        vscLightRed = "#D16969",
-        vscYellowOrange = "#D7BA7D",
-        vscYellow = "#DCDCAA",
-        vscDarkYellow = "#FFD602",
-        vscPink = "#C586C0",
-    }
-else
-    colors = {
-        vscNone = "NONE",
-        vscFront = "#343434",
-        vscBack = "#FFFFFF",
-
-        vscTabCurrent = "#FFFFFF",
-        vscTabOther = "#CECECE",
-        vscTabOutside = "#E8E8E8",
-
-        vscLeftDark = "#F3F3F3",
-        vscLeftMid = "#E5E5E5",
-        vscLeftLight = "#F3F3F3",
-
-        vscPopupFront = "#000000",
-        vscPopupBack = "#F3F3F3",
-        vscPopupHighlightBlue = "#0064c1",
-        vscPopupHighlightGray = "#767676",
-
-        vscSplitLight = "#EEEEEE",
-        vscSplitDark = "#DDDDDD",
-        vscSplitThumb = "#DFDFDF",
-
-        vscCursorDarkDark = "#E5EBF1",
-        vscCursorDark = "#6F6F6F",
-        vscCursorLight = "#767676",
-        vscSelection = "#ADD6FF",
-        vscLineNumber = "#098658",
-
-        vscDiffRedDark = "#FFCCCC",
-        vscDiffRedLight = "#FFA3A3",
-        vscDiffRedLightLight = "#FFCCCC",
-        vscDiffGreenDark = "#DBE6C2",
-        vscDiffGreenLight = "#EBF1DD",
-        vscSearchCurrent = "#A8AC94",
-        vscSearch = "#F8C9AB",
-
-        vscGitAdded = "#587c0c",
-        vscGitModified = "#895503",
-        vscGitDeleted = "#ad0707",
-        vscGitRenamed = "#007100",
-        vscGitUntracked = "#007100",
-        vscGitIgnored = "#8e8e90",
-        vscGitStageModified = "#895503",
-        vscGitStageDeleted = "#ad0707",
-        vscGitConflicting = "#ad0707",
-        vscGitSubmodule = "#1258a7",
-
-        vscContext = "#D2D2D2",
-        vscContextCurrent = "#929292",
-
-        vscFoldBackground = "#e6f3ff",
-
-        -- Syntax colors
-        vscGray = "#000000",
-        vscViolet = "#000080",
-        vscBlue = "#0000FF",
-        vscDarkBlue = "#007ACC",
-        vscLightBlue = "#0451A5",
-        vscGreen = "#008000",
-        vscBlueGreen = "#16825D",
-        vscLightGreen = "#098658",
-        vscRed = "#FF0000",
-        vscOrange = "#C72E0F",
-        vscLightRed = "#A31515",
-        vscYellowOrange = "#800000",
-        vscYellow = "#795E26",
-        vscPink = "#AF00DB",
-    }
-end
-
--- colors that do not vary by theme
-colors.vscUiBlue = "#084671"
-colors.vscUiOrange = "#f28b25"
-colors.vscPopupHighlightLightBlue = "#d7eafe"
+    -- Syntax colors
+    vscGray = "#808080",
+    vscViolet = "#646695",
+    vscBlue = "#569CD6",
+    vscAccentBlue = "#4FC1FE",
+    vscDarkBlue = "#223E55",
+    vscMediumBlue = "#18a2fe",
+    vscLightBlue = "#9CDCFE",
+    vscGreen = "#6A9955",
+    vscBlueGreen = "#4EC9B0",
+    vscLightGreen = "#B5CEA8",
+    vscRed = "#F44747",
+    vscOrange = "#CE9178",
+    vscLightRed = "#D16969",
+    vscYellowOrange = "#D7BA7D",
+    vscYellow = "#DCDCAA",
+    vscDarkYellow = "#FFD602",
+    vscPink = "#C586C0",
+    -- colours below were constant between light/dark themes
+    vscUiBlue = "#084671",
+    vscUiOrange = "#f28b25",
+    vscPopupHighlightLightBlue = "#d7eafe",
+}
 -- >>> END OF COLORS FILE
 
 -- >>> START OF NORMAL SETUP
@@ -172,13 +90,13 @@ local config = {} -- nb this is required in the lualine theme file
 
 -- initialize the config to the defaults
 config.opts = {
-    transparent = false,
+    transparent = false, -- nb with removed overrides, need to figure out setting vscBack to none
     italic_comments = false,
     color_overrides = {},
     group_overrides = {},
     disable_nvimtree_bg = true,
 }
-
+-- TODO move this logic up to the top
 -- setting transparent to true removes the default background
 if config.opts.transparent then
     config.opts.color_overrides.vscBack = "NONE"
@@ -217,9 +135,9 @@ theme.set_highlights = function()
     hl(0, "MatchParen", { fg = c.vscNone, bg = c.vscCursorDark })
     hl(0, "ModeMsg", { fg = c.vscFront, bg = c.vscLeftDark })
     hl(0, "MoreMsg", { fg = c.vscFront, bg = c.vscLeftDark })
-    hl(0, "NonText", { fg = (isDark and c.vscLineNumber or c.vscTabOther), bg = c.vscNone })
+    hl(0, "NonText", { fg = c.vscLineNumber, bg = c.vscNone })
     hl(0, "Pmenu", { fg = c.vscPopupFront, bg = c.vscPopupBack })
-    hl(0, "PmenuSel", { fg = isDark and c.vscPopupFront or c.vscBack, bg = c.vscPopupHighlightBlue })
+    hl(0, "PmenuSel", { fg = c.vscPopupFront, bg = c.vscPopupHighlightBlue })
     hl(0, "PmenuSbar", { fg = "NONE", bg = c.vscPopupHighlightGray })
     hl(0, "PmenuThumb", { fg = "NONE", bg = c.vscPopupFront })
     hl(0, "Question", { fg = c.vscBlue, bg = c.vscBack })
@@ -274,7 +192,7 @@ theme.set_highlights = function()
     hl(0, "SpellCap", { fg = c.vscRed, bg = c.vscBack, undercurl = true, sp = c.vscRed })
     hl(0, "SpellRare", { fg = c.vscRed, bg = c.vscBack, undercurl = true, sp = c.vscRed })
     hl(0, "SpellLocal", { fg = c.vscRed, bg = c.vscBack, undercurl = true, sp = c.vscRed })
-    hl(0, "Whitespace", { fg = isDark and c.vscLineNumber or c.vscTabOther })
+    hl(0, "Whitespace", { fg = c.vscLineNumber })
 
     -- Treesitter
     hl(0, "@error", { fg = c.vscRed, bg = "NONE" })
@@ -324,16 +242,16 @@ theme.set_highlights = function()
     hl(0, "@tag", { fg = c.vscBlue, bg = "NONE" })
     hl(0, "@tag.delimiter", { fg = c.vscGray, bg = "NONE" })
     hl(0, "@tag.attribute", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "@text.title", { fg = isDark and c.vscBlue or c.vscYellowOrange, bold = true })
+    hl(0, "@text.title", { fg = c.vscBlue, bold = true })
     hl(0, "@text.literal", { fg = c.vscFront, bg = "NONE" })
     hl(0, "@text.literal.markdown", { fg = c.vscOrange, bg = "NONE" })
     hl(0, "@text.literal.markdown_inline", { fg = c.vscOrange, bg = "NONE" })
     hl(0, "@text.emphasis", { fg = c.vscFront, bg = "NONE", italic = true })
-    hl(0, "@text.strong", { fg = isDark and c.vscBlue or c.vscViolet, bold = true })
+    hl(0, "@text.strong", { fg = c.vscBlue, bold = true })
     hl(0, "@text.uri", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "@textReference", { fg = isDark and c.vscOrange or c.vscYellowOrange })
+    hl(0, "@textReference", { fg = c.vscOrange })
     hl(0, "@punctuation.delimiter", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "@stringEscape", { fg = isDark and c.vscOrange or c.vscYellowOrange, bold = true })
+    hl(0, "@stringEscape", { fg = c.vscOrange, bold = true })
     hl(0, "@text.note", { fg = c.vscBlueGreen, bg = "NONE", bold = true })
     hl(0, "@text.warning", { fg = c.vscYellowOrange, bg = "NONE", bold = true })
     hl(0, "@text.danger", { fg = c.vscRed, bg = "NONE", bold = true })
@@ -353,16 +271,16 @@ theme.set_highlights = function()
     hl(0, "@decorator", { link = "Identifier" })
 
     -- Markdown
-    hl(0, "markdownBold", { fg = isDark and c.vscBlue or c.vscYellowOrange, bold = true })
+    hl(0, "markdownBold", { fg = c.vscBlue, bold = true })
     hl(0, "markdownCode", { fg = c.vscOrange, bg = "NONE" })
-    hl(0, "markdownRule", { fg = isDark and c.vscBlue or c.vscYellowOrange, bold = true })
+    hl(0, "markdownRule", { fg = c.vscBlue, bold = true })
     hl(0, "markdownCodeDelimiter", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "markdownHeadingDelimiter", { fg = isDark and c.vscBlue or c.vscYellowOrange, bg = "NONE" })
-    hl(0, "markdownFootnote", { fg = isDark and c.vscOrange or c.vscYellowOrange, bg = "NONE" })
-    hl(0, "markdownFootnoteDefinition", { fg = isDark and c.vscOrange or c.vscYellowOrange })
+    hl(0, "markdownHeadingDelimiter", { fg = c.vscBlue, bg = "NONE" })
+    hl(0, "markdownFootnote", { fg = c.vscOrange, bg = "NONE" })
+    hl(0, "markdownFootnoteDefinition", { fg = c.vscOrange })
     hl(0, "markdownUrl", { fg = c.vscFront, bg = "NONE", underline = true })
-    hl(0, "markdownLinkText", { fg = isDark and c.vscOrange or c.vscYellowOrange })
-    hl(0, "markdownEscape", { fg = isDark and c.vscOrange or c.vscYellowOrange })
+    hl(0, "markdownLinkText", { fg = c.vscOrange })
+    hl(0, "markdownEscape", { fg = c.vscOrange })
 
     -- Asciidoc
     hl(0, "asciidocAttributeEntry", { fg = c.vscYellowOrange })
@@ -631,9 +549,9 @@ theme.set_highlights = function()
     hl(0, "DiagnosticUnderlineWarn", { fg = "NONE", bg = "NONE", undercurl = true, sp = c.vscYellow })
     hl(0, "DiagnosticUnderlineInfo", { fg = "NONE", bg = "NONE", undercurl = true, sp = c.vscBlue })
     hl(0, "DiagnosticUnderlineHint", { fg = "NONE", bg = "NONE", undercurl = true, sp = c.vscBlue })
-    hl(0, "LspReferenceText", { fg = "NONE", bg = isDark and c.vscPopupHighlightGray or c.vscPopupHighlightLightBlue })
-    hl(0, "LspReferenceRead", { fg = "NONE", bg = isDark and c.vscPopupHighlightGray or c.vscPopupHighlightLightBlue })
-    hl(0, "LspReferenceWrite", { fg = "NONE", bg = isDark and c.vscPopupHighlightGray or c.vscPopupHighlightLightBlue })
+    hl(0, "LspReferenceText", { fg = "NONE", bg = c.vscPopupHighlightGray })
+    hl(0, "LspReferenceRead", { fg = "NONE", bg = c.vscPopupHighlightGray })
+    hl(0, "LspReferenceWrite", { fg = "NONE", bg = c.vscPopupHighlightGray })
 
     -- Nvim compe -- leaving this for reference to read across to
     -- either mini completion or my own autocomplete
@@ -649,50 +567,27 @@ theme.set_highlights = function()
     hl(0, "CmpItemMenu", { fg = c.vscPopupFront, bg = "NONE" })
     hl(0, "CmpItemAbbr", { fg = c.vscFront, bg = "NONE" })
     hl(0, "CmpItemAbbrDeprecated", { fg = c.vscCursorDark, bg = c.vscPopupBack, strikethrough = true })
-    hl(0, "CmpItemAbbrMatch", { fg = isDark and c.vscMediumBlue or c.vscDarkBlue, bg = "NONE", bold = true })
-    hl(0, "CmpItemAbbrMatchFuzzy", { fg = isDark and c.vscMediumBlue or c.vscDarkBlue, bg = "NONE", bold = true })
+    hl(0, "CmpItemAbbrMatch", { fg = c.vscMediumBlue, bold = true })
+    hl(0, "CmpItemAbbrMatchFuzzy", { fg = c.vscMediumBlue, bold = true })
 
-    if isDark then
-        -- find out if this is an internal, I think it probably is, or perhaps
-        -- it is used by nvim lsp config? who knows
-        hl(0, "LspFloatWinNormal", { fg = c.vscFront, bg = "NONE" })
-        hl(0, "LspFloatWinBorder", { fg = c.vscLineNumber, bg = "NONE" })
+    -- find out if this is an internal, I think it probably is, or perhaps
+    -- it is used by nvim lsp config? who knows
+    hl(0, "LspFloatWinNormal", { fg = c.vscFront, bg = "NONE" })
+    hl(0, "LspFloatWinBorder", { fg = c.vscLineNumber, bg = "NONE" })
 
-        hl(0, "TelescopePromptBorder", { fg = c.vscLineNumber, bg = "NONE" })
-        hl(0, "TelescopeResultsBorder", { fg = c.vscLineNumber, bg = "NONE" })
-        hl(0, "TelescopePreviewBorder", { fg = c.vscLineNumber, bg = "NONE" })
-        hl(0, "TelescopeNormal", { fg = c.vscFront, bg = "NONE" })
-        hl(0, "TelescopeSelection", { fg = c.vscFront, bg = c.vscPopupHighlightBlue })
-        hl(0, "TelescopeMultiSelection", { fg = c.vscFront, bg = c.vscPopupHighlightBlue })
-        hl(0, "TelescopeMatching", { fg = c.vscMediumBlue, bg = "NONE", bold = true })
-        hl(0, "TelescopePromptPrefix", { fg = c.vscFront, bg = "NONE" })
+    hl(0, "TelescopePromptBorder", { fg = c.vscLineNumber, bg = "NONE" })
+    hl(0, "TelescopeResultsBorder", { fg = c.vscLineNumber, bg = "NONE" })
+    hl(0, "TelescopePreviewBorder", { fg = c.vscLineNumber, bg = "NONE" })
+    hl(0, "TelescopeNormal", { fg = c.vscFront, bg = "NONE" })
+    hl(0, "TelescopeSelection", { fg = c.vscFront, bg = c.vscPopupHighlightBlue })
+    hl(0, "TelescopeMultiSelection", { fg = c.vscFront, bg = c.vscPopupHighlightBlue })
+    hl(0, "TelescopeMatching", { fg = c.vscMediumBlue, bg = "NONE", bold = true })
+    hl(0, "TelescopePromptPrefix", { fg = c.vscFront, bg = "NONE" })
 
-        -- symbols-outline
-        -- white fg and lualine blue bg
-        hl(0, "FocusedSymbol", { fg = "#ffffff", bg = c.vscUiBlue })
-        hl(0, "SymbolsOutlineConnector", { fg = c.vscLineNumber, bg = "NONE" })
-    else
-        hl(0, "LspFloatWinNormal", { fg = c.vscFront, bg = "NONE" })
-        hl(0, "LspFloatWinBorder", { fg = c.vscTabOther, bg = "NONE" })
-
-        hl(0, "TelescopePromptBorder", { fg = c.vscTabOther, bg = "NONE" })
-        hl(0, "TelescopeResultsBorder", { fg = c.vscTabOther, bg = "NONE" })
-        hl(0, "TelescopePreviewBorder", { fg = c.vscTabOther, bg = "NONE" })
-        hl(0, "TelescopeNormal", { fg = c.vscFront, bg = "NONE" })
-        hl(0, "TelescopeSelection", { fg = "#FFFFFF", bg = c.vscPopupHighlightBlue })
-        hl(0, "TelescopeMultiSelection", { fg = c.vscBack, bg = c.vscPopupHighlightBlue })
-        hl(0, "TelescopeMatching", { fg = "orange", bg = "NONE", bold = true, nil })
-        hl(0, "TelescopePromptPrefix", { fg = c.vscFront, bg = "NONE" })
-
-        -- Pmenu - definitely built in
-        hl(0, "Pmenu", { fg = "NONE", bg = c.vscPopupBack })
-        hl(0, "PmenuSel", { fg = "#FFFFFF", bg = "#285EBA" })
-
-        -- symbols-outline
-        -- white fg and lualine blue bg
-        hl(0, "FocusedSymbol", { fg = c.vscBack, bg = "#AF00DB" })
-        hl(0, "SymbolsOutlineConnector", { fg = c.vscTabOther, bg = "NONE" })
-    end
+    -- symbols-outline
+    -- white fg and lualine blue bg
+    hl(0, "FocusedSymbol", { fg = "#ffffff", bg = c.vscUiBlue })
+    hl(0, "SymbolsOutlineConnector", { fg = c.vscLineNumber, bg = "NONE" })
 end
 
 theme.link_highlights = function()
