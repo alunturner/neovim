@@ -3,8 +3,12 @@
 -- By http://github.com/mofiqul
 -- shamelessly pillaged from https://github.com/Mofiqul/vscode.nvim/tree/main
 
--- can set vim.o.background = "light" here for the light theme if desired,
--- but background default is dark
+-- tidy up how we handle the strings for dark and light
+local DARK = "dark"
+local LIGHT = "light"
+
+vim.o.background = DARK
+local isDark = vim.o.background == LIGHT
 
 -- hacky way to get the config into lualine - this can go when config goes
 local M = {}
@@ -15,7 +19,7 @@ local M = {}
 local colors = {}
 
 -- colors that vary by theme
-if vim.o.background == "dark" then
+if isDark then
     colors = {
         vscNone = "NONE",
         vscFront = "#D4D4D4",
@@ -185,7 +189,7 @@ end
 local hl = vim.api.nvim_set_hl
 local theme = {}
 
--- TODO next step is remove the unneeded colour settings
+-- this is where we set the highlight groups for neovim and it's installed plugins
 theme.set_highlights = function(opts)
     local c = colors
     local isDark = vim.o.background == "dark"
