@@ -5,7 +5,6 @@
 
 -- tidy up how we handle the strings for dark and light
 local DARK = "dark"
-local LIGHT = "light"
 
 vim.o.background = DARK
 local isDark = vim.o.background == DARK
@@ -837,29 +836,18 @@ theme.link_highlight = function()
 end
 
 -- Load colorscheme with a given or default style
----@param style? string
-vscode.load = function(style)
-    vim.cmd("hi clear")
-    if vim.fn.exists("syntax_on") then
-        vim.cmd("syntax reset")
-    end
-
-    vim.o.termguicolors = true
-    vim.g.colors_name = "vscode"
-
-    vim.o.background = style or config.opts.style or vim.o.background
-
-    theme.set_highlights(config.opts)
-    theme.link_highlight()
-
-    if config.opts.group_overrides then
-        for group, val in pairs(config.opts["group_overrides"]) do
-            vim.api.nvim_set_hl(0, group, val)
-        end
-    end
+-- this block replaces what used to be the vscode.load function definition
+-- followed by immediately calling the function
+vim.cmd("hi clear")
+if vim.fn.exists("syntax_on") then
+    vim.cmd("syntax reset")
 end
 
-vscode.load()
+vim.o.termguicolors = true
+vim.g.colors_name = "vscode"
+
+theme.set_highlights(config.opts)
+theme.link_highlight()
 
 -- hacky way to get the config across to lualine - can go when the config goes
 M.config = config
