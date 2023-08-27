@@ -192,6 +192,7 @@ theme.set_highlights = function()
     local c = colors
     local opts = config.opts
 
+    -- Neovim
     hl(0, "Normal", { fg = c.vscFront, bg = c.vscBack })
     hl(0, "ColorColumn", { fg = "NONE", bg = c.vscCursorDarkDark })
     hl(0, "Cursor", { fg = c.vscCursorDark, bg = c.vscCursorLight })
@@ -321,7 +322,6 @@ theme.set_highlights = function()
     hl(0, "@tag", { fg = c.vscBlue, bg = "NONE" })
     hl(0, "@tag.delimiter", { fg = c.vscGray, bg = "NONE" })
     hl(0, "@tag.attribute", { fg = c.vscLightBlue, bg = "NONE" })
-
     hl(0, "@text.title", { fg = isDark and c.vscBlue or c.vscYellowOrange, bold = true })
     hl(0, "@text.literal", { fg = c.vscFront, bg = "NONE" })
     hl(0, "@text.literal.markdown", { fg = c.vscOrange, bg = "NONE" })
@@ -332,11 +332,9 @@ theme.set_highlights = function()
     hl(0, "@textReference", { fg = isDark and c.vscOrange or c.vscYellowOrange })
     hl(0, "@punctuation.delimiter", { fg = c.vscFront, bg = "NONE" })
     hl(0, "@stringEscape", { fg = isDark and c.vscOrange or c.vscYellowOrange, bold = true })
-
     hl(0, "@text.note", { fg = c.vscBlueGreen, bg = "NONE", bold = true })
     hl(0, "@text.warning", { fg = c.vscYellowOrange, bg = "NONE", bold = true })
     hl(0, "@text.danger", { fg = c.vscRed, bg = "NONE", bold = true })
-
     hl(0, "@text.diff.add", { link = "DiffAdd" })
     hl(0, "@text.diff.delete", { link = "DiffDelete" })
 
