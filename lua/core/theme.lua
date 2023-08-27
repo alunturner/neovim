@@ -1,13 +1,10 @@
--- vscode.nvim color scheme
--- Lua port of https://github.com/tomasiser/vim-code-dark
--- By http://github.com/mofiqul
+-- PAX scheme, influenced heavily by the vs code dark plus theme,
 -- shamelessly pillaged from https://github.com/Mofiqul/vscode.nvim/tree/main
 
 -- >>> CONFIG
 local use_italic_comments = true
 
 -- >>> START OF COLORS FILE
--- we're only keeping the dark scheme
 local colors = {
     vscNone = "NONE",
     vscFront = "#D4D4D4",
