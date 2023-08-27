@@ -8,7 +8,7 @@ Plugin.config = function()
         -- search MiniCompletionSetup for help
         delay = { completion = 1000, info = 1000, signature = 1000 },
         window = {
-            info = { height = 7, width = 80, border = "rounded" },
+            info = { height = 7, width = 80, border = "double" },
             signature = { height = 7, width = 80, border = "none" },
         },
         lsp_completion = {
