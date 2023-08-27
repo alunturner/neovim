@@ -3,6 +3,8 @@
 -- can set vim.o.background = "light" here for the light theme if desired,
 -- but background default is dark
 
+-- hacky way to get the config into lualine - this can go when config goes
+local M = {}
 local colors = {}
 colors.get_colors = function()
     local mycolors = {} ---@type table<string,string>
@@ -162,7 +164,7 @@ end
 -- Lua port of https://github.com/tomasiser/vim-code-dark
 -- By http://github.com/mofiqul
 local vscode = {}
-local config = {}
+local config = {} -- nb this is required in the lualine theme file
 
 local defaults = {
     transparent = false,
@@ -870,3 +872,7 @@ vscode.load = function(style)
 end
 
 vscode.load()
+
+-- hacky way to get the config across to lualine - can go when the config goes
+M.config = config
+return M
