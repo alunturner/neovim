@@ -45,6 +45,9 @@ local options = {
 
     -- remove the command line beneath the lualine
     cmdheight = 0,
+
+    -- try and add a gutter, works as it adds space to lhs
+    -- foldcolumn = "4",
 }
 
 -- set options from table
