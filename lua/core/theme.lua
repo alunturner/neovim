@@ -91,7 +91,7 @@ local colors = {
 local hl = vim.api.nvim_set_hl
 local theme = {}
 
-local function themeHelper(highlights)
+local function set_highlights(highlights)
     for name, val in pairs(highlights) do
         vim.api.nvim_set_hl(0, name, val)
     end
@@ -104,86 +104,89 @@ theme.set_highlights = function()
     local c = colors
     -- TODO create a helper function to manage all of this repetition
     -- Neovim
-    hl(0, "Normal", { fg = c.vscFront, bg = c.vscBack })
-    hl(0, "ColorColumn", { fg = "NONE", bg = c.vscCursorDarkDark })
-    hl(0, "Cursor", { fg = c.vscCursorDark, bg = c.vscCursorLight })
-    hl(0, "CursorLine", { bg = c.vscCursorDarkDark })
-    hl(0, "CursorColumn", { fg = "NONE", bg = c.vscCursorDarkDark })
-    hl(0, "Directory", { fg = c.vscBlue, bg = c.vscBack })
-    hl(0, "DiffAdd", { fg = "NONE", bg = c.vscDiffGreenLight })
-    hl(0, "DiffChange", { fg = "NONE", bg = c.vscDiffRedDark })
-    hl(0, "DiffDelete", { fg = "NONE", bg = c.vscDiffRedLight })
-    hl(0, "DiffText", { fg = "NONE", bg = c.vscDiffRedLight })
-    hl(0, "EndOfBuffer", { fg = c.vscBack, bg = "NONE" })
-    hl(0, "ErrorMsg", { fg = c.vscRed, bg = c.vscBack })
-    hl(0, "VertSplit", { fg = c.vscSplitDark, bg = c.vscBack })
-    hl(0, "Folded", { fg = "NONE", bg = c.vscFoldBackground })
-    hl(0, "FoldColumn", { fg = c.vscLineNumber, bg = c.vscBack })
-    hl(0, "SignColumn", { fg = "NONE", bg = c.vscBack })
-    hl(0, "IncSearch", { fg = c.vscNone, bg = c.vscSearchCurrent })
-    hl(0, "LineNr", { fg = c.vscLineNumber, bg = c.vscBack })
-    hl(0, "CursorLineNr", { fg = c.vscPopupFront, bg = c.vscBack })
-    hl(0, "MatchParen", { fg = c.vscNone, bg = c.vscCursorDark })
-    hl(0, "ModeMsg", { fg = c.vscFront, bg = c.vscLeftDark })
-    hl(0, "MoreMsg", { fg = c.vscFront, bg = c.vscLeftDark })
-    hl(0, "NonText", { fg = c.vscLineNumber, bg = c.vscNone })
-    hl(0, "Pmenu", { fg = c.vscPopupFront, bg = c.vscPopupBack })
-    hl(0, "PmenuSel", { fg = c.vscPopupFront, bg = c.vscPopupHighlightBlue })
-    hl(0, "PmenuSbar", { fg = "NONE", bg = c.vscPopupHighlightGray })
-    hl(0, "PmenuThumb", { fg = "NONE", bg = c.vscPopupFront })
-    hl(0, "Question", { fg = c.vscBlue, bg = c.vscBack })
-    hl(0, "Search", { fg = c.vscNone, bg = c.vscSearch })
-    hl(0, "SpecialKey", { fg = c.vscBlue, bg = c.vscNone })
-    hl(0, "StatusLine", { fg = c.vscFront, bg = c.vscLeftMid })
-    hl(0, "StatusLineNC", { fg = c.vscFront, bg = c.vscLeftDark })
-    hl(0, "TabLine", { fg = c.vscFront, bg = c.vscTabOther })
-    hl(0, "TabLineFill", { fg = c.vscFront, bg = c.vscTabOutside })
-    hl(0, "TabLineSel", { fg = c.vscFront, bg = c.vscTabCurrent })
-    hl(0, "Title", { fg = c.vscNone, bg = c.vscNone, bold = true })
-    hl(0, "Visual", { fg = c.vscNone, bg = c.vscSelection })
-    hl(0, "VisualNOS", { fg = c.vscNone, bg = c.vscSelection })
-    hl(0, "WarningMsg", { fg = c.vscRed, bg = c.vscBack, bold = true })
-    hl(0, "WildMenu", { fg = c.vscNone, bg = c.vscSelection })
-    hl(0, "Comment", { fg = c.vscGreen, bg = "NONE", italic = use_italic_comments })
-    hl(0, "Constant", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "String", { fg = c.vscOrange, bg = "NONE" })
-    hl(0, "Character", { fg = c.vscOrange, bg = "NONE" })
-    hl(0, "Number", { fg = c.vscLightGreen, bg = "NONE" })
-    hl(0, "Boolean", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "Float", { fg = c.vscLightGreen, bg = "NONE" })
-    hl(0, "Identifier", { fg = c.vscLightBlue, bg = "NONE" })
-    hl(0, "Function", { fg = c.vscYellow, bg = "NONE" })
-    hl(0, "Statement", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "Conditional", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "Repeat", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "Label", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "Operator", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "Keyword", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "Exception", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "PreProc", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "Include", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "Define", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "Macro", { fg = c.vscPink, bg = "NONE" })
-    hl(0, "Type", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "StorageClass", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "Structure", { fg = c.vscBlueGreen, bg = "NONE" })
-    hl(0, "Typedef", { fg = c.vscBlue, bg = "NONE" })
-    hl(0, "Special", { fg = c.vscYellowOrange, bg = "NONE" })
-    hl(0, "SpecialChar", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "Tag", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "Delimiter", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "SpecialComment", { fg = c.vscGreen, bg = "NONE" })
-    hl(0, "Debug", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "Underlined", { fg = c.vscNone, bg = "NONE", underline = true })
-    hl(0, "Conceal", { fg = c.vscFront, bg = c.vscBack })
-    hl(0, "Ignore", { fg = c.vscFront, bg = "NONE" })
-    hl(0, "Error", { fg = c.vscRed, bg = c.vscBack, undercurl = true, sp = c.vscRed })
-    hl(0, "Todo", { fg = c.vscYellowOrange, bg = c.vscBack, bold = true })
-    hl(0, "SpellBad", { fg = c.vscRed, bg = c.vscBack, undercurl = true, sp = c.vscRed })
-    hl(0, "SpellCap", { fg = c.vscRed, bg = c.vscBack, undercurl = true, sp = c.vscRed })
-    hl(0, "SpellRare", { fg = c.vscRed, bg = c.vscBack, undercurl = true, sp = c.vscRed })
-    hl(0, "SpellLocal", { fg = c.vscRed, bg = c.vscBack, undercurl = true, sp = c.vscRed })
-    hl(0, "Whitespace", { fg = c.vscLineNumber })
+    local Neovim = {
+        Normal = { fg = c.vscFront, bg = c.vscBack },
+        ColorColumn = { fg = "NONE", bg = c.vscCursorDarkDark },
+        Cursor = { fg = c.vscCursorDark, bg = c.vscCursorLight },
+        CursorLine = { bg = c.vscCursorDarkDark },
+        CursorColumn = { fg = "NONE", bg = c.vscCursorDarkDark },
+        Directory = { fg = c.vscBlue, bg = c.vscBack },
+        DiffAdd = { fg = "NONE", bg = c.vscDiffGreenLight },
+        DiffChange = { fg = "NONE", bg = c.vscDiffRedDark },
+        DiffDelete = { fg = "NONE", bg = c.vscDiffRedLight },
+        DiffText = { fg = "NONE", bg = c.vscDiffRedLight },
+        EndOfBuffer = { fg = c.vscBack, bg = "NONE" },
+        ErrorMsg = { fg = c.vscRed, bg = c.vscBack },
+        VertSplit = { fg = c.vscSplitDark, bg = c.vscBack },
+        Folded = { fg = "NONE", bg = c.vscFoldBackground },
+        FoldColumn = { fg = c.vscLineNumber, bg = c.vscBack },
+        SignColumn = { fg = "NONE", bg = c.vscBack },
+        IncSearch = { fg = c.vscNone, bg = c.vscSearchCurrent },
+        LineNr = { fg = c.vscLineNumber, bg = c.vscBack },
+        CursorLineNr = { fg = c.vscPopupFront, bg = c.vscBack },
+        MatchParen = { fg = c.vscNone, bg = c.vscCursorDark },
+        ModeMsg = { fg = c.vscFront, bg = c.vscLeftDark },
+        MoreMsg = { fg = c.vscFront, bg = c.vscLeftDark },
+        NonText = { fg = c.vscLineNumber, bg = c.vscNone },
+        Pmenu = { fg = c.vscPopupFront, bg = c.vscPopupBack },
+        PmenuSel = { fg = c.vscPopupFront, bg = c.vscPopupHighlightBlue },
+        PmenuSbar = { fg = "NONE", bg = c.vscPopupHighlightGray },
+        PmenuThumb = { fg = "NONE", bg = c.vscPopupFront },
+        Question = { fg = c.vscBlue, bg = c.vscBack },
+        Search = { fg = c.vscNone, bg = c.vscSearch },
+        SpecialKey = { fg = c.vscBlue, bg = c.vscNone },
+        StatusLine = { fg = c.vscFront, bg = c.vscLeftMid },
+        StatusLineNC = { fg = c.vscFront, bg = c.vscLeftDark },
+        TabLine = { fg = c.vscFront, bg = c.vscTabOther },
+        TabLineFill = { fg = c.vscFront, bg = c.vscTabOutside },
+        TabLineSel = { fg = c.vscFront, bg = c.vscTabCurrent },
+        Title = { fg = c.vscNone, bg = c.vscNone, bold = true },
+        Visual = { fg = c.vscNone, bg = c.vscSelection },
+        VisualNOS = { fg = c.vscNone, bg = c.vscSelection },
+        WarningMsg = { fg = c.vscRed, bg = c.vscBack, bold = true },
+        WildMenu = { fg = c.vscNone, bg = c.vscSelection },
+        Comment = { fg = c.vscGreen, bg = "NONE", italic = use_italic_comments },
+        Constant = { fg = c.vscBlue, bg = "NONE" },
+        String = { fg = c.vscOrange, bg = "NONE" },
+        Character = { fg = c.vscOrange, bg = "NONE" },
+        Number = { fg = c.vscLightGreen, bg = "NONE" },
+        Boolean = { fg = c.vscBlue, bg = "NONE" },
+        Float = { fg = c.vscLightGreen, bg = "NONE" },
+        Identifier = { fg = c.vscLightBlue, bg = "NONE" },
+        Function = { fg = c.vscYellow, bg = "NONE" },
+        Statement = { fg = c.vscPink, bg = "NONE" },
+        Conditional = { fg = c.vscPink, bg = "NONE" },
+        Repeat = { fg = c.vscPink, bg = "NONE" },
+        Label = { fg = c.vscPink, bg = "NONE" },
+        Operator = { fg = c.vscFront, bg = "NONE" },
+        Keyword = { fg = c.vscPink, bg = "NONE" },
+        Exception = { fg = c.vscPink, bg = "NONE" },
+        PreProc = { fg = c.vscPink, bg = "NONE" },
+        Include = { fg = c.vscPink, bg = "NONE" },
+        Define = { fg = c.vscPink, bg = "NONE" },
+        Macro = { fg = c.vscPink, bg = "NONE" },
+        Type = { fg = c.vscBlue, bg = "NONE" },
+        StorageClass = { fg = c.vscBlue, bg = "NONE" },
+        Structure = { fg = c.vscBlueGreen, bg = "NONE" },
+        Typedef = { fg = c.vscBlue, bg = "NONE" },
+        Special = { fg = c.vscYellowOrange, bg = "NONE" },
+        SpecialChar = { fg = c.vscFront, bg = "NONE" },
+        Tag = { fg = c.vscFront, bg = "NONE" },
+        Delimiter = { fg = c.vscFront, bg = "NONE" },
+        SpecialComment = { fg = c.vscGreen, bg = "NONE" },
+        Debug = { fg = c.vscFront, bg = "NONE" },
+        Underlined = { fg = c.vscNone, bg = "NONE", underline = true },
+        Conceal = { fg = c.vscFront, bg = c.vscBack },
+        Ignore = { fg = c.vscFront, bg = "NONE" },
+        Error = { fg = c.vscRed, bg = c.vscBack, undercurl = true, sp = c.vscRed },
+        Todo = { fg = c.vscYellowOrange, bg = c.vscBack, bold = true },
+        SpellBad = { fg = c.vscRed, bg = c.vscBack, undercurl = true, sp = c.vscRed },
+        SpellCap = { fg = c.vscRed, bg = c.vscBack, undercurl = true, sp = c.vscRed },
+        SpellRare = { fg = c.vscRed, bg = c.vscBack, undercurl = true, sp = c.vscRed },
+        SpellLocal = { fg = c.vscRed, bg = c.vscBack, undercurl = true, sp = c.vscRed },
+        Whitespace = { fg = c.vscLineNumber },
+    }
+    set_highlights(Neovim)
 
     -- Treesitter
     hl(0, "@error", { fg = c.vscRed, bg = "NONE" })
