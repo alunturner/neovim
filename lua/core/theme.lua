@@ -193,7 +193,7 @@ local theme = {}
 theme.set_highlights = function()
     local c = colors
     local opts = config.opts
-
+    -- TODO create a helper function to manage all of this repetition
     -- Neovim
     hl(0, "Normal", { fg = c.vscFront, bg = c.vscBack })
     hl(0, "ColorColumn", { fg = "NONE", bg = c.vscCursorDarkDark })
