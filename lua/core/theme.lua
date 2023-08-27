@@ -9,9 +9,6 @@ local DARK = "dark"
 vim.o.background = DARK
 local isDark = vim.o.background == DARK
 
--- hacky way to get the config into lualine - this can go when config goes
-local M = {}
-
 -- colors used to set highlights inside theme.set_highlights function
 -- this is no longer set by a function, we simply have an object that is set depending on
 -- the value of vim.o.background (default dark)
@@ -849,5 +846,4 @@ theme.set_highlights()
 theme.link_highlights()
 
 -- hacky way to get the config across to lualine - can go when the config goes
-M.config = config
-return M
+return config

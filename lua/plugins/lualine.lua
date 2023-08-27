@@ -1,7 +1,7 @@
 -- theme taken from the below, see core.theme file for more details
 -- Copyright (c) 2020-2021 Mofiqul Islam
 -- MIT license, see LICENSE for more details.
-local config = require("core.theme").config
+local config = require("core.theme")
 local dark_plus = {}
 local colors = {}
 
