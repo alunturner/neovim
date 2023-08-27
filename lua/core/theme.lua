@@ -192,7 +192,6 @@ local theme = {}
 -- this is where we set the highlight groups for neovim and it's installed plugins
 theme.set_highlights = function(opts)
     local c = colors
-    local isDark = vim.o.background == "dark"
 
     hl(0, "Normal", { fg = c.vscFront, bg = c.vscBack })
     hl(0, "ColorColumn", { fg = "NONE", bg = c.vscCursorDarkDark })
