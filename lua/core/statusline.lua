@@ -123,24 +123,24 @@ end
 ---@return string String suitable for 'statusline'.
 MiniStatusline.combine_groups = function(groups)
     local parts = vim.tbl_map(function(s)
-    --stylua: ignore start
-    if type(s) == 'string' then return s end
-    if type(s) ~= 'table' then return '' end
+        --stylua: ignore start
+        if type(s) == 'string' then return s end
+        if type(s) ~= 'table' then return '' end
 
-    local string_arr = vim.tbl_filter(function(x) return type(x) == 'string' and x ~= '' end, s.strings or {})
-    local str = table.concat(string_arr, ' ')
+        local string_arr = vim.tbl_filter(function(x) return type(x) == 'string' and x ~= '' end, s.strings or {})
+        local str = table.concat(string_arr, ' ')
 
-    -- Use previous highlight group
-    if s.hl == nil then
-      return (' %s '):format(str)
-    end
+        -- Use previous highlight group
+        if s.hl == nil then
+            return (' %s '):format(str)
+        end
 
-    -- Allow using this highlight group later
-    if str:len() == 0 then
-      return string.format('%%#%s#', s.hl)
-    end
+        -- Allow using this highlight group later
+        if str:len() == 0 then
+            return string.format('%%#%s#', s.hl)
+        end
 
-    return string.format('%%#%s# %s ', s.hl, str)
+        return string.format('%%#%s# %s ', s.hl, str)
         --stylua: ignore end
     end, groups)
 
@@ -430,22 +430,22 @@ end
 
 --stylua: ignore
 H.create_default_hl = function()
-  local set_default_hl = function(name, data)
-    data.default = true
-    vim.api.nvim_set_hl(0, name, data)
-  end
+    local set_default_hl = function(name, data)
+        data.default = true
+        vim.api.nvim_set_hl(0, name, data)
+    end
 
-  set_default_hl('MiniStatuslineModeNormal',  { link = 'Cursor' })
-  set_default_hl('MiniStatuslineModeInsert',  { link = 'DiffChange' })
-  set_default_hl('MiniStatuslineModeVisual',  { link = 'DiffAdd' })
-  set_default_hl('MiniStatuslineModeReplace', { link = 'DiffDelete' })
-  set_default_hl('MiniStatuslineModeCommand', { link = 'DiffText' })
-  set_default_hl('MiniStatuslineModeOther',   { link = 'IncSearch' })
+    set_default_hl('MiniStatuslineModeNormal', { link = 'Cursor' })
+    set_default_hl('MiniStatuslineModeInsert', { link = 'DiffChange' })
+    set_default_hl('MiniStatuslineModeVisual', { link = 'DiffAdd' })
+    set_default_hl('MiniStatuslineModeReplace', { link = 'DiffDelete' })
+    set_default_hl('MiniStatuslineModeCommand', { link = 'DiffText' })
+    set_default_hl('MiniStatuslineModeOther', { link = 'IncSearch' })
 
-  set_default_hl('MiniStatuslineDevinfo',  { link = 'StatusLine' })
-  set_default_hl('MiniStatuslineFilename', { link = 'StatusLineNC' })
-  set_default_hl('MiniStatuslineFileinfo', { link = 'StatusLine' })
-  set_default_hl('MiniStatuslineInactive', { link = 'StatusLineNC' })
+    set_default_hl('MiniStatuslineDevinfo', { link = 'StatusLine' })
+    set_default_hl('MiniStatuslineFilename', { link = 'StatusLineNC' })
+    set_default_hl('MiniStatuslineFileinfo', { link = 'StatusLine' })
+    set_default_hl('MiniStatuslineInactive', { link = 'StatusLineNC' })
 end
 
 H.is_disabled = function()
@@ -464,49 +464,49 @@ local CTRL_V = vim.api.nvim_replace_termcodes("<C-V>", true, true, true)
 
 -- stylua: ignore start
 H.modes = setmetatable({
-  ['n']    = { long = 'Normal',   short = 'N',   hl = 'MiniStatuslineModeNormal' },
-  ['v']    = { long = 'Visual',   short = 'V',   hl = 'MiniStatuslineModeVisual' },
-  ['V']    = { long = 'V-Line',   short = 'V-L', hl = 'MiniStatuslineModeVisual' },
-  [CTRL_V] = { long = 'V-Block',  short = 'V-B', hl = 'MiniStatuslineModeVisual' },
-  ['s']    = { long = 'Select',   short = 'S',   hl = 'MiniStatuslineModeVisual' },
-  ['S']    = { long = 'S-Line',   short = 'S-L', hl = 'MiniStatuslineModeVisual' },
-  [CTRL_S] = { long = 'S-Block',  short = 'S-B', hl = 'MiniStatuslineModeVisual' },
-  ['i']    = { long = 'Insert',   short = 'I',   hl = 'MiniStatuslineModeInsert' },
-  ['R']    = { long = 'Replace',  short = 'R',   hl = 'MiniStatuslineModeReplace' },
-  ['c']    = { long = 'Command',  short = 'C',   hl = 'MiniStatuslineModeCommand' },
-  ['r']    = { long = 'Prompt',   short = 'P',   hl = 'MiniStatuslineModeOther' },
-  ['!']    = { long = 'Shell',    short = 'Sh',  hl = 'MiniStatuslineModeOther' },
-  ['t']    = { long = 'Terminal', short = 'T',   hl = 'MiniStatuslineModeOther' },
+    ['n']    = { long = 'Normal', short = 'N', hl = 'MiniStatuslineModeNormal' },
+    ['v']    = { long = 'Visual', short = 'V', hl = 'MiniStatuslineModeVisual' },
+    ['V']    = { long = 'V-Line', short = 'V-L', hl = 'MiniStatuslineModeVisual' },
+    [CTRL_V] = { long = 'V-Block', short = 'V-B', hl = 'MiniStatuslineModeVisual' },
+    ['s']    = { long = 'Select', short = 'S', hl = 'MiniStatuslineModeVisual' },
+    ['S']    = { long = 'S-Line', short = 'S-L', hl = 'MiniStatuslineModeVisual' },
+    [CTRL_S] = { long = 'S-Block', short = 'S-B', hl = 'MiniStatuslineModeVisual' },
+    ['i']    = { long = 'Insert', short = 'I', hl = 'MiniStatuslineModeInsert' },
+    ['R']    = { long = 'Replace', short = 'R', hl = 'MiniStatuslineModeReplace' },
+    ['c']    = { long = 'Command', short = 'C', hl = 'MiniStatuslineModeCommand' },
+    ['r']    = { long = 'Prompt', short = 'P', hl = 'MiniStatuslineModeOther' },
+    ['!']    = { long = 'Shell', short = 'Sh', hl = 'MiniStatuslineModeOther' },
+    ['t']    = { long = 'Terminal', short = 'T', hl = 'MiniStatuslineModeOther' },
 }, {
-  -- By default return 'Unknown' but this shouldn't be needed
-  __index = function()
-    return   { long = 'Unknown',  short = 'U',   hl = '%#MiniStatuslineModeOther#' }
-  end,
+    -- By default return 'Unknown' but this shouldn't be needed
+    __index = function()
+        return { long = 'Unknown', short = 'U', hl = '%#MiniStatuslineModeOther#' }
+    end,
 })
 -- stylua: ignore end
 
 -- Default content ------------------------------------------------------------
 H.default_content_active = function()
-  -- stylua: ignore start
-  local mode, mode_hl = MiniStatusline.section_mode({ trunc_width = 120 })
-  local git           = MiniStatusline.section_git({ trunc_width = 75 })
-  local diagnostics   = MiniStatusline.section_diagnostics({ trunc_width = 75 })
-  local filename      = MiniStatusline.section_filename({ trunc_width = 140 })
-  local fileinfo      = MiniStatusline.section_fileinfo({ trunc_width = 120 })
-  local location      = MiniStatusline.section_location({ trunc_width = 75 })
+    -- stylua: ignore start
+    local mode, mode_hl = MiniStatusline.section_mode({ trunc_width = 120 })
+    local git           = MiniStatusline.section_git({ trunc_width = 75 })
+    local diagnostics   = MiniStatusline.section_diagnostics({ trunc_width = 75 })
+    local filename      = MiniStatusline.section_filename({ trunc_width = 140 })
+    local fileinfo      = MiniStatusline.section_fileinfo({ trunc_width = 120 })
+    local location      = MiniStatusline.section_location({ trunc_width = 75 })
 
-  -- Usage of `MiniStatusline.combine_groups()` ensures highlighting and
-  -- correct padding with spaces between groups (accounts for 'missing'
-  -- sections, etc.)
-  return MiniStatusline.combine_groups({
-    { hl = mode_hl,                  strings = { mode } },
-    { hl = 'MiniStatuslineDevinfo',  strings = { git, diagnostics } },
-    '%<', -- Mark general truncate point
-    { hl = 'MiniStatuslineFilename', strings = { filename } },
-    '%=', -- End left alignment
-    { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
-    { hl = mode_hl,                  strings = { location } },
-  })
+    -- Usage of `MiniStatusline.combine_groups()` ensures highlighting and
+    -- correct padding with spaces between groups (accounts for 'missing'
+    -- sections, etc.)
+    return MiniStatusline.combine_groups({
+        { hl = mode_hl,                 strings = { mode } },
+        { hl = 'MiniStatuslineDevinfo', strings = { git, diagnostics } },
+        '%<', -- Mark general truncate point
+        { hl = 'MiniStatuslineFilename', strings = { filename } },
+        '%=', -- End left alignment
+        { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
+        { hl = mode_hl,                  strings = { location } },
+    })
     -- stylua: ignore end
 end
 
