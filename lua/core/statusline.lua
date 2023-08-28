@@ -48,9 +48,6 @@ MiniStatusline.config = {
         -- Content for inactive window(s)
         inactive = nil,
     },
-
-    -- Whether to use icons by default
-    use_icons = true,
 }
 
 --- Module setup
@@ -166,7 +163,7 @@ MiniStatusline.section_git = function(args)
 
     local head = vim.b.gitsigns_head or "-"
     local signs = MiniStatusline.is_truncated(args.trunc_width) and "" or (vim.b.gitsigns_status or "")
-    local icon = args.icon or (H.get_config().use_icons and "" or "Git")
+    local icon = args.icon or "" or "Git"
 
     if signs == "" then
         if head == "-" or head == "" then
@@ -205,7 +202,7 @@ MiniStatusline.section_diagnostics = function(args)
         end
     end
 
-    local icon = args.icon or (H.get_config().use_icons and "" or "LSP")
+    local icon = args.icon or "" or "LSP"
     if vim.tbl_count(t) == 0 then
         return ("%s -"):format(icon)
     end
@@ -447,10 +444,6 @@ H.get_filesize = function()
 end
 
 H.get_filetype_icon = function()
-    -- Skip if NerdFonts is disabled
-    if not H.get_config().use_icons then
-        return ""
-    end
     -- Have this `require()` here to not depend on plugin initialization order
     local has_devicons, devicons = pcall(require, "nvim-web-devicons")
     if not has_devicons then
