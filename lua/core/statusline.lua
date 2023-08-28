@@ -58,7 +58,7 @@ MiniStatusline.setup = function()
     -- Define behavior
     H.create_autocommands()
 
-    -- - Disable built-in statusline in Quickfix window
+    -- Disable built-in statusline in Quickfix window
     vim.g.qf_disable_statusline = 1
 
     -- Create default highlighting
@@ -157,6 +157,7 @@ end
 ---
 --- Short output is returned if window width is lower than `args.trunc_width`.
 MiniStatusline.section_git = function(args)
+    -- TODO integrate git fugitive here
     if H.isnt_normal_buffer() then
         return ""
     end
@@ -309,9 +310,6 @@ MiniStatusline.section_searchcount = function(args)
 end
 
 -- Helper data ================================================================
--- Module default config
-H.default_config = MiniStatusline.config
-
 -- Showed diagnostic levels
 H.diagnostic_levels = {
     { id = vim.diagnostic.severity.ERROR, sign = "E" },
