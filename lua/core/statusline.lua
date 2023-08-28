@@ -38,29 +38,7 @@
 local MiniStatusline = {}
 local H = {}
 
-local user_config = {}
-
---- Module setup
-MiniStatusline.setup = function()
-    -- Export module
-    _G.MiniStatusline = MiniStatusline
-
-    -- Setup config
-    user_config = H.setup_config(user_config)
-
-    -- Apply config
-    H.apply_config(user_config)
-
-    -- Define behavior
-    H.create_autocommands()
-
-    -- - Disable built-in statusline in Quickfix window
-    vim.g.qf_disable_statusline = 1
-
-    -- Create default highlighting
-    H.create_default_hl()
-end
-
+-- DEFAULT CONFIG
 --- Module config
 MiniStatusline.config = {
     -- Content of statusline as functions which return statusline string. See
@@ -80,6 +58,21 @@ MiniStatusline.config = {
     -- this to `false` and 'laststatus' to 3.
     set_vim_settings = true,
 }
+
+--- Module setup
+MiniStatusline.setup = function()
+    -- Export module
+    _G.MiniStatusline = MiniStatusline
+
+    -- Define behavior
+    H.create_autocommands()
+
+    -- - Disable built-in statusline in Quickfix window
+    vim.g.qf_disable_statusline = 1
+
+    -- Create default highlighting
+    H.create_default_hl()
+end
 
 -- Module functionality =======================================================
 --- Compute content for active window
@@ -338,36 +331,6 @@ H.diagnostic_levels = {
 
 -- Helper functionality =======================================================
 -- Settings -------------------------------------------------------------------
-H.setup_config = function(config)
-    -- General idea: if some table elements are not present in user-supplied
-    -- `config`, take them from default config
-    vim.validate({ config = { config, "table", true } })
-    config = vim.tbl_deep_extend("force", H.default_config, config or {})
-
-    -- Validate per nesting level to produce correct error message
-    vim.validate({
-        content = { config.content, "table" },
-        set_vim_settings = { config.set_vim_settings, "boolean" },
-        use_icons = { config.use_icons, "boolean" },
-    })
-
-    vim.validate({
-        ["content.active"] = { config.content.active, "function", true },
-        ["content.inactive"] = { config.content.inactive, "function", true },
-    })
-
-    return config
-end
-
-H.apply_config = function(config)
-    MiniStatusline.config = config
-
-    -- Set settings to ensure statusline is displayed properly
-    if config.set_vim_settings then
-        vim.o.laststatus = 2 -- Always show statusline
-    end
-end
-
 H.create_autocommands = function()
     local augroup = vim.api.nvim_create_augroup("MiniStatusline", {})
 
