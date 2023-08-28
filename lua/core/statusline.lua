@@ -39,12 +39,15 @@ local MiniStatusline = {}
 local H = {}
 
 -- Default content ------------------------------------------------------------
+-- TODO figure out how to make the separators play nicely - think they'll have
+-- to be handled in the combine_groups function
+local left_separator = ""
+local right_separator = ""
 local custom_active = function()
     local mode, mode_hl = MiniStatusline.section_mode({ trunc_width = 120 })
     local git = MiniStatusline.section_git({ trunc_width = 75 })
     local diagnostics = MiniStatusline.section_diagnostics({ trunc_width = 75 })
     local filename = MiniStatusline.section_filename({ trunc_width = 140 })
-    local fileinfo = MiniStatusline.section_fileinfo({ trunc_width = 120 })
     local location = MiniStatusline.section_location({ trunc_width = 75 })
 
     -- Usage of `MiniStatusline.combine_groups()` ensures highlighting and
@@ -56,8 +59,8 @@ local custom_active = function()
         "%<", -- Mark general truncate point
         { hl = "MiniStatuslineFilename", strings = { filename } },
         "%=", -- End left alignment
-        { hl = "MiniStatuslineFileinfo", strings = { fileinfo } },
-        { hl = mode_hl, strings = { location } },
+        { hl = "MiniStatuslineFileinfo", strings = { location } },
+        { hl = mode_hl, strings = { mode } },
     })
 end
 
@@ -189,7 +192,6 @@ MiniStatusline.section_git = function(args)
     if H.isnt_normal_buffer() then
         return ""
     end
-
     local head = vim.b.gitsigns_head or "-"
     local signs = MiniStatusline.is_truncated(args.trunc_width) and "" or (vim.b.gitsigns_status or "")
     local icon = args.icon or "" or "Git"
@@ -399,19 +401,19 @@ local CTRL_S = vim.api.nvim_replace_termcodes("<C-S>", true, true, true)
 local CTRL_V = vim.api.nvim_replace_termcodes("<C-V>", true, true, true)
 
 H.modes = setmetatable({
-    ["n"] = { long = "Normal", short = "N", hl = "MiniStatuslineModeNormal" },
-    ["v"] = { long = "Visual", short = "V", hl = "MiniStatuslineModeVisual" },
-    ["V"] = { long = "V-Line", short = "V-L", hl = "MiniStatuslineModeVisual" },
-    [CTRL_V] = { long = "V-Block", short = "V-B", hl = "MiniStatuslineModeVisual" },
-    ["s"] = { long = "Select", short = "S", hl = "MiniStatuslineModeVisual" },
-    ["S"] = { long = "S-Line", short = "S-L", hl = "MiniStatuslineModeVisual" },
-    [CTRL_S] = { long = "S-Block", short = "S-B", hl = "MiniStatuslineModeVisual" },
-    ["i"] = { long = "Insert", short = "I", hl = "MiniStatuslineModeInsert" },
-    ["R"] = { long = "Replace", short = "R", hl = "MiniStatuslineModeReplace" },
-    ["c"] = { long = "Command", short = "C", hl = "MiniStatuslineModeCommand" },
-    ["r"] = { long = "Prompt", short = "P", hl = "MiniStatuslineModeOther" },
-    ["!"] = { long = "Shell", short = "Sh", hl = "MiniStatuslineModeOther" },
-    ["t"] = { long = "Terminal", short = "T", hl = "MiniStatuslineModeOther" },
+    ["n"] = { long = "NORMAL", short = "N", hl = "MiniStatuslineModeNormal" },
+    ["v"] = { long = "VISUAL", short = "V", hl = "MiniStatuslineModeVisual" },
+    ["V"] = { long = "V-LINE", short = "V-L", hl = "MiniStatuslineModeVisual" },
+    [CTRL_V] = { long = "V-BLOCK", short = "V-B", hl = "MiniStatuslineModeVisual" },
+    ["s"] = { long = "SELECT", short = "S", hl = "MiniStatuslineModeVisual" },
+    ["S"] = { long = "S-LINE", short = "S-L", hl = "MiniStatuslineModeVisual" },
+    [CTRL_S] = { long = "S-BLOCK", short = "S-B", hl = "MiniStatuslineModeVisual" },
+    ["i"] = { long = "INSERT", short = "I", hl = "MiniStatuslineModeInsert" },
+    ["R"] = { long = "REPLACE", short = "R", hl = "MiniStatuslineModeReplace" },
+    ["c"] = { long = "COMMAND", short = "C", hl = "MiniStatuslineModeCommand" },
+    ["r"] = { long = "PROMPT", short = "P", hl = "MiniStatuslineModeOther" },
+    ["!"] = { long = "SHELL", short = "Sh", hl = "MiniStatuslineModeOther" },
+    ["t"] = { long = "TERMINAL", short = "T", hl = "MiniStatuslineModeOther" },
 }, {
     -- By default return 'Unknown' but this shouldn't be needed
     __index = function()
