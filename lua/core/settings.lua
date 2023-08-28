@@ -42,9 +42,6 @@ local options = {
 
     -- Mapped sequence timing
     timeoutlen = 500,
-
-    -- remove the command line beneath the lualine
-    cmdheight = 0,
 }
 
 -- set options from table
