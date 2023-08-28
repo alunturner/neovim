@@ -39,10 +39,6 @@ local MiniStatusline = {}
 local H = {}
 
 --- Module setup
----
----@param config table|nil Module config table. See |MiniStatusline.config|.
----
----@usage `require('mini.statusline').setup({})` (replace `{}` with your `config` table)
 MiniStatusline.setup = function(config)
     -- Export module
     _G.MiniStatusline = MiniStatusline
@@ -64,9 +60,6 @@ MiniStatusline.setup = function(config)
 end
 
 --- Module config
----
---- Default values:
----@eval return MiniDoc.afterlines_to_code(MiniDoc.current.eval_section)
 MiniStatusline.config = {
     -- Content of statusline as functions which return statusline string. See
     -- `:h statusline` and code of default contents (used instead of `nil`).
@@ -85,7 +78,6 @@ MiniStatusline.config = {
     -- this to `false` and 'laststatus' to 3.
     set_vim_settings = true,
 }
---minidoc_afterlines_end
 
 -- Module functionality =======================================================
 --- Compute content for active window
@@ -117,10 +109,6 @@ end
 ---   previous one is used) and string parts in `strings` field. Non-empty
 ---   strings from `strings` are separated by one space. Non-empty groups are
 ---   separated by two spaces (one for each highlighting).
----
----@param groups table Array of groups.
----
----@return string String suitable for 'statusline'.
 MiniStatusline.combine_groups = function(groups)
     local parts = vim.tbl_map(function(s)
         --stylua: ignore start
@@ -154,10 +142,6 @@ end
 --- default.
 ---
 --- Use this to manually decide if section needs truncation or not.
----
----@param trunc_width number|nil Truncation width. If `nil`, output is `false`.
----
----@return boolean Whether to truncate.
 MiniStatusline.is_truncated = function(trunc_width)
     -- Use -1 to default to 'not truncated'
     local cur_width = vim.o.laststatus == 3 and vim.o.columns or vim.api.nvim_win_get_width(0)
@@ -171,10 +155,6 @@ end
 --- Section for Vim |mode()|
 ---
 --- Short output is returned if window width is lower than `args.trunc_width`.
----
----@param args __statusline_args
----
----@return ... Section string and mode's highlight group.
 MiniStatusline.section_mode = function(args)
     local mode_info = H.modes[vim.fn.mode()]
 
@@ -190,10 +170,6 @@ end
 --- Note: requires 'lewis6991/gitsigns' plugin.
 ---
 --- Short output is returned if window width is lower than `args.trunc_width`.
----
----@param args __statusline_args Use `args.icon` to supply your own icon.
----
----@return __statusline_section
 MiniStatusline.section_git = function(args)
     if H.isnt_normal_buffer() then
         return ""
@@ -219,10 +195,6 @@ end
 --- errors ('E'), warnings ('W'), information ('I'), and hints ('H').
 ---
 --- Short output is returned if window width is lower than `args.trunc_width`.
----
----@param args __statusline_args Use `args.icon` to supply your own icon.
----
----@return __statusline_section
 MiniStatusline.section_diagnostics = function(args)
     -- Assumption: there are no attached clients if table
     -- `vim.lsp.buf_get_clients()` is empty
@@ -256,10 +228,6 @@ end
 --- Show full file name or relative in short output.
 ---
 --- Short output is returned if window width is lower than `args.trunc_width`.
----
----@param args __statusline_args
----
----@return __statusline_section
 MiniStatusline.section_filename = function(args)
     -- In terminal always use plain name
     if vim.bo.buftype == "terminal" then
@@ -278,10 +246,6 @@ end
 ---
 --- Short output contains only extension and is returned if window width is
 --- lower than `args.trunc_width`.
----
----@param args __statusline_args
----
----@return __statusline_section
 MiniStatusline.section_fileinfo = function(args)
     local filetype = vim.bo.filetype
 
@@ -317,10 +281,6 @@ end
 --- - Short: '<cursor line>│<cursor column>'.
 ---
 --- Short output is returned if window width is lower than `args.trunc_width`.
----
----@param args __statusline_args
----
----@return __statusline_section
 MiniStatusline.section_location = function(args)
     -- Use virtual column number to allow update when past last column
     if MiniStatusline.is_truncated(args.trunc_width) then
@@ -341,10 +301,6 @@ end
 --- data on every call which can be computationally expensive (although still
 --- usually same order of magnitude as 0.1 ms). To prevent this, supply
 --- `args.options = {recompute = false}`.
----
----@param args __statusline_args
----
----@return __statusline_section
 MiniStatusline.section_searchcount = function(args)
     if vim.v.hlsearch == 0 or MiniStatusline.is_truncated(args.trunc_width) then
         return ""
