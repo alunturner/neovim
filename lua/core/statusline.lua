@@ -38,8 +38,7 @@
 local MiniStatusline = {}
 local H = {}
 
--- DEFAULT CONFIG
---- Module config
+-- CONFIG
 MiniStatusline.config = {
     -- Content of statusline as functions which return statusline string. See
     -- `:h statusline` and code of default contents (used instead of `nil`).
@@ -52,11 +51,6 @@ MiniStatusline.config = {
 
     -- Whether to use icons by default
     use_icons = true,
-
-    -- Whether to set Vim's settings for statusline (make it always shown with
-    -- 'laststatus' set to 2). To use global statusline in Neovim>=0.7.0, set
-    -- this to `false` and 'laststatus' to 3.
-    set_vim_settings = true,
 }
 
 --- Module setup
