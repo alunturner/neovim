@@ -197,7 +197,7 @@ end
 --- errors ('E'), warnings ('W'), information ('I'), and hints ('H').
 ---
 --- Short output is returned if window width is lower than `args.trunc_width`.
-MiniStatusline.section_diagnostics = function(args)
+MiniStatusline.section_diagnostics = function()
     -- Assumption: there are no attached clients if table
     -- `vim.lsp.buf_get_clients()` is empty
     local hasnt_attached_client = next(vim.lsp.buf_get_clients()) == nil
@@ -216,7 +216,7 @@ MiniStatusline.section_diagnostics = function(args)
         end
     end
 
-    local icon = args.icon or "" or "LSP"
+    local icon = "" or "LSP"
     if vim.tbl_count(t) == 0 then
         return ("%s -"):format(icon)
     end
