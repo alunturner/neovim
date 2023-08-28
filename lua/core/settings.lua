@@ -46,6 +46,9 @@ local options = {
     -- Statusline
     laststatus = 3,
     cmdheight = 0,
+
+    -- Windowline
+    winbar = "%=%m %f",
 }
 
 -- set options from table
