@@ -38,16 +38,18 @@
 local MiniStatusline = {}
 local H = {}
 
+local user_config = {}
+
 --- Module setup
-MiniStatusline.setup = function(config)
+MiniStatusline.setup = function()
     -- Export module
     _G.MiniStatusline = MiniStatusline
 
     -- Setup config
-    config = H.setup_config(config)
+    user_config = H.setup_config(user_config)
 
     -- Apply config
-    H.apply_config(config)
+    H.apply_config(user_config)
 
     -- Define behavior
     H.create_autocommands()
