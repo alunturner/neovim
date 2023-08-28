@@ -38,13 +38,39 @@
 local MiniStatusline = {}
 local H = {}
 
+-- Default content ------------------------------------------------------------
+local custom_active = function()
+    local mode, mode_hl = MiniStatusline.section_mode({ trunc_width = 120 })
+    local git = MiniStatusline.section_git({ trunc_width = 75 })
+    local diagnostics = MiniStatusline.section_diagnostics({ trunc_width = 75 })
+    local filename = MiniStatusline.section_filename({ trunc_width = 140 })
+    local fileinfo = MiniStatusline.section_fileinfo({ trunc_width = 120 })
+    local location = MiniStatusline.section_location({ trunc_width = 75 })
+
+    -- Usage of `MiniStatusline.combine_groups()` ensures highlighting and
+    -- correct padding with spaces between groups (accounts for 'missing'
+    -- sections, etc.)
+    return MiniStatusline.combine_groups({
+        { hl = mode_hl, strings = { mode } },
+        { hl = "MiniStatuslineDevinfo", strings = { git, diagnostics } },
+        "%<", -- Mark general truncate point
+        { hl = "MiniStatuslineFilename", strings = { filename } },
+        "%=", -- End left alignment
+        { hl = "MiniStatuslineFileinfo", strings = { fileinfo } },
+        { hl = mode_hl, strings = { location } },
+    })
+end
+
+local custom_inactive = function()
+    return "%#MiniStatuslineInactive#%F%="
+end
 -- CONFIG
 MiniStatusline.config = {
     -- Content of (in)active statuslines as functions which return statusline string.
     -- See `:h statusline` and code of default contents (used instead of `nil`).
     content = {
-        active = nil,
-        inactive = nil,
+        active = custom_active,
+        inactive = custom_inactive,
     },
 }
 
