@@ -43,7 +43,8 @@ local options = {
     -- Mapped sequence timing
     timeoutlen = 500,
 
-    -- remove the command line beneath the lualine
+    -- Statusline
+    laststatus = 3,
     cmdheight = 0,
 }
 
