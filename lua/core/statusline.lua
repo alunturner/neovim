@@ -67,6 +67,7 @@ end
 local custom_inactive = function()
     return "%#MiniStatuslineInactive#%F%="
 end
+
 -- CONFIG
 MiniStatusline.config = {
     -- Content of (in)active statuslines as functions which return statusline string.
@@ -171,14 +172,14 @@ end
 --- Note: requires 'lewis6991/gitsigns' plugin.
 ---
 --- Short output is returned if window width is lower than `args.trunc_width`.
-MiniStatusline.section_git = function(args)
+MiniStatusline.section_git = function()
     -- TODO integrate git fugitive here
     if H.isnt_normal_buffer() then
         return ""
     end
     local head = vim.b.gitsigns_head or "-"
     local signs = vim.b.gitsigns_status or ""
-    local icon = args.icon or "" or "Git"
+    local icon = "" or "Git"
 
     if signs == "" then
         if head == "-" or head == "" then
