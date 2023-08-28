@@ -1,59 +1,76 @@
---!structure::add status line
-
--- try and smash in a local arctic theme
+-- theme taken from the below, see core.theme file for more details
+-- Copyright (c) 2020-2021 Mofiqul Islam
+-- MIT license, see LICENSE for more details.
+-- not an error! need to have required the core.theme to make sure lualine
+-- displays properly, we can sort the ordering of this when we bring the
+-- status line design in house
+require("core.theme")
+local pax = {}
 local colors = {
-  pink = '#c586c0',
-  red = '#c72e0f',
-  orange = '#cc6633',
-  green = '#16825d',
-  blue = '#007acc',
-  violet = '#646695',
-  purple = '#68217a',
-  white = '#ffffff',
-  lightgray = '#454545',
-  gray = '#252526',
+    inactive = "#666666",
+    bg = "#262626",
+    bg2 = "#373737",
+    fg = "#ffffff",
+    red = "#f44747",
+    green = "#4EC9B0",
+    blue = "#0a7aca",
+    lightblue = "#5CB6F8",
+    yellow = "#ffaf00",
+    pink = "#DDB6F2",
 }
 
-local custom_arctic = {
-  normal = {
-    a = { fg = colors.white, bg = colors.blue },
-    b = { fg = colors.white, bg = colors.lightgray },
-    c = { fg = colors.white, bg = colors.gray }
-  },
-  insert = {
-    a = { fg = colors.white, bg = colors.orange },
-  },
-  visual = {
-    a = { fg = colors.white, bg = colors.purple },
-  },
-  replace = {
-    a = { fg = colors.white, bg = colors.pink },
-  },
-  command = {
-    a = { fg = colors.white, bg = colors.green },
-  },
-  terminal = {
-    a = { fg = colors.white, bg = colors.violet },
-  },
-  pending = {
-    a = { fg = colors.white, bg = colors.red },
-  },
-  inactive = {
-    a = { fg = colors.white, bg = colors.darkgray },
-  }
+pax.normal = {
+    a = { fg = colors.fg, bg = colors.blue, gui = "bold" },
+    b = { fg = colors.blue, bg = colors.bg2 },
+    c = { fg = colors.fg, bg = colors.bg },
+}
+
+pax.visual = {
+    a = { fg = colors.bg, bg = colors.yellow, gui = "bold" },
+    b = { fg = colors.yellow, bg = colors.bg },
+}
+
+pax.inactive = {
+    a = { fg = colors.fg, bg = colors.bg, gui = "bold" },
+    b = { fg = colors.inactive, bg = colors.bg },
+    c = { fg = colors.inactive, bg = colors.bg },
+}
+
+pax.replace = {
+    a = { fg = colors.bg, bg = colors.red, gui = "bold" },
+    b = { fg = colors.red, bg = colors.bg2 },
+    c = { fg = colors.fg, bg = colors.bg },
+}
+
+pax.insert = {
+    a = { fg = colors.bg, bg = colors.green, gui = "bold" },
+    b = { fg = colors.green, bg = colors.bg2 },
+    c = { fg = colors.fg, bg = colors.bg },
+}
+
+pax.terminal = {
+    a = { fg = colors.bg, bg = colors.green, gui = "bold" },
+    b = { fg = colors.fg, bg = colors.bg2 },
+    c = { fg = colors.fg, bg = colors.bg },
+}
+
+pax.command = {
+    a = { fg = colors.bg, bg = colors.pink, gui = "bold" },
+    b = { fg = colors.pink, bg = colors.bg2 },
+    c = { fg = colors.fg, bg = colors.bg },
 }
 
 local Plugin = {
-    "nvim-lualine/lualine.nvim", --!uses::lualine
+    "nvim-lualine/lualine.nvim",
     requires = { "nvim-tree/nvim-web-devicons", opt = true },
 }
 
 Plugin.config = function()
     require("lualine").setup({
         options = {
-            theme = custom_arctic,
+            theme = pax,
             disabled_filetypes = {
-                statusline = {"no-neck-pain"}
+                statusline = { "no-neck-pain" },
             },
         },
         sections = {
