@@ -44,23 +44,23 @@ local H = {}
 local left_separator = ""
 local right_separator = ""
 local custom_active = function()
-    local mode, mode_hl = MiniStatusline.section_mode({ trunc_width = 120 })
-    local git = MiniStatusline.section_git({ trunc_width = 75 })
-    local diagnostics = MiniStatusline.section_diagnostics({ trunc_width = 75 })
-    local filename = MiniStatusline.section_filename({ trunc_width = 140 })
-    local location = MiniStatusline.section_location({ trunc_width = 75 })
+    local mode_short, mode_long, mode_hl = MiniStatusline.section_mode()
+    local git = MiniStatusline.section_git()
+    local diagnostics = MiniStatusline.section_diagnostics()
+    local filename = MiniStatusline.section_filename()
+    local location = MiniStatusline.section_location()
 
     -- Usage of `MiniStatusline.combine_groups()` ensures highlighting and
     -- correct padding with spaces between groups (accounts for 'missing'
     -- sections, etc.)
     return MiniStatusline.combine_groups({
-        { hl = mode_hl, strings = { mode } },
+        { hl = mode_hl, strings = { mode_long } },
         { hl = "MiniStatuslineDevinfo", strings = { git, diagnostics } },
         "%<", -- Mark general truncate point
         { hl = "MiniStatuslineFilename", strings = { filename } },
         "%=", -- End left alignment
         { hl = "MiniStatuslineFileinfo", strings = { location } },
-        { hl = mode_hl, strings = { mode } },
+        { hl = mode_hl, strings = { mode_short } },
     })
 end
 
@@ -99,7 +99,7 @@ MiniStatusline.active = function()
         return ""
     end
 
-    return (H.get_config().content.active or H.default_content_active)()
+    return custom_active()
 end
 
 --- Compute content for inactive window
@@ -108,7 +108,7 @@ MiniStatusline.inactive = function()
         return ""
     end
 
-    return (H.get_config().content.inactive or H.default_content_inactive)()
+    return custom_inactive()
 end
 
 --- Combine groups of sections
@@ -152,19 +152,6 @@ MiniStatusline.combine_groups = function(groups)
     return table.concat(parts, "")
 end
 
---- Decide whether to truncate
----
---- This basically computes window width and compares it to `trunc_width`: if
---- window is smaller then truncate; otherwise don't. Don't truncate by
---- default.
----
---- Use this to manually decide if section needs truncation or not.
-MiniStatusline.is_truncated = function(trunc_width)
-    -- Use -1 to default to 'not truncated'
-    local cur_width = vim.o.laststatus == 3 and vim.o.columns or vim.api.nvim_win_get_width(0)
-    return cur_width < (trunc_width or -1)
-end
-
 -- Sections ===================================================================
 -- Functions should return output text without whitespace on sides.
 -- Return empty string to omit section.
@@ -172,12 +159,9 @@ end
 --- Section for Vim |mode()|
 ---
 --- Short output is returned if window width is lower than `args.trunc_width`.
-MiniStatusline.section_mode = function(args)
+MiniStatusline.section_mode = function()
     local mode_info = H.modes[vim.fn.mode()]
-
-    local mode = MiniStatusline.is_truncated(args.trunc_width) and mode_info.short or mode_info.long
-
-    return mode, mode_info.hl
+    return mode_info.short, mode_info.long, mode_info.hl
 end
 
 --- Section for Git information
@@ -193,7 +177,7 @@ MiniStatusline.section_git = function(args)
         return ""
     end
     local head = vim.b.gitsigns_head or "-"
-    local signs = MiniStatusline.is_truncated(args.trunc_width) and "" or (vim.b.gitsigns_status or "")
+    local signs = vim.b.gitsigns_status or ""
     local icon = args.icon or "" or "Git"
 
     if signs == "" then
@@ -216,9 +200,7 @@ MiniStatusline.section_diagnostics = function(args)
     -- Assumption: there are no attached clients if table
     -- `vim.lsp.buf_get_clients()` is empty
     local hasnt_attached_client = next(vim.lsp.buf_get_clients()) == nil
-    local dont_show_lsp = MiniStatusline.is_truncated(args.trunc_width)
-        or H.isnt_normal_buffer()
-        or hasnt_attached_client
+    local dont_show_lsp = H.isnt_normal_buffer() or hasnt_attached_client
     if dont_show_lsp then
         return ""
     end
@@ -245,14 +227,10 @@ end
 --- Show full file name or relative in short output.
 ---
 --- Short output is returned if window width is lower than `args.trunc_width`.
-MiniStatusline.section_filename = function(args)
+MiniStatusline.section_filename = function()
     -- In terminal always use plain name
     if vim.bo.buftype == "terminal" then
         return "%t"
-    elseif MiniStatusline.is_truncated(args.trunc_width) then
-        -- File name with 'truncate', 'modified', 'readonly' flags
-        -- Use relative path if truncated
-        return "%f%m%r"
     else
         -- Use fullpath if not truncated
         return "%F%m%r"
@@ -263,7 +241,7 @@ end
 ---
 --- Short output contains only extension and is returned if window width is
 --- lower than `args.trunc_width`.
-MiniStatusline.section_fileinfo = function(args)
+MiniStatusline.section_fileinfo = function()
     local filetype = vim.bo.filetype
 
     -- Don't show anything if can't detect file type or not inside a "normal
@@ -276,11 +254,6 @@ MiniStatusline.section_fileinfo = function(args)
     local icon = H.get_filetype_icon()
     if icon ~= "" then
         filetype = string.format("%s %s", icon, filetype)
-    end
-
-    -- Construct output string if truncated
-    if MiniStatusline.is_truncated(args.trunc_width) then
-        return filetype
     end
 
     -- Construct output string with extra file info
@@ -297,12 +270,7 @@ end
 --- - Short: '<cursor line>│<cursor column>'.
 ---
 --- Short output is returned if window width is lower than `args.trunc_width`.
-MiniStatusline.section_location = function(args)
-    -- Use virtual column number to allow update when past last column
-    if MiniStatusline.is_truncated(args.trunc_width) then
-        return "%l│%2v"
-    end
-
+MiniStatusline.section_location = function()
     -- Use `virtcol()` to correctly handle multi-byte characters
     return '%l|%L│%2v|%-2{virtcol("$") - 1}'
 end
@@ -318,7 +286,7 @@ end
 --- usually same order of magnitude as 0.1 ms). To prevent this, supply
 --- `args.options = {recompute = false}`.
 MiniStatusline.section_searchcount = function(args)
-    if vim.v.hlsearch == 0 or MiniStatusline.is_truncated(args.trunc_width) then
+    if vim.v.hlsearch == 0 then
         return ""
     end
     -- `searchcount()` can return errors because it is evaluated very often in
@@ -421,48 +389,10 @@ H.modes = setmetatable({
     end,
 })
 
--- Default content ------------------------------------------------------------
-H.default_content_active = function()
-    local mode, mode_hl = MiniStatusline.section_mode({ trunc_width = 120 })
-    local git = MiniStatusline.section_git({ trunc_width = 75 })
-    local diagnostics = MiniStatusline.section_diagnostics({ trunc_width = 75 })
-    local filename = MiniStatusline.section_filename({ trunc_width = 140 })
-    local fileinfo = MiniStatusline.section_fileinfo({ trunc_width = 120 })
-    local location = MiniStatusline.section_location({ trunc_width = 75 })
-
-    -- Usage of `MiniStatusline.combine_groups()` ensures highlighting and
-    -- correct padding with spaces between groups (accounts for 'missing'
-    -- sections, etc.)
-    return MiniStatusline.combine_groups({
-        { hl = mode_hl, strings = { mode } },
-        { hl = "MiniStatuslineDevinfo", strings = { git, diagnostics } },
-        "%<", -- Mark general truncate point
-        { hl = "MiniStatuslineFilename", strings = { filename } },
-        "%=", -- End left alignment
-        { hl = "MiniStatuslineFileinfo", strings = { fileinfo } },
-        { hl = mode_hl, strings = { location } },
-    })
-end
-
-H.default_content_inactive = function()
-    return "%#MiniStatuslineInactive#%F%="
-end
-
 -- Utilities ------------------------------------------------------------------
 H.isnt_normal_buffer = function()
     -- For more information see ":h buftype"
     return vim.bo.buftype ~= ""
-end
-
-H.get_filetype_icon = function()
-    -- Have this `require()` here to not depend on plugin initialization order
-    local has_devicons, devicons = pcall(require, "nvim-web-devicons")
-    if not has_devicons then
-        return ""
-    end
-
-    local file_name, file_ext = vim.fn.expand("%:t"), vim.fn.expand("%:e")
-    return devicons.get_icon(file_name, file_ext, { default = true })
 end
 
 H.get_diagnostic_count = function(id)
