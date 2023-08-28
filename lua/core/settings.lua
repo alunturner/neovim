@@ -45,6 +45,7 @@ local options = {
 
     -- Statusline
     laststatus = 3,
+    cmdheight = 0,
 }
 
 -- set options from table
