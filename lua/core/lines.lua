@@ -3,7 +3,6 @@ local lib = {}
 -- We store any anded' highlight groups here so that we don't keep creating redundant highlight groups at runtime
 
 local hl_prefix = "PaxLines"
-local hl_anon_id = 0
 
 function lib.get_hl_abs(name) -- return absolute highlight name
     return hl_prefix .. name
@@ -23,41 +22,6 @@ end
 
 function lib.get_hl_val_abs(name)
     return vim.api.nvim_get_hl(0, { name = name })
-end
-
-local function hl_val_equal(hl_a, hl_b)
-    if #hl_a ~= #hl_b then
-        return false
-    end
-
-    for k, v in pairs(hl_a) do
-        if hl_b[k] ~= v then
-            return false
-        end
-    end
-
-    return true
-end
-
-local cached_hl_groups = {}
-function lib.set_hl_val_abs(val)
-    local hl = {}
-
-    -- Check if an identical highlight group
-    for _, v in pairs(cached_hl_groups) do
-        if hl_val_equal(v.val, val) then
-            return v.name
-        end
-    end
-
-    hl.name = hl_prefix .. "Anonymous" .. tostring(hl_anon_id)
-    hl_anon_id = hl_anon_id + 1
-    hl.val = val
-    table.insert(cached_hl_groups, hl)
-
-    vim.api.nvim_set_hl(0, hl.name, hl.val)
-
-    return hl.name
 end
 
 -- Adds highlight group infront of s
