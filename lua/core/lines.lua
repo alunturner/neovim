@@ -5,10 +5,6 @@ local percent_equals = { raw = true, value = "%=" }
 -- HELPERS, aka lib
 local lib = {}
 -- We store any anded' highlight groups here so that we don't keep creating redundant highlight groups at runtime
-function lib.get_hl_abs(name) -- return absolute highlight name
-    return hl_prefix .. name
-end
-
 function lib.set_hl(name)
     return ("%%#%s%s#"):format(hl_prefix, name)
 end
@@ -19,10 +15,6 @@ end
 
 function lib.unset_hl()
     return lib.set_hl_abs("Normal")
-end
-
-function lib.get_hl_val_abs(name)
-    return vim.api.nvim_get_hl(0, { name = name })
 end
 
 -- Adds highlight group infront of s
