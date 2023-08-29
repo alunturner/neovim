@@ -4,25 +4,11 @@ local percent_equals = { raw = true, value = "%=" }
 
 -- HELPERS, aka lib
 local lib = {}
--- We store any anded' highlight groups here so that we don't keep creating redundant highlight groups at runtime
-function lib.set_hl(name)
-    return ("%%#%s%s#"):format(hl_prefix, name)
-end
-
-function lib.set_hl_abs(name)
-    return ("%%#%s#"):format(name)
-end
-
-function lib.unset_hl()
-    return lib.set_hl_abs("Normal")
-end
-
--- Adds highlight group infront of s
-function lib.set_highlight(name, s, reset)
-    if reset then
-        return lib.set_hl(name) .. s .. lib.set_hl_abs("Normal")
-    end
-    return lib.set_hl(name) .. s
+-- to save using the hl_prefix everywhere, this helper will return the string
+-- required to add a highlight group (%#highlight_group#) with the prefix
+function lib.get_hl_group(name, s)
+    local hl_group = ("%%#%s%s#"):format(hl_prefix, name)
+    return hl_group .. s
 end
 
 lib.lookup = {}
@@ -47,7 +33,7 @@ function lib:create_status_item(fn)
 end
 
 function lib:parse_config(config)
-    local result = "%#Normal#"
+    --local result = "%#Normal#"
     for _, v in pairs(config) do
         if type(v) == "table" then
             if v.raw then -- allows user to add something directly to statusline
@@ -119,7 +105,7 @@ function mod.mode()
         ["t"] = "T",
     }
     local mode = modes[vim.api.nvim_get_mode().mode]
-    return lib.set_highlight(mode, " " .. mode .. " ")
+    return lib.get_hl_group(mode, " " .. mode .. " ")
 end
 
 function mod.filetype()
@@ -127,21 +113,21 @@ function mod.filetype()
     if filetype == "" then
         return ""
     end
-    return lib.set_highlight("Filetype", " " .. filetype .. " ")
+    return lib.get_hl_group("Filetype", " " .. filetype .. " ")
 end
 
 -- This can be a raw string, no need for expression as it is built into vim
 function mod.file()
     return {
         raw = true,
-        value = lib.set_highlight("File", " %m %f "),
+        value = lib.get_hl_group("File", " %m %f "),
     }
 end
 
 function mod.project()
     return {
         raw = true,
-        value = lib.set_highlight("Project", " %F "),
+        value = lib.get_hl_group("Project", " %F "),
     }
 end
 
@@ -181,16 +167,15 @@ local function git_diff_parse(diff_output)
         deletions = deletions + del
         line, i = get_line(diff_output, i)
     end
-    local hl = lib.set_highlight
-    info = info .. hl("GitDiffInsertion", " ")
+    info = info .. lib.get_hl_group("GitDiffInsertion", " ")
     if insertions ~= 0 then
-        info = info .. hl("GitDiffInsertion", "+") .. tostring(insertions)
+        info = info .. lib.get_hl_group("GitDiffInsertion", "+") .. tostring(insertions)
     end
     if insertions ~= 0 and deletions ~= 0 then
         info = info .. " " -- add space separator
     end
     if deletions ~= 0 then
-        info = info .. hl("GitDiffDeletion", "-") .. tostring(deletions)
+        info = info .. lib.get_hl_group("GitDiffDeletion", "-") .. tostring(deletions)
     end
     return info == "" and "" or info .. " "
 end
