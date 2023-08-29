@@ -23,7 +23,7 @@ local options = {
     -- Text display
     breakindent = true,
     scrolloff = 8,
-    colorcolumn = "120",
+    colorcolumn = "80",
     signcolumn = "yes",
 
     -- Cursor display
@@ -46,9 +46,6 @@ local options = {
     -- Statusline
     laststatus = 3,
     cmdheight = 1,
-
-    -- Windowline
-    winbar = "%=%m %f",
 }
 
 -- set options from table
