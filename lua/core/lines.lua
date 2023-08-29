@@ -207,6 +207,13 @@ function mod.file()
     }
 end
 
+function mod.project()
+    return {
+        raw = true,
+        value = lib.set_highlight("Project", " %F "),
+    }
+end
+
 -- {{{ git status
 -- return next line from i, and return the position after '\n'
 local function get_line(str, i)
@@ -316,8 +323,10 @@ M.lib = lib
 M.___ = { raw = true, value = "%=" }
 
 local ___ = M.___
-M.default_config = {
+local config = {
     winbar = {
+        mod.project(),
+        ___,
         ___,
         mod.file(),
     },
@@ -330,9 +339,7 @@ M.default_config = {
     theme = theme,
 }
 
-function M.setup(config)
-    config = config and next(config) and config or M.default_config
-
+function M.setup()
     -- Setup the highlight groups
     for k, v in pairs(config.theme) do
         if type(k) == "number" then
