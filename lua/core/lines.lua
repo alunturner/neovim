@@ -1,10 +1,11 @@
 -- CONSTANTS
 local hl_prefix = "PaxLines"
-local percent_equals = "%="
+local separator = "%="
 -- HELPERS, aka lib
 local lib = {}
--- to save using the hl_prefix everywhere, this helper will return the string
--- required to add a highlight group (%#highlight_group#) with the prefix
+-- Takes the section name and a string
+-- Prefixes the string with the correct highlight group string
+-- Format of that string is %#highlight_group#
 function lib.get_hl_group(name, s)
     local hl_group = ("%%#%s%s#"):format(hl_prefix, name)
     return hl_group .. s
@@ -17,7 +18,13 @@ function lib.lookup._get(i)
     return lib.lookup[i]
 end
 
-function lib:create_status_item(fn)
+function lib:create_status_string(s)
+    self.lookup[self.lookup._items] = s
+    self.lookup._items = self.lookup._items + 1
+    return s
+end
+
+function lib:create_status_function(fn)
     local item
     if not (type(fn) == "function") then
         item = function()
@@ -43,8 +50,10 @@ end
 function lib:parse(sections)
     local result = ""
     for _, section in pairs(sections) do
-        if type(section) == "string" or type(section) == "function" then
-            result = result .. self:create_status_item(section)
+        if type(section) == "string" then
+            result = result .. self:create_status_function(section)
+        elseif type(section) == "function" then
+            result = result .. self:create_status_function(section)
         elseif type(section) == "table" then
             -- TODO handle tables to allow for nesting
         end
@@ -206,12 +215,12 @@ PaxLines.lib = lib
 
 local winbar = {
     mod.project,
-    percent_equals,
-    percent_equals,
+    separator,
+    separator,
     mod.file,
 }
 local statusline = {
-    percent_equals,
+    separator,
     mod.mode,
     mod.filetype,
     mod.git_diff,
