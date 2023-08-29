@@ -250,19 +250,6 @@ function mod.git_diff()
 end
 -- }}}
 
-local theme = {
-    ["N"] = { fg = "#2d353b", bg = "#83c092" },
-    ["I"] = { fg = "#2d353b", bg = "#7fbbb3" },
-    ["V"] = { fg = "#2d353b", bg = "#dbbc7f" },
-    ["C"] = { fg = "#2d353b", bg = "#d699b6" },
-    ["T"] = { fg = "#2d353b", bg = "#a7c080" },
-    ["S"] = { fg = "#2d353b", bg = "#e67e80" },
-    ["File"] = { fg = "#d3c6aa", bg = "#343f44" },
-    ["Filetype"] = { fg = "#d3c6aa", bg = "#272e33" },
-    ["GitDiffDeletion"] = { fg = "#e67e80", bg = "#232a2e" },
-    ["GitDiffInsertion"] = { fg = "#a7c080", bg = "#232a2e" },
-}
-
 local M = {}
 
 -- global for module
@@ -287,11 +274,6 @@ local config = {
 }
 
 function M.setup()
-    -- setup the hl groups, not sure why I can't just do this in theme.lua
-    for k, v in pairs(theme) do
-        lib.create_status_highlight_group(k, v)
-    end
-
     if config.statusline then
         vim.opt.statusline = lib:parse_config(config.statusline)
     end

@@ -141,6 +141,7 @@ local builtins = {
     SpecialKey = { fg = c.blue },
     StatusLine = { fg = c.front, bg = c.leftMid },
     StatusLineNC = { fg = c.front, bg = c.leftDark },
+    options = {},
     TabLine = { fg = c.front, bg = c.tabOther },
     TabLineFill = { fg = c.front, bg = c.tabOutside },
     TabLineSel = { fg = c.front, bg = c.tabCurrent },
@@ -534,15 +535,15 @@ set_highlights(languages)
 
 local in_house = {
     -- PaxLines
-    PaxN = { fg = "#2d353b", bg = "#83c092" },
-    PaxI = { fg = "#2d353b", bg = "#7fbbb3" },
-    PaxV = { fg = "#2d353b", bg = "#dbbc7f" },
-    PaxC = { fg = "#2d353b", bg = "#d699b6" },
-    PaxT = { fg = "#2d353b", bg = "#a7c080" },
-    PaxS = { fg = "#2d353b", bg = "#e67e80" },
-    PaxFile = { fg = "#d3c6aa", bg = "#343f44" },
-    PaxFiletype = { fg = "#d3c6aa", bg = "#272e33" },
-    PaxGitDiffDeletion = { fg = "#e67e80", bg = "#232a2e" },
-    PaxGitDiffInsertion = { fg = "#a7c080", bg = "#232a2e" },
+    PaxLinesN = { fg = "#2d353b", bg = "#83c092" },
+    PaxLinesI = { fg = "#2d353b", bg = "#7fbbb3" },
+    PaxLinesV = { fg = "#2d353b", bg = "#dbbc7f" },
+    PaxLinesC = { fg = "#2d353b", bg = "#d699b6" },
+    PaxLinesT = { fg = "#2d353b", bg = "#a7c080" },
+    PaxLinesS = { fg = "#2d353b", bg = "#e67e80" },
+    PaxLinesFile = { fg = "#d3c6aa", bg = "#343f44" },
+    PaxLinesFiletype = { fg = "#d3c6aa", bg = "#272e33" },
+    PaxLinesGitDiffDeletion = { fg = "#e67e80", bg = "#232a2e" },
+    PaxLinesGitDiffInsertion = { fg = "#a7c080", bg = "#232a2e" },
 }
 set_highlights(in_house)
