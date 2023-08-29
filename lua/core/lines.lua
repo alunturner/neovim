@@ -53,16 +53,6 @@ function lib:create_status_item(fn)
     return "%{%v:lua.Stat.lib.lookup._get(" .. string.format("%d", self.lookup._items - 1) .. ")()%}"
 end
 
-function lib.create_status_highlight_group(name, val)
-    vim.api.nvim_set_hl(0, hl_prefix .. name, val)
-end
-
-function lib:create_status_highlight_groups(groups)
-    for k, v in pairs(groups) do
-        self.create_status_highlight_group(k, v)
-    end
-end
-
 function lib:parse_config(config)
     local result = "%#Normal#"
     for _, v in pairs(config) do
