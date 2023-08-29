@@ -262,9 +262,5 @@ local statusline = {
     mod.git_diff,
 }
 
-function M.setup()
-    vim.opt.statusline = lib:parse_config(statusline)
-    vim.opt.winbar = lib:parse_config(winbar)
-end
-
-M.setup()
+vim.opt.statusline = lib:parse_config(statusline)
+vim.opt.winbar = lib:parse_config(winbar)
