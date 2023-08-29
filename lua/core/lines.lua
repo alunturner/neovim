@@ -33,7 +33,7 @@ function lib:create_status_item(fn)
 end
 
 function lib:parse_config(config)
-    --local result = "%#Normal#"
+    local result = "%#Normal#"
     for _, v in pairs(config) do
         if type(v) == "table" then
             if v.raw then -- allows user to add something directly to statusline
