@@ -50,7 +50,7 @@ function lib:create_status_item(fn)
     end
     self.lookup[self.lookup._items] = item
     self.lookup._items = self.lookup._items + 1
-    return "%{%v:lua.Stat.lib.lookup._get(" .. string.format("%d", self.lookup._items - 1) .. ")()%}"
+    return "%{%v:lua.PaxLines.lib.lookup._get(" .. string.format("%d", self.lookup._items - 1) .. ")()%}"
 end
 
 function lib:parse_config(config)
@@ -240,11 +240,9 @@ function mod.git_diff()
 end
 -- }}}
 
-local M = {}
-
 -- global for module
-Stat = M
-M.lib = lib
+PaxLines = {}
+PaxLines.lib = lib
 
 local percent_equals = { raw = true, value = "%=" }
 
