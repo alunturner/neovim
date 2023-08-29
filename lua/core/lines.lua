@@ -1,9 +1,8 @@
 -- HELPERS, aka lib
 local lib = {}
--- TODO - hack out the lib complexity
 -- We store any anded' highlight groups here so that we don't keep creating redundant highlight groups at runtime
 
-local hl_prefix = "__Stat__"
+local hl_prefix = "Pax"
 local hl_anon_id = 0
 
 function lib.get_hl_abs(name) -- return absolute highlight name
@@ -106,7 +105,7 @@ function lib:create_status_item(fn)
 end
 
 function lib.create_status_highlight_group(name, val)
-    vim.api.nvim_set_hl(0, "__Stat__" .. name, val)
+    vim.api.nvim_set_hl(0, "Pax" .. name, val)
 end
 
 function lib:create_status_highlight_groups(groups)

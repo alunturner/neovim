@@ -31,7 +31,6 @@ local options = {
 
     -- Numbers
     number = true,
-    relativenumber = true,
 
     -- Theme display
     termguicolors = true,
