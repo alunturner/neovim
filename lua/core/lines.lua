@@ -245,18 +245,17 @@ local M = {}
 -- global for module
 Stat = M
 M.lib = lib
-M.___ = { raw = true, value = "%=" }
 
-local ___ = M.___
+local percent_equals = { raw = true, value = "%=" }
 
 local winbar = {
     mod.project(),
-    ___,
-    ___,
+    percent_equals,
+    percent_equals,
     mod.file(),
 }
 local statusline = {
-    ___,
+    percent_equals,
     mod.mode,
     mod.filetype,
     mod.git_diff,
