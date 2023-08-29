@@ -25,15 +25,7 @@ function lib:create_status_string(s)
 end
 
 function lib:create_status_function(fn)
-    local item
-    if not (type(fn) == "function") then
-        item = function()
-            return fn
-        end
-    else
-        item = fn
-    end
-    self.lookup[self.lookup._items] = item
+    self.lookup[self.lookup._items] = fn
     self.lookup._items = self.lookup._items + 1
     return "%{%v:lua.PaxLines.lib.lookup._get(" .. string.format("%d", self.lookup._items - 1) .. ")()%}"
 end
@@ -51,7 +43,7 @@ function lib:parse(sections)
     local result = ""
     for _, section in pairs(sections) do
         if type(section) == "string" then
-            result = result .. self:create_status_function(section)
+            result = result .. self:create_status_string(section)
         elseif type(section) == "function" then
             result = result .. self:create_status_function(section)
         elseif type(section) == "table" then
