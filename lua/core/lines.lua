@@ -1,7 +1,6 @@
 -- CONSTANTS
 local hl_prefix = "PaxLines"
-local percent_equals = { raw = true, value = "%=" }
-
+local percent_equals = "%="
 -- HELPERS, aka lib
 local lib = {}
 -- to save using the hl_prefix everywhere, this helper will return the string
@@ -18,11 +17,6 @@ function lib.lookup._get(i)
     return lib.lookup[i]
 end
 
-function lib:create_status_string(s)
-    self.lookup[self.lookup_items] = s
-    self.lookup._items = self.lookup._items + 1
-    return s
-end
 function lib:create_status_item(fn)
     local item
     if not (type(fn) == "function") then
@@ -46,34 +40,30 @@ end
 --  name = <used as highlight group name>,
 --  sections = {...list of more sections to insert}
 --}
-function lib:parse(config)
+function lib:parse(sections)
     local result = ""
-    for _, v in pairs(config) do
-        if type(v) == "table" then
-            if v.raw then -- allows user to add something directly to statusline
-                result = result .. v.value
-                goto __break__
-            end
+    for _, section in pairs(sections) do
+        if type(section) == "string" or type(section) == "function" then
+            result = result .. self:create_status_item(section)
+        elseif type(section) == "table" then
             local minmax = ""
-            if v.minwid then
-                minmax = minmax .. tostring(v.minwid)
+            if section.minwid then
+                minmax = minmax .. tostring(section.minwid)
             end
-            if v.maxwid then
-                minmax = minmax .. "." .. tostring(v.maxwid)
+            if section.maxwid then
+                minmax = minmax .. "." .. tostring(section.maxwid)
             end
             local group = {}
-            for _, item in ipairs(v) do
+            for _, item in ipairs(section) do
                 table.insert(group, self:create_status_item(item))
             end
             local dash = ""
-            if v.left_justify then
+            if section.left_justify then
                 dash = "-"
             end
-            result = result .. string.format("%%%s%s(%s%%)", dash, minmax, table.concat(group, v.separator or " "))
-        else
-            result = result .. self:create_status_item(v)
+            result = result
+                .. string.format("%%%s%s(%s%%)", dash, minmax, table.concat(group, section.separator or " "))
         end
-        ::__break__::
     end
     return result
 end
@@ -132,17 +122,11 @@ end
 
 -- This can be a raw string, no need for expression as it is built into vim
 function mod.file()
-    return {
-        raw = true,
-        value = lib.get_hl_group("File", " %m %f "),
-    }
+    return lib.get_hl_group("File", " %m %f ")
 end
 
 function mod.project()
-    return {
-        raw = true,
-        value = lib.get_hl_group("Project", " %F "),
-    }
+    return lib.get_hl_group("Project", " %F ")
 end
 
 -- {{{ git status
@@ -237,10 +221,10 @@ PaxLines = {}
 PaxLines.lib = lib
 
 local winbar = {
-    mod.project(),
+    mod.project,
     percent_equals,
     percent_equals,
-    mod.file(),
+    mod.file,
 }
 local statusline = {
     percent_equals,
