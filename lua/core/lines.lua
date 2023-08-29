@@ -289,11 +289,7 @@ local config = {
 function M.setup()
     -- setup the hl groups, not sure why I can't just do this in theme.lua
     for k, v in pairs(theme) do
-        if type(k) == "number" then
-            lib:create_status_highlight_groups(v)
-        else
-            lib.create_status_highlight_group(k, v)
-        end
+        lib.create_status_highlight_group(k, v)
     end
 
     if config.statusline then
