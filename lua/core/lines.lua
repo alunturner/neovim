@@ -32,7 +32,7 @@ function lib:create_status_item(fn)
     return "%{%v:lua.PaxLines.lib.lookup._get(" .. string.format("%d", self.lookup._items - 1) .. ")()%}"
 end
 
-function lib:parse_config(config)
+function lib:parse(config)
     local result = "%#Normal#"
     for _, v in pairs(config) do
         if type(v) == "table" then
@@ -235,5 +235,5 @@ local statusline = {
     mod.git_diff,
 }
 
-vim.opt.statusline = lib:parse_config(statusline)
-vim.opt.winbar = lib:parse_config(winbar)
+vim.opt.statusline = lib:parse(statusline)
+vim.opt.winbar = lib:parse(winbar)
