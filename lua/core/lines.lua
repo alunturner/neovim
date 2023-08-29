@@ -248,28 +248,23 @@ M.lib = lib
 M.___ = { raw = true, value = "%=" }
 
 local ___ = M.___
-local config = {
-    winbar = {
-        mod.project(),
-        ___,
-        ___,
-        mod.file(),
-    },
-    statusline = {
-        ___,
-        mod.mode,
-        mod.filetype,
-        mod.git_diff,
-    },
+
+local winbar = {
+    mod.project(),
+    ___,
+    ___,
+    mod.file(),
+}
+local statusline = {
+    ___,
+    mod.mode,
+    mod.filetype,
+    mod.git_diff,
 }
 
 function M.setup()
-    if config.statusline then
-        vim.opt.statusline = lib:parse_config(config.statusline)
-    end
-    if config.winbar then
-        vim.opt.winbar = lib:parse_config(config.winbar)
-    end
+    vim.opt.statusline = lib:parse_config(statusline)
+    vim.opt.winbar = lib:parse_config(winbar)
 end
 
 M.setup()
