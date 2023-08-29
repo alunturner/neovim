@@ -46,23 +46,7 @@ function lib:parse(sections)
         if type(section) == "string" or type(section) == "function" then
             result = result .. self:create_status_item(section)
         elseif type(section) == "table" then
-            local minmax = ""
-            if section.minwid then
-                minmax = minmax .. tostring(section.minwid)
-            end
-            if section.maxwid then
-                minmax = minmax .. "." .. tostring(section.maxwid)
-            end
-            local group = {}
-            for _, item in ipairs(section) do
-                table.insert(group, self:create_status_item(item))
-            end
-            local dash = ""
-            if section.left_justify then
-                dash = "-"
-            end
-            result = result
-                .. string.format("%%%s%s(%s%%)", dash, minmax, table.concat(group, section.separator or " "))
+            -- TODO handle tables to allow for nesting
         end
     end
     return result
