@@ -1,6 +1,6 @@
 -- HELPERS, aka lib
 local lib = {}
-
+-- TODO - hack out the lib complexity
 -- We store any anded' highlight groups here so that we don't keep creating redundant highlight groups at runtime
 
 local hl_prefix = "__Stat__"
@@ -203,7 +203,7 @@ end
 function mod.file()
     return {
         raw = true,
-        value = lib.set_highlight("File", " %f "),
+        value = lib.set_highlight("File", " %m %f "),
     }
 end
 
