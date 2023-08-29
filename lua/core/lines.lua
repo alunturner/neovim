@@ -2,7 +2,7 @@
 local lib = {}
 -- We store any anded' highlight groups here so that we don't keep creating redundant highlight groups at runtime
 
-local hl_prefix = "Pax"
+local hl_prefix = "PaxLines"
 local hl_anon_id = 0
 
 function lib.get_hl_abs(name) -- return absolute highlight name
@@ -37,21 +37,6 @@ local function hl_val_equal(hl_a, hl_b)
     end
 
     return true
-end
-
-function lib.add_margin(s, sz)
-    local mg_right = 0
-    local mg_left = 0
-
-    if type(sz) == "table" then
-        mg_left = (" "):rep(sz.left)
-        mg_right = (" "):rep(sz.right)
-    else
-        mg_left = (" "):rep(sz)
-        mg_right = (" "):rep(sz)
-    end
-
-    return mg_left .. s .. mg_right
 end
 
 local cached_hl_groups = {}
@@ -105,7 +90,7 @@ function lib:create_status_item(fn)
 end
 
 function lib.create_status_highlight_group(name, val)
-    vim.api.nvim_set_hl(0, "Pax" .. name, val)
+    vim.api.nvim_set_hl(0, hl_prefix .. name, val)
 end
 
 function lib:create_status_highlight_groups(groups)
@@ -335,12 +320,11 @@ local config = {
         mod.filetype,
         mod.git_diff,
     },
-    theme = theme,
 }
 
 function M.setup()
-    -- Setup the highlight groups
-    for k, v in pairs(config.theme) do
+    -- setup the hl groups, not sure why I can't just do this in theme.lua
+    for k, v in pairs(theme) do
         if type(k) == "number" then
             lib:create_status_highlight_groups(v)
         else

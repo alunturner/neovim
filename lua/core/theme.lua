@@ -531,3 +531,18 @@ local languages = {
     yamlConstant = { fg = c.blue },
 }
 set_highlights(languages)
+
+local in_house = {
+    -- PaxLines
+    PaxN = { fg = "#2d353b", bg = "#83c092" },
+    PaxI = { fg = "#2d353b", bg = "#7fbbb3" },
+    PaxV = { fg = "#2d353b", bg = "#dbbc7f" },
+    PaxC = { fg = "#2d353b", bg = "#d699b6" },
+    PaxT = { fg = "#2d353b", bg = "#a7c080" },
+    PaxS = { fg = "#2d353b", bg = "#e67e80" },
+    PaxFile = { fg = "#d3c6aa", bg = "#343f44" },
+    PaxFiletype = { fg = "#d3c6aa", bg = "#272e33" },
+    PaxGitDiffDeletion = { fg = "#e67e80", bg = "#232a2e" },
+    PaxGitDiffInsertion = { fg = "#a7c080", bg = "#232a2e" },
+}
+set_highlights(in_house)
