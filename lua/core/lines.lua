@@ -1,9 +1,10 @@
+-- CONSTANTS
+local hl_prefix = "PaxLines"
+local percent_equals = { raw = true, value = "%=" }
+
 -- HELPERS, aka lib
 local lib = {}
 -- We store any anded' highlight groups here so that we don't keep creating redundant highlight groups at runtime
-
-local hl_prefix = "PaxLines"
-
 function lib.get_hl_abs(name) -- return absolute highlight name
     return hl_prefix .. name
 end
@@ -243,8 +244,6 @@ end
 -- global for module
 PaxLines = {}
 PaxLines.lib = lib
-
-local percent_equals = { raw = true, value = "%=" }
 
 local winbar = {
     mod.project(),
