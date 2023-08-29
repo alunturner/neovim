@@ -32,6 +32,15 @@ function lib:create_status_item(fn)
     return "%{%v:lua.PaxLines.lib.lookup._get(" .. string.format("%d", self.lookup._items - 1) .. ")()%}"
 end
 
+-- we call this with a list of SECTIONS
+-- each SECTION can be one of:
+-- STRING - which just gets inserted
+-- FUNCTION - which will get called, and the result will be inserted
+-- TABLE - which has a highlight group created, then it's subsections inserted
+--{
+--  name = <used as highlight group name>,
+--  sections = {...list of more sections to insert}
+--}
 function lib:parse(config)
     local result = ""
     for _, v in pairs(config) do
