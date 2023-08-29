@@ -535,15 +535,22 @@ set_highlights(languages)
 
 local in_house = {
     -- PaxLines
-    PaxLinesN = { fg = "#2d353b", bg = "#83c092" },
-    PaxLinesI = { fg = "#2d353b", bg = "#7fbbb3" },
-    PaxLinesV = { fg = "#2d353b", bg = "#dbbc7f" },
-    PaxLinesC = { fg = "#2d353b", bg = "#d699b6" },
-    PaxLinesT = { fg = "#2d353b", bg = "#a7c080" },
-    PaxLinesS = { fg = "#2d353b", bg = "#e67e80" },
-    PaxLinesFile = { fg = "#d3c6aa", bg = "#343f44" },
-    PaxLinesFiletype = { fg = "#d3c6aa", bg = "#272e33" },
-    PaxLinesGitDiffDeletion = { fg = "#e67e80", bg = "#232a2e" },
-    PaxLinesGitDiffInsertion = { fg = "#a7c080", bg = "#232a2e" },
+    PaxLinesNORMAL = { fg = c.pink },
+    PaxLinesOPENDING = { fg = c.pink },
+    PaxLinesVISUAL = { fg = c.pink },
+    PaxLinesVLINE = { fg = c.pink },
+    PaxLinesVBLOCK = { fg = c.pink },
+    PaxLinesSELECT = { fg = c.pink },
+    PaxLinesSLINE = { fg = c.pink },
+    PaxLinesSBLOCK = { fg = c.pink },
+    PaxLinesINSERT = { fg = c.pink },
+    PaxLinesVREPLACE = { fg = c.pink },
+    PaxLinesCOMMAND = { fg = c.pink },
+    PaxLinesEX = { fg = c.pink },
+    PaxLinesREPLACE = { fg = c.pink },
+    PaxLinesMORE = { fg = c.pink },
+    PaxLinesCONFIRM = { fg = c.pink },
+    PaxLinesSHELL = { fg = c.pink },
+    PaxLinesTERMINAL = { fg = c.pink },
 }
 set_highlights(in_house)
