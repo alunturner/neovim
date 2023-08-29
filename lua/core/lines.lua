@@ -18,6 +18,11 @@ function lib.lookup._get(i)
     return lib.lookup[i]
 end
 
+function lib:create_status_string(s)
+    self.lookup[self.lookup_items] = s
+    self.lookup._items = self.lookup._items + 1
+    return s
+end
 function lib:create_status_item(fn)
     local item
     if not (type(fn) == "function") then
