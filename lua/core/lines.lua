@@ -6,28 +6,33 @@ local lib = {}
 -- Takes the section name and a string
 -- Prefixes the string with the correct highlight group string
 -- Format of that string is %#highlight_group#
-function lib.get_hl_group(name, s)
+function lib.prepend_hl_group(name, s)
     local hl_group = ("%%#%s%s#"):format(hl_prefix, name)
     return hl_group .. s
 end
 
-lib.lookup = {}
-lib.lookup._items = 1
+lib.sections = {}
+lib.next_section_index = 1
 
-function lib.lookup._get(i)
-    return lib.lookup[i]
+-- this needs to be a . defined method to allow it to be called in
+-- :add_function_section (at least I think this is the case)
+function lib.get_section(index)
+    return lib.sections[index]
 end
 
-function lib:create_status_string(s)
-    self.lookup[self.lookup._items] = s
-    self.lookup._items = self.lookup._items + 1
+function lib:append_section(section)
+    self.sections[self.next_section_index] = section
+    self.next_section_index = self.next_section_index + 1
+end
+
+function lib:add_string_section(s)
+    self:append_section(s)
     return s
 end
 
-function lib:create_status_function(fn)
-    self.lookup[self.lookup._items] = fn
-    self.lookup._items = self.lookup._items + 1
-    return "%{%v:lua.PaxLines.lib.lookup._get(" .. string.format("%d", self.lookup._items - 1) .. ")()%}"
+function lib:add_function_section(fn)
+    self:append_section(fn)
+    return "%{%v:lua.PaxLines.lib.get_section(" .. string.format("%d", self.next_section_index - 1) .. ")()%}"
 end
 
 -- we call this with a list of SECTIONS
@@ -43,9 +48,9 @@ function lib:parse(sections)
     local result = ""
     for _, section in pairs(sections) do
         if type(section) == "string" then
-            result = result .. self:create_status_string(section)
+            result = result .. self:add_string_section(section)
         elseif type(section) == "function" then
-            result = result .. self:create_status_function(section)
+            result = result .. self:add_function_section(section)
         elseif type(section) == "table" then
             -- TODO handle tables to allow for nesting
         end
@@ -57,44 +62,50 @@ end
 local mod = {}
 
 function mod.mode()
+    -- Lifted from Lualine
+    -- TODO get these highlight groups in the theme
+    -- stylua: ignore start
     local modes = {
-        ["n"] = "N",
-        ["no"] = "N",
-        ["nov"] = "N",
-        ["noV"] = "N",
-        ["no\22"] = "N",
-        ["niI"] = "N",
-        ["niR"] = "N",
-        ["niV"] = "N",
-        ["nt"] = "N",
-        ["ntT"] = "N",
-        ["v"] = "V",
-        ["vs"] = "V",
-        ["V"] = "V",
-        ["Vs"] = "V",
-        ["\22"] = "V",
-        ["\22s"] = "V",
-        ["s"] = "S",
-        ["S"] = "S",
-        ["CTRL-S"] = "S",
-        ["i"] = "I",
-        ["ic"] = "I",
-        ["ix"] = "I",
-        ["R"] = "R",
-        ["Rc"] = "R",
-        ["Rx"] = "R",
-        ["Rvc"] = "R",
-        ["Rvx"] = "R",
-        ["c"] = "C",
-        ["cv"] = "E",
-        ["r"] = "N",
-        ["rm"] = "N",
-        ["r?"] = "N",
-        ["!"] = "N",
-        ["t"] = "T",
+        ["n"]       = "NORMAL",
+        ["no"]      = "O-PENDING",
+        ["nov"]     = "O-PENDING",
+        ["noV"]     = "O-PENDING",
+        ["no\22"]   = "O-PENDING",
+        ["niI"]     = "NORMAL",
+        ["niR"]     = "NORMAL",
+        ["niV"]     = "NORMAL",
+        ["nt"]      = "NORMAL",
+        ["ntT"]     = "NORMAL",
+        ["v"]       = "VISUAL",
+        ["vs"]      = "VISUAL",
+        ["V"]       = "V-LINE",
+        ["Vs"]      = "V-LINE",
+        ["\22"]     = "V-BLOCK",
+        ["\22s"]    = "V-BLOCK",
+        ["s"]       = "SELECT",
+        ["S"]       = "S-LINE",
+        ["\19"]     = "S-BLOCK",
+        ["i"]       = "INSERT",
+        ["ic"]      = "INSERT",
+        ["ix"]      = "INSERT",
+        ["R"]       = "REPLACE",
+        ["Rc"]      = "REPLACE",
+        ["Rx"]      = "REPLACE",
+        ["Rv"]      = "V-REPLACE",
+        ["Rvc"]     = "V-REPLACE",
+        ["Rvx"]     = "V-REPLACE",
+        ["c"]       = "COMMAND",
+        ["cv"]      = "EX",
+        ["ce"]      = "EX",
+        ["r"]       = "REPLACE",
+        ["rm"]      = "MORE",
+        ["r?"]      = "CONFIRM",
+        ["!"]       = "SHELL",
+        ["t"]       = "TERMINAL",
     }
+    -- stylua: ignore end
     local mode = modes[vim.api.nvim_get_mode().mode]
-    return lib.get_hl_group(mode, " " .. mode .. " ")
+    return lib.prepend_hl_group(mode, " " .. mode .. " ")
 end
 
 function mod.filetype()
@@ -102,16 +113,16 @@ function mod.filetype()
     if filetype == "" then
         return ""
     end
-    return lib.get_hl_group("Filetype", " " .. filetype .. " ")
+    return lib.prepend_hl_group("Filetype", " " .. filetype .. " ")
 end
 
 -- This can be a raw string, no need for expression as it is built into vim
 function mod.file()
-    return lib.get_hl_group("File", " %m %f ")
+    return lib.prepend_hl_group("File", " %m %f ")
 end
 
 function mod.project()
-    return lib.get_hl_group("Project", " %F ")
+    return lib.prepend_hl_group("Project", " %F ")
 end
 
 -- {{{ git status
@@ -150,15 +161,15 @@ local function git_diff_parse(diff_output)
         deletions = deletions + del
         line, i = get_line(diff_output, i)
     end
-    info = info .. lib.get_hl_group("GitDiffInsertion", " ")
+    info = info .. lib.prepend_hl_group("GitDiffInsertion", " ")
     if insertions ~= 0 then
-        info = info .. lib.get_hl_group("GitDiffInsertion", "+") .. tostring(insertions)
+        info = info .. lib.prepend_hl_group("GitDiffInsertion", "+") .. tostring(insertions)
     end
     if insertions ~= 0 and deletions ~= 0 then
         info = info .. " " -- add space separator
     end
     if deletions ~= 0 then
-        info = info .. lib.get_hl_group("GitDiffDeletion", "-") .. tostring(deletions)
+        info = info .. lib.prepend_hl_group("GitDiffDeletion", "-") .. tostring(deletions)
     end
     return info == "" and "" or info .. " "
 end
