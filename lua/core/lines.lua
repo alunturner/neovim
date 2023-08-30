@@ -11,6 +11,26 @@ function lib.prepend_hl_group(name, s)
     return hl_group .. s
 end
 
+-- prefixes the section name with the hl_prefix
+function lib.get_hl_group(section_name)
+    return string.format("%%#%s%s#", hl_prefix, section_name)
+end
+
+-- opts = {
+-- name = string => used to store the function and name the hl group
+-- content = string | function
+-- minwid = number
+-- maxwid = number
+-- justify = boolean
+-- }
+function lib.generate_status_string(opts)
+    local content = opts.content
+    local minwid = opts.minwid
+    local maxwid = opts.maxwid
+    local justify = opts.justify
+    local name = opts.name
+end
+
 lib.sections = {}
 lib.next_section_index = 1
 
@@ -23,11 +43,6 @@ end
 function lib:append_section(section)
     self.sections[self.next_section_index] = section
     self.next_section_index = self.next_section_index + 1
-end
-
-function lib:add_string_section(s)
-    self:append_section(s)
-    return s
 end
 
 function lib:add_function_section(fn)
@@ -55,7 +70,7 @@ function lib:parse(sections)
 
         -- do the actual display string
         if type(section) == "string" then
-            result = result .. self:add_string_section(section)
+            result = result .. section
         elseif type(section) == "function" then
             result = result .. self:add_function_section(section)
         end
@@ -238,7 +253,6 @@ end
 -- global for module
 PaxLines = {}
 PaxLines.lib = lib
-
 local statusline = {
     sections.mode_repeater,
     sections.project,

@@ -543,7 +543,7 @@ local in_house = {
     PaxLinesSELECT = { fg = c.pink },
     PaxLinesSLINE = { fg = c.pink },
     PaxLinesSBLOCK = { fg = c.pink },
-    PaxLinesINSERT = { fg = c.pink },
+    PaxLinesINSERT = { fg = c.green },
     PaxLinesVREPLACE = { fg = c.pink },
     PaxLinesCOMMAND = { fg = c.pink },
     PaxLinesEX = { fg = c.pink },
