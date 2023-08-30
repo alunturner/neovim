@@ -128,22 +128,19 @@ end
 -- TODO figure out why this isn't working... think this should work like the
 -- (working) diagnostics section
 function sections.project()
-    local clients = vim.lsp.buf_get_clients()
-    local no_client_attached = next(clients) == nil
-    local empty_result = lib.prepend_hl_group("NORMAL", "PROJECT")
+    local workspace_path = vim.lsp.buf.list_workspace_folders()[1]
+    local no_workspace = workspace_path == nil
 
-    if no_client_attached then
-        return empty_result
+    if no_workspace then
+        return lib.prepend_hl_group("NORMAL", "PROJECT")
     end
 
-    for _, client in ipairs(clients) do
-        if client.root_dir ~= nil then
-            local root = string.format("%s", client.root_dir)
-            return lib.prepend_hl_group("NORMAL", root)
-        end
+    -- clunky, but not sure how to do this cleanly
+    local path_parts = {}
+    for part in string.gmatch(workspace_path, "[^/]+") do
+        table.insert(path_parts, part)
     end
-
-    return empty_result
+    return lib.prepend_hl_group("NORMAL", path_parts[#path_parts])
 end
 
 -- a mode repeater for the winline
