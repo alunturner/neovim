@@ -104,23 +104,27 @@ function mod.mode()
     return lib.prepend_hl_group(hl_name, display_text)
 end
 
--- This can be a raw string, no need for expression as it is built into vim
 function mod.file()
-    return lib.prepend_hl_group("File", "%m %f")
+    return "%t"
 end
 
 function mod.project()
-    return lib.prepend_hl_group("Project", "%F")
+    return "PROJECT"
 end
 
 -- a mode repeater for the winline
 function mod.mode_repeater()
-    return "MODE REPEATER"
+    return "M"
 end
 
--- diagnostics for the lhs of the statusline
+-- diagnostics for the lhs of the statusline, optional
 function mod.diagnostics()
     return "DIAGNOSTICS"
+end
+
+-- search for the rhs of the statusline, optional
+function mod.search()
+    return "SEARCH"
 end
 
 -- location for the rhs of the statusline
@@ -129,35 +133,38 @@ function mod.location()
 end
 
 -- git status for the extreme left
-function mod.git_status()
-    return "BRANCH AND STATUS"
+function mod.git_project()
+    return "GIT STATUS"
 end
 
 -- git diff for the extreme right
-function mod.git_diff()
+function mod.git_file()
     return "GIT DIFF"
+end
+
+-- git branch for the extreme left
+function mod.git_branch()
+    return "GIT BRANCH"
 end
 
 -- global for module
 PaxLines = {}
 PaxLines.lib = lib
 
-local winbar = {
-    mod.project,
-    separator,
-    mod.mode_repeater,
-    separator,
-    mod.file,
-}
 local statusline = {
-    mod.git_status,
+    mod.mode_repeater,
+    mod.project,
+    mod.git_branch,
+    mod.git_project,
     mod.diagnostics,
     separator,
     mod.mode,
     separator,
+    mod.search,
     mod.location,
-    mod.git_diff,
+    mod.git_file,
+    mod.file,
+    mod.mode_repeater,
 }
 
 vim.opt.statusline = lib:parse(statusline)
-vim.opt.winbar = lib:parse(winbar)
