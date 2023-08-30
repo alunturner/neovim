@@ -175,7 +175,24 @@ end
 
 -- search for the rhs of the statusline, optional
 function sections.search()
-    return "SEARCH"
+    if vim.v.hlsearch == 0 then
+        return ""
+    end
+
+    -- making this pcall with { recompute = false } may help performance
+    local ok, s_count = pcall(vim.fn.searchcount, { recompute = true })
+    if not ok or s_count.current == nil or s_count.total == 0 then
+        return ""
+    end
+
+    if s_count.incomplete == 1 then
+        return "?/?"
+    end
+
+    local too_many = (">%d"):format(s_count.maxcount)
+    local current = s_count.current > s_count.maxcount and too_many or s_count.current
+    local total = s_count.total > s_count.maxcount and too_many or s_count.total
+    return ("%s/%s"):format(current, total)
 end
 
 -- location for the rhs of the statusline
