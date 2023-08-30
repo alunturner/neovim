@@ -52,12 +52,8 @@ function lib:parse(sections)
 end
 
 -- mod
-local mod = {}
-
--- Display the full word for the current mode
-function mod.mode()
-    -- (lifted from Lualine)
-    local mode_table = {
+local sections = {
+    mode_table = {
         ["n"] = "NORMAL",
         ["no"] = "O-PENDING",
         ["nov"] = "O-PENDING",
@@ -94,56 +90,65 @@ function mod.mode()
         ["r?"] = "CONFIRM",
         ["!"] = "SHELL",
         ["t"] = "TERMINAL",
-    }
+    },
+}
 
+-- Display the full word for the current mode
+function sections.mode()
     local nvim_code = vim.api.nvim_get_mode().mode
-    local display_text = mode_table[nvim_code]
+    local display_text = sections.mode_table[nvim_code]
 
     -- remove the hyphens from those names that have them
     local hl_name = string.gsub(display_text, "(%w+)-(%w+)", "%1%2")
     return lib.prepend_hl_group(hl_name, display_text)
 end
 
-function mod.file()
-    return "%t"
+function sections.file()
+    return "%m %t"
 end
 
-function mod.project()
+function sections.project()
     return "PROJECT"
 end
 
 -- a mode repeater for the winline
-function mod.mode_repeater()
-    return "M"
+function sections.mode_repeater()
+    local nvim_code = vim.api.nvim_get_mode().mode
+    local display_text = sections.mode_table[nvim_code]
+
+    -- remove the hyphens from those names that have them
+    local hl_name = string.gsub(display_text, "(%w+)-(%w+)", "%1%2")
+    local repeater_length = 1
+    return lib.prepend_hl_group(hl_name, string.rep(" ", repeater_length))
 end
 
 -- diagnostics for the lhs of the statusline, optional
-function mod.diagnostics()
+function sections.diagnostics()
     return "DIAGNOSTICS"
 end
 
 -- search for the rhs of the statusline, optional
-function mod.search()
+function sections.search()
     return "SEARCH"
 end
 
 -- location for the rhs of the statusline
-function mod.location()
+function sections.location()
     return "LOCATION"
 end
 
 -- git status for the extreme left
-function mod.git_project()
+function sections.git_project()
     return "GIT STATUS"
 end
 
 -- git diff for the extreme right
-function mod.git_file()
+function sections.git_file()
     return "GIT DIFF"
 end
 
 -- git branch for the extreme left
-function mod.git_branch()
+function sections.git_branch()
     return "GIT BRANCH"
 end
 
@@ -152,19 +157,19 @@ PaxLines = {}
 PaxLines.lib = lib
 
 local statusline = {
-    mod.mode_repeater,
-    mod.project,
-    mod.git_branch,
-    mod.git_project,
-    mod.diagnostics,
+    sections.mode_repeater,
+    sections.project,
+    sections.git_branch,
+    sections.git_project,
+    sections.diagnostics,
     separator,
-    mod.mode,
+    sections.mode,
     separator,
-    mod.search,
-    mod.location,
-    mod.git_file,
-    mod.file,
-    mod.mode_repeater,
+    sections.search,
+    sections.location,
+    sections.git_file,
+    sections.file,
+    sections.mode_repeater,
 }
 
 vim.opt.statusline = lib:parse(statusline)
