@@ -1,3 +1,6 @@
+-- TODO - this is nearly there but I've run into the same problem again where
+-- exiting insert mode makes the line disappear briefly - stick with Lualine
+-- until I figure this out
 -- CONSTANTS
 local hl_prefix = "PaxLines"
 -- HELPERS, aka lib
