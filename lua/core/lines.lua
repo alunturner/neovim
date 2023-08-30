@@ -41,13 +41,31 @@ end
 -- use a function to add highlight groups or dynamic behaviour
 function lib:parse(sections)
     local result = ""
-    for _, section in pairs(sections) do
+    local spacing_count = 1
+    local spacing = string.rep(" ", spacing_count)
+
+    for i, section in ipairs(sections) do
+        local should_space_start = i > 1
+        local should_space_end = i < #sections
+
+        -- do the pre-spacing
+        if should_space_start then
+            result = spacing .. result
+        end
+
+        -- do the actual display string
         if type(section) == "string" then
             result = result .. self:add_string_section(section)
         elseif type(section) == "function" then
             result = result .. self:add_function_section(section)
         end
+
+        -- do the post-spacing
+        if should_space_end then
+            result = result .. spacing
+        end
     end
+
     return result
 end
 
@@ -107,22 +125,25 @@ function sections.file()
     return "%m %t"
 end
 
--- TODO, figure out why this doesn't work, I presume it needs to update?
+-- TODO figure out why this isn't working... think this should work like the
+-- (working) diagnostics section
 function sections.project()
     local clients = vim.lsp.buf_get_clients()
     local no_client_attached = next(clients) == nil
+    local empty_result = lib.prepend_hl_group("NORMAL", "")
 
     if no_client_attached then
-        return ""
+        return empty_result
     end
 
     for _, client in ipairs(clients) do
         if client.root_dir ~= nil then
-            return string.format("%s", "hello!")
+            local root = string.format("%s", client.root_dir)
+            return lib.prepend_hl_group("NORMAL", root)
         end
     end
 
-    return ""
+    return empty_result
 end
 
 -- a mode repeater for the winline
