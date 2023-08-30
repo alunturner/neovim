@@ -138,7 +138,39 @@ end
 
 -- diagnostics for the lhs of the statusline, optional
 function sections.diagnostics()
-    return "DIAGNOSTICS"
+    local diagnostic_levels = {
+        { id = vim.diagnostic.severity.ERROR, sign = "E" },
+        { id = vim.diagnostic.severity.WARN, sign = "W" },
+        { id = vim.diagnostic.severity.INFO, sign = "I" },
+        { id = vim.diagnostic.severity.HINT, sign = "H" },
+    }
+    local get_diagnostic_count = function(id)
+        return #vim.diagnostic.get(0, { severity = id })
+    end
+
+    -- Assumption: there are no attached clients if table
+    -- `vim.lsp.buf_get_clients()` is empty
+    local clients = vim.lsp.buf_get_clients()
+    local no_client_attached = next(clients) == nil
+    if no_client_attached then
+        return ""
+    end
+
+    -- Construct diagnostic info using predefined order
+    local t = {}
+    for _, level in ipairs(diagnostic_levels) do
+        local n = get_diagnostic_count(level.id)
+        -- Add level info only if diagnostic is present
+        if n > 0 then
+            table.insert(t, string.format(" %s%s", level.sign, n))
+        end
+    end
+
+    local icon = "LSP"
+    if vim.tbl_count(t) == 0 then
+        return ("%s -"):format(icon)
+    end
+    return string.format("%s%s", icon, table.concat(t, ""))
 end
 
 -- search for the rhs of the statusline, optional
@@ -151,6 +183,7 @@ function sections.location()
     return "LOCATION"
 end
 
+-- hold off doing these until git fugitive added
 -- git status for the extreme left
 function sections.git_project()
     return "GIT STATUS"
