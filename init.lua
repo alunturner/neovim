@@ -9,4 +9,3 @@ require("core.settings")
 
 -- Apply custom design files here.
 require("core.theme")
-require("core.statusline")
