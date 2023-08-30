@@ -1,6 +1,5 @@
 -- CONSTANTS
 local hl_prefix = "PaxLines"
-local separator = "%="
 -- HELPERS, aka lib
 local lib = {}
 -- Takes the section name and a string
@@ -125,6 +124,10 @@ local sections = {
         ["t"] = "TERMINAL",
     },
 }
+
+function sections.separator()
+    return "%="
+end
 
 -- Display the full word for the current mode
 function sections.mode()
@@ -259,9 +262,9 @@ local statusline = {
     sections.git_branch,
     sections.git_project,
     sections.diagnostics,
-    separator,
+    sections.separator,
     sections.mode,
-    separator,
+    sections.separator,
     sections.search,
     sections.location,
     sections.git_file,
