@@ -107,8 +107,22 @@ function sections.file()
     return "%m %t"
 end
 
+-- TODO, figure out why this doesn't work, I presume it needs to update?
 function sections.project()
-    return "PROJECT"
+    local clients = vim.lsp.buf_get_clients()
+    local no_client_attached = next(clients) == nil
+
+    if no_client_attached then
+        return ""
+    end
+
+    for _, client in ipairs(clients) do
+        if client.root_dir ~= nil then
+            return string.format("%s", "hello!")
+        end
+    end
+
+    return ""
 end
 
 -- a mode repeater for the winline
