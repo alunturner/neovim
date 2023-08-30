@@ -130,7 +130,7 @@ end
 function sections.project()
     local clients = vim.lsp.buf_get_clients()
     local no_client_attached = next(clients) == nil
-    local empty_result = lib.prepend_hl_group("NORMAL", "")
+    local empty_result = lib.prepend_hl_group("NORMAL", "PROJECT")
 
     if no_client_attached then
         return empty_result
