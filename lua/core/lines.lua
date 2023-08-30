@@ -195,9 +195,10 @@ function sections.search()
     return ("%s/%s"):format(current, total)
 end
 
--- location for the rhs of the statusline
+-- TODO make this display the highlighted dimensions when in a visual mode
+-- see https://neovim.io/doc/user/builtin.html#virtcol()
 function sections.location()
-    return "LOCATION"
+    return '%l:%-2{virtcol(".") - 1}'
 end
 
 -- hold off doing these until git fugitive added
