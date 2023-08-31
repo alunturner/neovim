@@ -198,19 +198,24 @@ end
 
 -- TODO
 PaxLines.GitFile = function()
-    local hl_string = create_highlight("GitFile")
-    local content = "GitFile"
-    return string.format("%%%s%s", hl_string, content)
+    return "GitFile"
 end
 local function GitFile()
-    local call = "{%v:lua.PaxLines.GitFile()%}"
-    return string.format("%%%s", call)
+    local highlight = create_highlight("GitFile")
+    local call = "%-20{%v:lua.PaxLines.GitFile()%}"
+    local reset = get_global_highlight()
+    return string.format("%s%s%s", highlight, call, reset)
 end
 
+-- TODO
+PaxLines.File = function()
+    return "%f"
+end
 local function File()
-    local hl_string = create_highlight("File")
-    local content = "%m %t"
-    return string.format("%%%s%s", hl_string, content)
+    local highlight = create_highlight("File")
+    local call = "%-20{%v:lua.PaxLines.File()%}"
+    local reset = get_global_highlight()
+    return string.format("%s%s%s", highlight, call, reset)
 end
 local function Spacer()
     return " "
@@ -272,26 +277,16 @@ PaxLines.status = function()
             Diagnostics(),
             Separator(),
             Mode(),
-
             Separator(),
             Search(),
             Spacer(),
             Location(),
             Spacer(),
-            ModeRepeater(),
-            --[[Spacer(),
-            Spacer(),
-            Spacer(),
-
-            Separator(),
-            Separator(),
-    
-
             GitFile(),
             Spacer(),
             File(),
             Spacer(),
-            ModeRepeater(),--]]
+            ModeRepeater(),
         })
     end
 end
