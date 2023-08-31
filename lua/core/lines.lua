@@ -1,3 +1,10 @@
+-- TODO
+-- next step - rename all to PascalCase to reflect the fact that they're globals,
+-- then add the styling to all of the sections so that they look nice
+-- then add the sizing so that they look right in
+-- wide
+-- regular
+-- narrow
 PaxLines = {}
 local hl_prefix = "PaxLines"
 local function create_hl_string(hl_name)
@@ -43,7 +50,7 @@ local modes = {
     ["t"] = { display_text = "TERMINAL", hl_name = "ModeOther" },
 }
 
-PaxLines.mode_repeater = function()
+PaxLines.ModeRepeater = function()
     local mode_code = vim.api.nvim_get_mode().mode
     local hl_name = modes[mode_code].hl_name
 
@@ -51,12 +58,12 @@ PaxLines.mode_repeater = function()
     local content = "  "
     return string.format("%%%s%s", hl_string, content)
 end
-local function mode_repeater()
-    local call = "{%v:lua.PaxLines.mode_repeater()%}"
+local function ModeRepeater()
+    local call = "{%v:lua.PaxLines.ModeRepeater()%}"
     return string.format("%%%s", call)
 end
 
-PaxLines.workspace = function()
+PaxLines.Workspace = function()
     local workspace_path = vim.lsp.buf.list_workspace_folders()[1]
     local no_workspace = workspace_path == nil
 
@@ -74,34 +81,34 @@ PaxLines.workspace = function()
     local content = path_parts[#path_parts]
     return string.format("%%%s%s", hl_string, content)
 end
-local function workspace()
-    local call = "{%v:lua.PaxLines.workspace()%}"
+local function Workspace()
+    local call = "{%v:lua.PaxLines.Workspace()%}"
     return string.format("%%%s", call)
 end
 
 -- TODO
-PaxLines.git_branch = function()
+PaxLines.GitBranch = function()
     local hl_string = create_hl_string("GitBranch")
     local content = "GitBranch"
     return string.format("%%%s%s", hl_string, content)
 end
-local function git_branch()
-    local call = "{%v:lua.PaxLines.git_branch()%}"
+local function GitBranch()
+    local call = "{%v:lua.PaxLines.GitBranch()%}"
     return string.format("%%%s", call)
 end
 
 -- TODO
-PaxLines.git_project = function()
+PaxLines.GitProject = function()
     local hl_string = create_hl_string("GitProject")
     local content = "GitProject"
     return string.format("%%%s%s", hl_string, content)
 end
-local function git_project()
-    local call = "{%v:lua.PaxLines.git_project()%}"
+local function GitProject()
+    local call = "{%v:lua.PaxLines.GitProject()%}"
     return string.format("%%%s", call)
 end
 
-PaxLines.diagnostics = function()
+PaxLines.Diagnostics = function()
     local diagnostic_levels = {
         { id = vim.diagnostic.severity.ERROR, sign = "E" },
         { id = vim.diagnostic.severity.WARN, sign = "W" },
@@ -138,12 +145,12 @@ PaxLines.diagnostics = function()
     local content = string.format("%s%s", icon, table.concat(t, ""))
     return string.format("%%%s%s", hl_string, content)
 end
-local function diagnostics()
-    local call = "{%v:lua.PaxLines.diagnostics()%}"
+local function Diagnostics()
+    local call = "{%v:lua.PaxLines.Diagnostics()%}"
     return string.format("%%%s", call)
 end
 
-PaxLines.mode = function()
+PaxLines.Mode = function()
     local mode_code = vim.api.nvim_get_mode().mode
     local hl_name = modes[mode_code].hl_name
 
@@ -151,12 +158,12 @@ PaxLines.mode = function()
     local content = modes[mode_code].display_text
     return string.format("%%%s%s", hl_string, content)
 end
-local function mode()
-    local call = "{%v:lua.PaxLines.mode()%}"
+local function Mode()
+    local call = "{%v:lua.PaxLines.Mode()%}"
     return string.format("%%%s", call)
 end
 
-PaxLines.search = function()
+PaxLines.Search = function()
     if vim.v.hlsearch == 0 then
         return ""
     end
@@ -180,39 +187,39 @@ PaxLines.search = function()
     local content = string.format("%s/%s", current, total)
     return string.format("%%%s%s", hl_string, content)
 end
-local function search()
-    local call = "{%v:lua.PaxLines.search()%}"
+local function Search()
+    local call = "{%v:lua.PaxLines.Search()%}"
     return string.format("%%%s", call)
 end
 
-PaxLines.location = function()
+PaxLines.Location = function()
     local hl_string = create_hl_string("Location")
     local content = '%l:%-2{virtcol(".") - 1}'
     return string.format("%%%s%s", hl_string, content)
 end
-local function location()
-    local call = "{%v:lua.PaxLines.location()%}"
+local function Location()
+    local call = "{%v:lua.PaxLines.Location()%}"
     return string.format("%%%s", call)
 end
 
 -- TODO
-PaxLines.git_file = function()
+PaxLines.GitFile = function()
     local hl_string = create_hl_string("GitFile")
     local content = "GitFile"
     return string.format("%%%s%s", hl_string, content)
 end
-local function git_file()
-    local call = "{%v:lua.PaxLines.git_file()%}"
+local function GitFile()
+    local call = "{%v:lua.PaxLines.GitFile()%}"
     return string.format("%%%s", call)
 end
 
-local function file()
+local function File()
     local hl_string = create_hl_string("File")
     local content = "%m %t"
     return string.format("%%%s%s", hl_string, content)
 end
 
-local function separator()
+local function Separator()
     local hl_string = create_hl_string("Separator")
     local content = "%="
     return string.format("%%%s%s", hl_string, content)
@@ -230,36 +237,36 @@ PaxLines.status = function()
 
     if current_width < medium_breakpoint then
         return table.concat(
-            { git_project(), diagnostics(), separator(), mode(), separator(), location(), search() },
+            { GitProject(), Diagnostics(), Separator(), Mode(), Separator(), Location(), Search() },
             " "
         )
     elseif current_width < wide_breakpoint then
         return table.concat({
-            workspace(),
-            git_project(),
-            diagnostics(),
-            separator(),
-            mode(),
-            separator(),
-            location(),
-            search(),
-            file(),
+            Workspace(),
+            GitProject(),
+            Diagnostics(),
+            Separator(),
+            Mode(),
+            Separator(),
+            Location(),
+            Search(),
+            File(),
         }, " ")
     else
         return table.concat({
-            mode_repeater(),
-            workspace(),
-            git_branch(),
-            git_project(),
-            diagnostics(),
-            separator(),
-            mode(),
-            separator(),
-            search(),
-            location(),
-            git_file(),
-            file(),
-            mode_repeater(),
+            ModeRepeater(),
+            Workspace(),
+            GitBranch(),
+            GitProject(),
+            Diagnostics(),
+            Separator(),
+            Mode(),
+            Separator(),
+            Search(),
+            Location(),
+            GitFile(),
+            File(),
+            ModeRepeater(),
         }, " ")
     end
 end
