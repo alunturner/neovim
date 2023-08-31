@@ -198,7 +198,7 @@ end
 -- TODO
 PaxLines.git_file = function()
     local hl_string = create_hl_string("GitFile")
-    local content = '%l:%-2{virtcol(".") - 1}'
+    local content = "GitFile"
     return string.format("%%%s%s", hl_string, content)
 end
 local function git_file()
@@ -213,7 +213,7 @@ local function file()
 end
 
 local function separator()
-    local hl_string = create_hl_string("File")
+    local hl_string = create_hl_string("Separator")
     local content = "%="
     return string.format("%%%s%s", hl_string, content)
 end
