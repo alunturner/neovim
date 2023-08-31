@@ -186,15 +186,20 @@ local function search()
 end
 
 PaxLines.location = function()
-    return "location"
+    local hl_string = create_hl_string("Location")
+    local content = '%l:%-2{virtcol(".") - 1}'
+    return string.format("%%%s%s", hl_string, content)
 end
 local function location()
     local call = "{%v:lua.PaxLines.location()%}"
     return string.format("%%%s", call)
 end
 
+-- TODO
 PaxLines.git_file = function()
-    return "git_file"
+    local hl_string = create_hl_string("GitFile")
+    local content = '%l:%-2{virtcol(".") - 1}'
+    return string.format("%%%s%s", hl_string, content)
 end
 local function git_file()
     local call = "{%v:lua.PaxLines.git_file()%}"
@@ -202,13 +207,15 @@ local function git_file()
 end
 
 local function file()
+    local hl_string = create_hl_string("File")
     local content = "%m %t"
-    return string.format("%s", content)
+    return string.format("%%%s%s", hl_string, content)
 end
 
 local function separator()
+    local hl_string = create_hl_string("File")
     local content = "%="
-    return string.format("%s", content)
+    return string.format("%%%s%s", hl_string, content)
 end
 
 -- TODO make this actually work, for now use it to dummy the content for prototyping
