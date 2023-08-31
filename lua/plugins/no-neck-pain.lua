@@ -12,12 +12,9 @@ Plugin.config = function()
                 fillchars = "eob: ",
             },
         },
-        --[[]
         autocmds = {
             enableOnVimEnter = true,
         },
-         ]]
-        --
     })
 end
 

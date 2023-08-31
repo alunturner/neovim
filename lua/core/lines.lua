@@ -82,8 +82,13 @@ local function separator()
     return string.format("%s", content)
 end
 
+-- TODO make this actually work, for now use it to dummy the content for prototyping
+local function get_terminal_width()
+    return 168
+end
+
 PaxLines.status = function()
-    local current_width = vim.api.nvim_win_get_width(0)
+    local current_width = get_terminal_width()
     local medium_breakpoint = 100
     local wide_breakpoint = 140
 
