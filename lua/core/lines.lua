@@ -1,46 +1,54 @@
 PaxLines = {}
+local hl_prefix = "PaxLines"
+local function create_hl_string(hl_name)
+    return string.format("#%s%s#", hl_prefix, hl_name)
+end
 
 local modes = {
-    ["n"] = { display_text = "NORMAL", highlight_group = "ModeNormal" },
-    ["no"] = { display_text = "O-PENDING", highlight_group = "ModePending" },
-    ["nov"] = { display_text = "O-PENDING", highlight_group = "ModePending" },
-    ["noV"] = { display_text = "O-PENDING", highlight_group = "ModePending" },
-    ["no\22"] = { display_text = "O-PENDING", highlight_group = "ModePending" },
-    ["niI"] = { display_text = "NORMAL", highlight_group = "ModeNormal" },
-    ["niR"] = { display_text = "NORMAL", highlight_group = "ModeNormal" },
-    ["niV"] = { display_text = "NORMAL", highlight_group = "ModeNormal" },
-    ["nt"] = { display_text = "NORMAL", highlight_group = "ModeNormal" },
-    ["ntT"] = { display_text = "NORMAL", highlight_group = "ModeNormal" },
-    ["v"] = { display_text = "VISUAL", highlight_group = "ModeVisual" },
-    ["vs"] = { display_text = "VISUAL", highlight_group = "ModeVisual" },
-    ["V"] = { display_text = "V-LINE", highlight_group = "ModeVisual" },
-    ["Vs"] = { display_text = "V-LINE", highlight_group = "ModeVisual" },
-    ["\22"] = { display_text = "V-BLOCK", highlight_group = "ModeVisual" },
-    ["\22s"] = { display_text = "V-BLOCK", highlight_group = "ModeVisual" },
-    ["s"] = { display_text = "SELECT", highlight_group = "ModeSelect" },
-    ["S"] = { display_text = "S-LINE", highlight_group = "ModeSelect" },
-    ["\19"] = { display_text = "S-BLOCK", highlight_group = "ModeSelect" },
-    ["i"] = { display_text = "INSERT", highlight_group = "ModeInsert" },
-    ["ic"] = { display_text = "INSERT", highlight_group = "ModeInsert" },
-    ["ix"] = { display_text = "INSERT", highlight_group = "ModeInsert" },
-    ["R"] = { display_text = "REPLACE", highlight_group = "ModeReplace" },
-    ["Rc"] = { display_text = "REPLACE", highlight_group = "ModeReplace" },
-    ["Rx"] = { display_text = "REPLACE", highlight_group = "ModeReplace" },
-    ["Rv"] = { display_text = "V-REPLACE", highlight_group = "ModeReplace" },
-    ["Rvc"] = { display_text = "V-REPLACE", highlight_group = "ModeReplace" },
-    ["Rvx"] = { display_text = "V-REPLACE", highlight_group = "ModeReplace" },
-    ["c"] = { display_text = "COMMAND", highlight_group = "ModeCommand" },
-    ["cv"] = { display_text = "EX", highlight_group = "ModeEx" },
-    ["ce"] = { display_text = "EX", highlight_group = "ModeEx" },
-    ["r"] = { display_text = "REPLACE", highlight_group = "ModeReplace" },
-    ["rm"] = { display_text = "MORE", highlight_group = "ModeOther" },
-    ["r?"] = { display_text = "CONFIRM", highlight_group = "ModeOther" },
-    ["!"] = { display_text = "SHELL", highlight_group = "ModeOther" },
-    ["t"] = { display_text = "TERMINAL", highlight_group = "ModeOther" },
+    ["n"] = { display_text = "NORMAL", hl_name = "ModeNormal" },
+    ["no"] = { display_text = "O-PENDING", hl_name = "ModePending" },
+    ["nov"] = { display_text = "O-PENDING", hl_name = "ModePending" },
+    ["noV"] = { display_text = "O-PENDING", hl_name = "ModePending" },
+    ["no\22"] = { display_text = "O-PENDING", hl_name = "ModePending" },
+    ["niI"] = { display_text = "NORMAL", hl_name = "ModeNormal" },
+    ["niR"] = { display_text = "NORMAL", hl_name = "ModeNormal" },
+    ["niV"] = { display_text = "NORMAL", hl_name = "ModeNormal" },
+    ["nt"] = { display_text = "NORMAL", hl_name = "ModeNormal" },
+    ["ntT"] = { display_text = "NORMAL", hl_name = "ModeNormal" },
+    ["v"] = { display_text = "VISUAL", hl_name = "ModeVisual" },
+    ["vs"] = { display_text = "VISUAL", hl_name = "ModeVisual" },
+    ["V"] = { display_text = "V-LINE", hl_name = "ModeVisual" },
+    ["Vs"] = { display_text = "V-LINE", hl_name = "ModeVisual" },
+    ["\22"] = { display_text = "V-BLOCK", hl_name = "ModeVisual" },
+    ["\22s"] = { display_text = "V-BLOCK", hl_name = "ModeVisual" },
+    ["s"] = { display_text = "SELECT", hl_name = "ModeSelect" },
+    ["S"] = { display_text = "S-LINE", hl_name = "ModeSelect" },
+    ["\19"] = { display_text = "S-BLOCK", hl_name = "ModeSelect" },
+    ["i"] = { display_text = "INSERT", hl_name = "ModeInsert" },
+    ["ic"] = { display_text = "INSERT", hl_name = "ModeInsert" },
+    ["ix"] = { display_text = "INSERT", hl_name = "ModeInsert" },
+    ["R"] = { display_text = "REPLACE", hl_name = "ModeReplace" },
+    ["Rc"] = { display_text = "REPLACE", hl_name = "ModeReplace" },
+    ["Rx"] = { display_text = "REPLACE", hl_name = "ModeReplace" },
+    ["Rv"] = { display_text = "V-REPLACE", hl_name = "ModeReplace" },
+    ["Rvc"] = { display_text = "V-REPLACE", hl_name = "ModeReplace" },
+    ["Rvx"] = { display_text = "V-REPLACE", hl_name = "ModeReplace" },
+    ["c"] = { display_text = "COMMAND", hl_name = "ModeCommand" },
+    ["cv"] = { display_text = "EX", hl_name = "ModeEx" },
+    ["ce"] = { display_text = "EX", hl_name = "ModeEx" },
+    ["r"] = { display_text = "REPLACE", hl_name = "ModeReplace" },
+    ["rm"] = { display_text = "MORE", hl_name = "ModeOther" },
+    ["r?"] = { display_text = "CONFIRM", hl_name = "ModeOther" },
+    ["!"] = { display_text = "SHELL", hl_name = "ModeOther" },
+    ["t"] = { display_text = "TERMINAL", hl_name = "ModeOther" },
 }
 
 PaxLines.mode_repeater = function()
-    return "M"
+    local mode_code = vim.api.nvim_get_mode().mode
+    local hl_name = modes[mode_code].hl_name
+    local hl_string = create_hl_string(hl_name)
+
+    return string.format("%%%s%s", hl_string, "  ")
 end
 local function mode_repeater()
     local call = "{%v:lua.PaxLines.mode_repeater()%}"

@@ -536,11 +536,12 @@ local pax = {
     -- PaxLines
     PaxLinesModeNormal = { fg = c.pink },
     PaxLinesModePending = { fg = c.pink },
-    PaxLinesModeVisual = { fg = c.pink },
+    PaxLinesModeVisual = { fg = c.pink, bg = c.green },
     PaxLinesModeSelect = { fg = c.pink },
-    PaxLinesModeInsert = { fg = c.pink },
-    PaxLinesModeReplace = { fg = c.pink },
-    PaxLinesModeCommand = { fg = c.pink },
+    PaxLinesModeInsert = { fg = c.pink, bg = c.blue },
+    PaxLinesModeReplace = { fg = c.pink, bg = c.red },
+    PaxLinesModeCommand = { fg = c.pink, bg = c.orange },
     PaxLinesModeEx = { fg = c.pink },
-    PaxLinesModeOther = { fg = c.pink },
+    PaxLinesModeOther = { fg = c.pink, bg = c.pink },
 }
+set_highlights(pax)
