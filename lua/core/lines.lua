@@ -9,7 +9,7 @@ local function mode_repeater()
 end
 
 PaxLines.workspace = function()
-    return "M"
+    return "WORKSPACE"
 end
 local function workspace()
     local call = "{%v:lua.PaxLines.workspace()%}"
@@ -17,7 +17,7 @@ local function workspace()
 end
 
 PaxLines.git_branch = function()
-    return "M"
+    return "GIT_BRANCH"
 end
 local function git_branch()
     local call = "{%v:lua.PaxLines.git_branch()%}"
@@ -83,21 +83,44 @@ local function separator()
 end
 
 PaxLines.status = function()
-    return table.concat({
-        -- mode_repeater(),
-        -- workspace(),
-        -- git_branch(),
-        git_project(),
-        diagnostics(),
-        separator(),
-        mode(),
-        separator(),
-        location(),
-        search(),
-        -- git_file(),
-        -- file(),
-        -- mode_repeater(),
-    }, " ")
+    local current_width = vim.api.nvim_win_get_width(0)
+    local medium_breakpoint = 100
+    local wide_breakpoint = 140
+
+    if current_width < medium_breakpoint then
+        return table.concat(
+            { git_project(), diagnostics(), separator(), mode(), separator(), location(), search() },
+            " "
+        )
+    elseif current_width < wide_breakpoint then
+        return table.concat({
+            workspace(),
+            git_project(),
+            diagnostics(),
+            separator(),
+            mode(),
+            separator(),
+            location(),
+            search(),
+            file(),
+        }, " ")
+    else
+        return table.concat({
+            mode_repeater(),
+            workspace(),
+            git_branch(),
+            git_project(),
+            diagnostics(),
+            separator(),
+            mode(),
+            separator(),
+            location(),
+            search(),
+            git_file(),
+            file(),
+            mode_repeater(),
+        }, " ")
+    end
 end
 
 -- may become the autocmd from here
