@@ -78,6 +78,7 @@ local function workspace()
     return string.format("%%%s", call)
 end
 
+-- TODO
 PaxLines.git_branch = function()
     return "GIT_BRANCH"
 end
@@ -86,8 +87,9 @@ local function git_branch()
     return string.format("%%%s", call)
 end
 
+-- TODO
 PaxLines.git_project = function()
-    return "FN_PROJECT"
+    return "GIT_PROJECT"
 end
 local function git_project()
     local call = "{%v:lua.PaxLines.git_project()%}"
@@ -95,7 +97,38 @@ local function git_project()
 end
 
 PaxLines.diagnostics = function()
-    return "DIAGNOSTICS"
+    local diagnostic_levels = {
+        { id = vim.diagnostic.severity.ERROR, sign = "E" },
+        { id = vim.diagnostic.severity.WARN, sign = "W" },
+        { id = vim.diagnostic.severity.INFO, sign = "I" },
+        { id = vim.diagnostic.severity.HINT, sign = "H" },
+    }
+
+    local get_diagnostic_count = function(id)
+        return #vim.diagnostic.get(0, { severity = id })
+    end
+    -- Assumption: there are no attached clients if table
+    -- `vim.lsp.buf_get_clients()` is empty
+    local no_client_attached = next(vim.lsp.buf_get_clients()) == nil
+    if no_client_attached then
+        return ""
+    end
+
+    -- Construct diagnostic info using predefined order
+    local t = {}
+    for _, level in ipairs(diagnostic_levels) do
+        local n = get_diagnostic_count(level.id)
+        -- Add level info only if diagnostic is present
+        if n > 0 then
+            table.insert(t, string.format(" %s%s", level.sign, n))
+        end
+    end
+
+    local icon = ""
+    if vim.tbl_count(t) == 0 then
+        return ("%s -"):format(icon)
+    end
+    return string.format("%s%s", icon, table.concat(t, ""))
 end
 local function diagnostics()
     local call = "{%v:lua.PaxLines.diagnostics()%}"
