@@ -531,3 +531,16 @@ local languages = {
     yamlConstant = { fg = c.blue },
 }
 set_highlights(languages)
+
+local pax = {
+    -- PaxLines
+    PaxLinesModeNormal = { fg = c.pink },
+    PaxLinesModePending = { fg = c.pink },
+    PaxLinesModeVisual = { fg = c.pink },
+    PaxLinesModeSelect = { fg = c.pink },
+    PaxLinesModeInsert = { fg = c.pink },
+    PaxLinesModeReplace = { fg = c.pink },
+    PaxLinesModeCommand = { fg = c.pink },
+    PaxLinesModeEx = { fg = c.pink },
+    PaxLinesModeOther = { fg = c.pink },
+}

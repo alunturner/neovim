@@ -1,5 +1,44 @@
 PaxLines = {}
 
+local modes = {
+    ["n"] = { display_text = "NORMAL", highlight_group = "ModeNormal" },
+    ["no"] = { display_text = "O-PENDING", highlight_group = "ModePending" },
+    ["nov"] = { display_text = "O-PENDING", highlight_group = "ModePending" },
+    ["noV"] = { display_text = "O-PENDING", highlight_group = "ModePending" },
+    ["no\22"] = { display_text = "O-PENDING", highlight_group = "ModePending" },
+    ["niI"] = { display_text = "NORMAL", highlight_group = "ModeNormal" },
+    ["niR"] = { display_text = "NORMAL", highlight_group = "ModeNormal" },
+    ["niV"] = { display_text = "NORMAL", highlight_group = "ModeNormal" },
+    ["nt"] = { display_text = "NORMAL", highlight_group = "ModeNormal" },
+    ["ntT"] = { display_text = "NORMAL", highlight_group = "ModeNormal" },
+    ["v"] = { display_text = "VISUAL", highlight_group = "ModeVisual" },
+    ["vs"] = { display_text = "VISUAL", highlight_group = "ModeVisual" },
+    ["V"] = { display_text = "V-LINE", highlight_group = "ModeVisual" },
+    ["Vs"] = { display_text = "V-LINE", highlight_group = "ModeVisual" },
+    ["\22"] = { display_text = "V-BLOCK", highlight_group = "ModeVisual" },
+    ["\22s"] = { display_text = "V-BLOCK", highlight_group = "ModeVisual" },
+    ["s"] = { display_text = "SELECT", highlight_group = "ModeSelect" },
+    ["S"] = { display_text = "S-LINE", highlight_group = "ModeSelect" },
+    ["\19"] = { display_text = "S-BLOCK", highlight_group = "ModeSelect" },
+    ["i"] = { display_text = "INSERT", highlight_group = "ModeInsert" },
+    ["ic"] = { display_text = "INSERT", highlight_group = "ModeInsert" },
+    ["ix"] = { display_text = "INSERT", highlight_group = "ModeInsert" },
+    ["R"] = { display_text = "REPLACE", highlight_group = "ModeReplace" },
+    ["Rc"] = { display_text = "REPLACE", highlight_group = "ModeReplace" },
+    ["Rx"] = { display_text = "REPLACE", highlight_group = "ModeReplace" },
+    ["Rv"] = { display_text = "V-REPLACE", highlight_group = "ModeReplace" },
+    ["Rvc"] = { display_text = "V-REPLACE", highlight_group = "ModeReplace" },
+    ["Rvx"] = { display_text = "V-REPLACE", highlight_group = "ModeReplace" },
+    ["c"] = { display_text = "COMMAND", highlight_group = "ModeCommand" },
+    ["cv"] = { display_text = "EX", highlight_group = "ModeEx" },
+    ["ce"] = { display_text = "EX", highlight_group = "ModeEx" },
+    ["r"] = { display_text = "REPLACE", highlight_group = "ModeReplace" },
+    ["rm"] = { display_text = "MORE", highlight_group = "ModeOther" },
+    ["r?"] = { display_text = "CONFIRM", highlight_group = "ModeOther" },
+    ["!"] = { display_text = "SHELL", highlight_group = "ModeOther" },
+    ["t"] = { display_text = "TERMINAL", highlight_group = "ModeOther" },
+}
+
 PaxLines.mode_repeater = function()
     return "M"
 end
