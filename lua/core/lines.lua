@@ -1,8 +1,6 @@
 -- TODO
--- then add the sizing so that they look right in
--- wide
--- regular
--- narrow
+-- figure out how on earth the sizing works
+-- then make the sizes work for narrow, nornmal, wide
 PaxLines = {}
 local hl_prefix = "PaxLines"
 local function create_hl_string(hl_name)
