@@ -80,6 +80,13 @@ local colors = {
     uiBlue = "#084671",
     uiOrange = "#f28b25",
     popupHighlightLightBlue = "#d7eafe",
+
+    -- copied from the previous lualine config for speed
+    statusRed = "#f44747",
+    statusGreen = "#4EC9B0",
+    statusBlue = "#0a7aca",
+    statusLightBlue = "#5CB6F8",
+    statusYellow = "#ffaf00",
 }
 
 -- I think that this clears anything that exists, which is perhaps redundant
@@ -535,15 +542,12 @@ set_highlights(languages)
 local pax = {
     -- PaxLines
     -- Modes
-    PaxLinesModeNormal = { fg = c.pink },
-    PaxLinesModePending = { fg = c.pink },
-    PaxLinesModeVisual = { fg = c.pink, bg = c.green },
-    PaxLinesModeSelect = { fg = c.pink },
-    PaxLinesModeInsert = { fg = c.pink, bg = c.blue },
-    PaxLinesModeReplace = { fg = c.pink, bg = c.red },
-    PaxLinesModeCommand = { fg = c.pink, bg = c.orange },
-    PaxLinesModeEx = { fg = c.pink },
-    PaxLinesModeOther = { fg = c.pink, bg = c.pink },
+    PaxLinesModeNormal = { fg = c.back, bg = c.front },
+    PaxLinesModeVisual = { fg = c.front, bg = c.green },
+    PaxLinesModeInsert = { fg = c.front, bg = c.statusBlue },
+    PaxLinesModeReplace = { fg = c.front, bg = c.statusRed },
+    PaxLinesModeCommand = { fg = c.front, bg = c.violet },
+    PaxLinesModeOther = { fg = c.front, bg = c.statusYellow },
 
     -- Sections
     PaxLinesWorkspace = { fg = c.front, bg = c.back },
