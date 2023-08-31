@@ -136,7 +136,12 @@ local function diagnostics()
 end
 
 PaxLines.mode = function()
-    return "mode"
+    local mode_code = vim.api.nvim_get_mode().mode
+    local hl_name = modes[mode_code].hl_name
+    local display_text = modes[mode_code].display_text
+    local hl_string = create_hl_string(hl_name)
+
+    return string.format("%%%s%s", hl_string, display_text)
 end
 local function mode()
     local call = "{%v:lua.PaxLines.mode()%}"
