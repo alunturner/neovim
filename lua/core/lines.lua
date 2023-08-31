@@ -1,12 +1,35 @@
 PaxLines = {}
 
+PaxLines.mode_repeater = function()
+    return "M"
+end
+local function mode_repeater()
+    local call = "{%v:lua.PaxLines.mode_repeater()%}"
+    return string.format("%%%s", call)
+end
+
+PaxLines.workspace = function()
+    return "M"
+end
+local function workspace()
+    local call = "{%v:lua.PaxLines.workspace()%}"
+    return string.format("%%%s", call)
+end
+
+PaxLines.git_branch = function()
+    return "M"
+end
+local function git_branch()
+    local call = "{%v:lua.PaxLines.git_branch()%}"
+    return string.format("%%%s", call)
+end
+
 PaxLines.git_project = function()
     return "FN_PROJECT"
 end
 local function git_project()
     local call = "{%v:lua.PaxLines.git_project()%}"
-    local width = "10"
-    return string.format("%%%s%s", width, call)
+    return string.format("%%%s", call)
 end
 
 PaxLines.diagnostics = function()
@@ -14,8 +37,7 @@ PaxLines.diagnostics = function()
 end
 local function diagnostics()
     local call = "{%v:lua.PaxLines.diagnostics()%}"
-    local width = "10"
-    return string.format("%%%s%s", width, call)
+    return string.format("%%%s", call)
 end
 
 PaxLines.mode = function()
@@ -23,8 +45,7 @@ PaxLines.mode = function()
 end
 local function mode()
     local call = "{%v:lua.PaxLines.mode()%}"
-    local width = "40"
-    return string.format("%%%s%s", width, call)
+    return string.format("%%%s", call)
 end
 
 PaxLines.search = function()
@@ -32,8 +53,7 @@ PaxLines.search = function()
 end
 local function search()
     local call = "{%v:lua.PaxLines.search()%}"
-    local width = "10"
-    return string.format("%%%s%s", width, call)
+    return string.format("%%%s", call)
 end
 
 PaxLines.location = function()
@@ -41,8 +61,7 @@ PaxLines.location = function()
 end
 local function location()
     local call = "{%v:lua.PaxLines.location()%}"
-    local width = "10"
-    return string.format("%%%s%s", width, call)
+    return string.format("%%%s", call)
 end
 
 PaxLines.git_file = function()
@@ -50,8 +69,7 @@ PaxLines.git_file = function()
 end
 local function git_file()
     local call = "{%v:lua.PaxLines.git_file()%}"
-    local width = "20"
-    return string.format("%%%s%s", width, call)
+    return string.format("%%%s", call)
 end
 
 local function file()
@@ -59,15 +77,26 @@ local function file()
     return string.format("%s", content)
 end
 
+local function separator()
+    local content = "%="
+    return string.format("%s", content)
+end
+
 PaxLines.status = function()
     return table.concat({
+        -- mode_repeater(),
+        -- workspace(),
+        -- git_branch(),
         git_project(),
         diagnostics(),
+        separator(),
         mode(),
+        separator(),
         location(),
         search(),
-        git_file(),
-        file(),
+        -- git_file(),
+        -- file(),
+        -- mode_repeater(),
     }, " ")
 end
 
