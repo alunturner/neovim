@@ -56,7 +56,22 @@ local function mode_repeater()
 end
 
 PaxLines.workspace = function()
-    return "WORKSPACE"
+    local workspace_path = vim.lsp.buf.list_workspace_folders()[1]
+    local no_workspace = workspace_path == nil
+
+    if no_workspace then
+        return ""
+    end
+
+    -- clunky, but not sure how to do this cleanly
+    local path_parts = {}
+    for part in string.gmatch(workspace_path, "[^/]+") do
+        table.insert(path_parts, part)
+    end
+
+    local hl_string = create_hl_string("Workspace")
+    local workspace = path_parts[#path_parts]
+    return string.format("%%%s%s", hl_string, workspace)
 end
 local function workspace()
     local call = "{%v:lua.PaxLines.workspace()%}"
