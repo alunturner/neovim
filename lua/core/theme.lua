@@ -534,6 +534,7 @@ set_highlights(languages)
 
 local pax = {
     -- PaxLines
+    -- Modes
     PaxLinesModeNormal = { fg = c.pink },
     PaxLinesModePending = { fg = c.pink },
     PaxLinesModeVisual = { fg = c.pink, bg = c.green },
@@ -543,5 +544,16 @@ local pax = {
     PaxLinesModeCommand = { fg = c.pink, bg = c.orange },
     PaxLinesModeEx = { fg = c.pink },
     PaxLinesModeOther = { fg = c.pink, bg = c.pink },
+
+    -- Sections
+    PaxLinesWorkspace = { fg = c.front, bg = c.back },
+    PaxLinesGitBranch = { fg = c.front, bg = c.back },
+    PaxLinesGitProject = { fg = c.front, bg = c.back },
+    PaxLinesDiagnostics = { fg = c.front, bg = c.back },
+    PaxLinesSearch = { fg = c.front, bg = c.back },
+    PaxLinesLocation = { fg = c.front, bg = c.back },
+    PaxLinesGitFile = { fg = c.front, bg = c.back },
+    PaxLinesFile = { fg = c.front, bg = c.back },
+    PaxLinesSeparator = { fg = c.front, bg = c.back },
 }
 set_highlights(pax)

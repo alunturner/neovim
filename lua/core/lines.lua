@@ -1,5 +1,4 @@
 -- TODO
--- next step - rename all to PascalCase to reflect the fact that they're globals,
 -- then add the styling to all of the sections so that they look nice
 -- then add the sizing so that they look right in
 -- wide
