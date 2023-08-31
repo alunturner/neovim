@@ -187,13 +187,13 @@ local function Search()
 end
 
 PaxLines.Location = function()
-    local hl_string = create_highlight("Location")
-    local content = '%l:%-2{virtcol(".") - 1}'
-    return string.format("%%%s%s", hl_string, content)
+    return '%l:%-2{virtcol(".") - 1}'
 end
 local function Location()
-    local call = "{%v:lua.PaxLines.Location()%}"
-    return string.format("%%%s", call)
+    local highlight = create_highlight("Location")
+    local call = "%-10{%v:lua.PaxLines.Location()%}"
+    local reset = get_global_highlight()
+    return string.format("%s%s%s", highlight, call, reset)
 end
 
 -- TODO
@@ -276,6 +276,8 @@ PaxLines.status = function()
             Separator(),
             Search(),
             Spacer(),
+            Location(),
+            Spacer(),
             ModeRepeater(),
             --[[Spacer(),
             Spacer(),
@@ -284,8 +286,7 @@ PaxLines.status = function()
             Separator(),
             Separator(),
     
-            Location(),
-            Spacer(),
+
             GitFile(),
             Spacer(),
             File(),
