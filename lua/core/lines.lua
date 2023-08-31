@@ -151,16 +151,11 @@ local function Diagnostics()
 end
 
 PaxLines.Mode = function()
-    local mode_code = vim.api.nvim_get_mode().mode
-    local hl_name = modes[mode_code].hl_name
-
-    local hl_string = create_highlight(hl_name)
-    local content = modes[mode_code].display_text
-    return string.format("%%%s%s", hl_string, content)
+    return PaxLines.mode.display_text
 end
 local function Mode()
-    local call = "{%v:lua.PaxLines.Mode()%}"
-    return string.format("%%%s", call)
+    local call = "%{%v:lua.PaxLines.Mode()%}"
+    return string.format("%s", call)
 end
 
 PaxLines.Search = function()
@@ -276,14 +271,15 @@ PaxLines.status = function()
             Spacer(),
             Diagnostics(),
             Separator(),
+            Mode(),
 
+            Separator(),
             ModeRepeater(),
             --[[Spacer(),
             Spacer(),
             Spacer(),
 
             Separator(),
-            Mode(),
             Separator(),
             Search(),
             Spacer(),
