@@ -2,9 +2,9 @@
 -- figure out how on earth the sizing works
 -- then make the sizes work for narrow, nornmal, wide
 PaxLines = {}
-local hl_prefix = "PaxLines"
-local function create_hl_string(hl_name)
-    return string.format("#%s%s#", hl_prefix, hl_name)
+local prefix = "PaxLines"
+local function create_highlight(highlight)
+    return string.format("%%#%s%s#", prefix, highlight)
 end
 
 local modes = {
@@ -46,13 +46,18 @@ local modes = {
     ["t"] = { display_text = "TERMINAL", hl_name = "ModeOther" },
 }
 
-PaxLines.ModeRepeater = function()
-    local mode_code = vim.api.nvim_get_mode().mode
-    local hl_name = modes[mode_code].hl_name
+local function set_global_mode()
+    local current_mode = vim.api.nvim_get_mode().mode
+    PaxLines.mode = modes[current_mode]
+end
+local function get_global_highlight()
+    local current_mode_hl_name = PaxLines.mode.hl_name
+    return create_highlight(current_mode_hl_name)
+end
 
-    local hl_string = create_hl_string(hl_name)
+PaxLines.ModeRepeater = function()
     local content = " "
-    return string.format("%%%s%s", hl_string, content)
+    return string.format("%s", content)
 end
 local function ModeRepeater()
     local call = "{%v:lua.PaxLines.ModeRepeater()%}"
@@ -64,7 +69,7 @@ PaxLines.Workspace = function()
     local no_workspace = workspace_path == nil
 
     if no_workspace then
-        return ""
+        return "[LSP]: Zzz"
     end
 
     -- clunky, but not sure how to do this cleanly
@@ -73,35 +78,35 @@ PaxLines.Workspace = function()
         table.insert(path_parts, part)
     end
 
-    local hl_string = create_hl_string("Workspace")
-    local content = path_parts[#path_parts]
-    return string.format("%%%s%s", hl_string, content)
+    return path_parts[#path_parts]
 end
 local function Workspace()
-    local call = "{%v:lua.PaxLines.Workspace()%}"
-    return string.format("%%%s", call)
+    local highlight = create_highlight("Workspace")
+    local call = "%-20{%v:lua.PaxLines.Workspace()%}"
+    local reset = get_global_highlight()
+    return string.format("%s%s%s", highlight, call, reset)
 end
 
 -- TODO
 PaxLines.GitBranch = function()
-    local hl_string = create_hl_string("GitBranch")
-    local content = "GitBranch"
-    return string.format("%%%s%s", hl_string, content)
+    return "GitBranch"
 end
 local function GitBranch()
-    local call = "{%v:lua.PaxLines.GitBranch()%}"
-    return string.format("%%%s", call)
+    local highlight = create_highlight("GitBranch")
+    local call = "%-20{%v:lua.PaxLines.GitBranch()%}"
+    local reset = get_global_highlight()
+    return string.format("%s%s%s", highlight, call, reset)
 end
 
 -- TODO
 PaxLines.GitProject = function()
-    local hl_string = create_hl_string("GitProject")
-    local content = "GitProject"
-    return string.format("%%%s%s", hl_string, content)
+    return "GitProject"
 end
 local function GitProject()
-    local call = "{%v:lua.PaxLines.GitProject()%}"
-    return string.format("%%%s", call)
+    local highlight = create_highlight("GitProject")
+    local call = "%-10{%v:lua.PaxLines.GitProject()%}"
+    local reset = get_global_highlight()
+    return string.format("%s%s%s", highlight, call, reset)
 end
 
 PaxLines.Diagnostics = function()
@@ -119,7 +124,7 @@ PaxLines.Diagnostics = function()
     -- `vim.lsp.buf_get_clients()` is empty
     local no_client_attached = next(vim.lsp.buf_get_clients()) == nil
     if no_client_attached then
-        return ""
+        return "[LSP]: Zzz"
     end
 
     -- Construct diagnostic info using predefined order
@@ -136,27 +141,21 @@ PaxLines.Diagnostics = function()
     if vim.tbl_count(t) == 0 then
         return ("%s -"):format(icon)
     end
-
-    local hl_string = create_hl_string("Diagnostics")
-    local content = string.format("%s%s", icon, table.concat(t, ""))
-    return string.format("%%%s%s", hl_string, content)
+    return string.format("%s%s", icon, table.concat(t, ""))
 end
 local function Diagnostics()
-    local call = "{%v:lua.PaxLines.Diagnostics()%}"
-    return string.format("%%%s", call)
+    local highlight = create_highlight("Diagnostics")
+    local call = "%-10{%v:lua.PaxLines.Diagnostics()%}"
+    local reset = get_global_highlight()
+    return string.format("%s%s%s", highlight, call, reset)
 end
 
 PaxLines.Mode = function()
-    local mode_code = vim.api.nvim_get_mode().mode
-    local hl_name = modes[mode_code].hl_name
-
-    local hl_string = create_hl_string(hl_name)
-    local content = modes[mode_code].display_text
-    return string.format("%%%s%s", hl_string, content)
+    return PaxLines.mode.display_text
 end
 local function Mode()
-    local call = "{%v:lua.PaxLines.Mode()%}"
-    return string.format("%%%s", call)
+    local call = "%{%v:lua.PaxLines.Mode()%}"
+    return string.format("%s", call)
 end
 
 PaxLines.Search = function()
@@ -178,50 +177,51 @@ PaxLines.Search = function()
     local current = s_count.current > s_count.maxcount and too_many or s_count.current
     local total = s_count.total > s_count.maxcount and too_many or s_count.total
 
-    local hl_string = create_hl_string("Search")
-    local content = string.format("%s/%s", current, total)
-    return string.format("%%%s%s", hl_string, content)
+    return string.format("%s/%s", current, total)
 end
 local function Search()
-    local call = "{%v:lua.PaxLines.Search()%}"
-    return string.format("%%%s", call)
+    local highlight = create_highlight("Search")
+    local call = "%-10{%v:lua.PaxLines.Search()%}"
+    local reset = get_global_highlight()
+    return string.format("%s%s%s", highlight, call, reset)
 end
 
 PaxLines.Location = function()
-    local hl_string = create_hl_string("Location")
-    local content = '%l:%-2{virtcol(".") - 1}'
-    return string.format("%%%s%s", hl_string, content)
+    return '%l:%-2{virtcol(".") - 1}'
 end
 local function Location()
-    local call = "{%v:lua.PaxLines.Location()%}"
-    return string.format("%%%s", call)
+    local highlight = create_highlight("Location")
+    local call = "%-10{%v:lua.PaxLines.Location()%}"
+    local reset = get_global_highlight()
+    return string.format("%s%s%s", highlight, call, reset)
 end
 
 -- TODO
 PaxLines.GitFile = function()
-    local hl_string = create_hl_string("GitFile")
-    local content = "GitFile"
-    return string.format("%%%s%s", hl_string, content)
+    return "GitFile"
 end
 local function GitFile()
-    local call = "{%v:lua.PaxLines.GitFile()%}"
-    return string.format("%%%s", call)
+    local highlight = create_highlight("GitFile")
+    local call = "%-20{%v:lua.PaxLines.GitFile()%}"
+    local reset = get_global_highlight()
+    return string.format("%s%s%s", highlight, call, reset)
 end
 
+-- TODO
+PaxLines.File = function()
+    return "%f"
+end
 local function File()
-    local hl_string = create_hl_string("File")
-    local content = "%m %t"
-    return string.format("%%%s%s", hl_string, content)
+    local highlight = create_highlight("File")
+    local call = "%-20{%v:lua.PaxLines.File()%}"
+    local reset = get_global_highlight()
+    return string.format("%s%s%s", highlight, call, reset)
 end
 local function Spacer()
-    local hl_string = create_hl_string("Spacer")
-    local content = " "
-    return string.format("%%%s%s", hl_string, content)
+    return " "
 end
 local function Separator()
-    local hl_string = create_hl_string("Separator")
-    local content = "%="
-    return string.format("%%%s%s", hl_string, content)
+    return "%="
 end
 
 -- TODO make this actually work, for now use it to dummy the content for prototyping
@@ -233,6 +233,8 @@ PaxLines.status = function()
     local current_width = get_terminal_width()
     local medium_breakpoint = 100
     local wide_breakpoint = 140
+
+    set_global_mode()
 
     if current_width < medium_breakpoint then
         return table.concat({
@@ -264,8 +266,8 @@ PaxLines.status = function()
         })
     else
         return table.concat({
+            create_highlight(PaxLines.mode.hl_name),
             ModeRepeater(),
-            Spacer(),
             Workspace(),
             Spacer(),
             GitBranch(),
