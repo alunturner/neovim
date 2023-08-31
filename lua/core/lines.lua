@@ -53,7 +53,7 @@ PaxLines.ModeRepeater = function()
     local hl_name = modes[mode_code].hl_name
 
     local hl_string = create_hl_string(hl_name)
-    local content = "  "
+    local content = " "
     return string.format("%%%s%s", hl_string, content)
 end
 local function ModeRepeater()
@@ -77,7 +77,7 @@ PaxLines.Workspace = function()
 
     local hl_string = create_hl_string("Workspace")
     local content = path_parts[#path_parts]
-    return string.format(" %%%s%s ", hl_string, content)
+    return string.format("%%%s%s", hl_string, content)
 end
 local function Workspace()
     local call = "{%v:lua.PaxLines.Workspace()%}"
@@ -88,7 +88,7 @@ end
 PaxLines.GitBranch = function()
     local hl_string = create_hl_string("GitBranch")
     local content = "GitBranch"
-    return string.format(" %%%s%s ", hl_string, content)
+    return string.format("%%%s%s", hl_string, content)
 end
 local function GitBranch()
     local call = "{%v:lua.PaxLines.GitBranch()%}"
@@ -99,7 +99,7 @@ end
 PaxLines.GitProject = function()
     local hl_string = create_hl_string("GitProject")
     local content = "GitProject"
-    return string.format(" %%%s%s ", hl_string, content)
+    return string.format("%%%s%s", hl_string, content)
 end
 local function GitProject()
     local call = "{%v:lua.PaxLines.GitProject()%}"
@@ -145,7 +145,7 @@ PaxLines.Diagnostics = function()
 end
 local function Diagnostics()
     local call = "{%v:lua.PaxLines.Diagnostics()%}"
-    return string.format(" %%%s ", call)
+    return string.format("%%%s", call)
 end
 
 PaxLines.Mode = function()
@@ -154,7 +154,7 @@ PaxLines.Mode = function()
 
     local hl_string = create_hl_string(hl_name)
     local content = modes[mode_code].display_text
-    return string.format(" %%%s%s ", hl_string, content)
+    return string.format("%%%s%s", hl_string, content)
 end
 local function Mode()
     local call = "{%v:lua.PaxLines.Mode()%}"
@@ -182,7 +182,7 @@ PaxLines.Search = function()
 
     local hl_string = create_hl_string("Search")
     local content = string.format("%s/%s", current, total)
-    return string.format(" %%%s%s ", hl_string, content)
+    return string.format("%%%s%s", hl_string, content)
 end
 local function Search()
     local call = "{%v:lua.PaxLines.Search()%}"
@@ -192,30 +192,34 @@ end
 PaxLines.Location = function()
     local hl_string = create_hl_string("Location")
     local content = '%l:%-2{virtcol(".") - 1}'
-    return string.format(" %%%s%s ", hl_string, content)
+    return string.format("%%%s%s", hl_string, content)
 end
 local function Location()
     local call = "{%v:lua.PaxLines.Location()%}"
-    return string.format(" %%%s ", call)
+    return string.format("%%%s", call)
 end
 
 -- TODO
 PaxLines.GitFile = function()
     local hl_string = create_hl_string("GitFile")
     local content = "GitFile"
-    return string.format(" %%%s%s ", hl_string, content)
+    return string.format("%%%s%s", hl_string, content)
 end
 local function GitFile()
     local call = "{%v:lua.PaxLines.GitFile()%}"
-    return string.format(" %%%s ", call)
+    return string.format("%%%s", call)
 end
 
 local function File()
     local hl_string = create_hl_string("File")
     local content = "%m %t"
-    return string.format(" %%%s%s ", hl_string, content)
+    return string.format("%%%s%s", hl_string, content)
 end
-
+local function Spacer()
+    local hl_string = create_hl_string("Spacer")
+    local content = " "
+    return string.format("%%%s%s", hl_string, content)
+end
 local function Separator()
     local hl_string = create_hl_string("Separator")
     local content = "%="
@@ -233,33 +237,55 @@ PaxLines.status = function()
     local wide_breakpoint = 140
 
     if current_width < medium_breakpoint then
-        return table.concat({ GitProject(), Diagnostics(), Separator(), Mode(), Separator(), Location(), Search() })
-    elseif current_width < wide_breakpoint then
         return table.concat({
-            Workspace(),
             GitProject(),
+            Spacer(),
             Diagnostics(),
             Separator(),
             Mode(),
             Separator(),
             Location(),
+            Spacer(),
             Search(),
+        })
+    elseif current_width < wide_breakpoint then
+        return table.concat({
+            Workspace(),
+            Spacer(),
+            GitProject(),
+            Spacer(),
+            Diagnostics(),
+            Separator(),
+            Mode(),
+            Separator(),
+            Location(),
+            Spacer(),
+            Search(),
+            Spacer(),
             File(),
         })
     else
         return table.concat({
             ModeRepeater(),
+            Spacer(),
             Workspace(),
+            Spacer(),
             GitBranch(),
+            Spacer(),
             GitProject(),
+            Spacer(),
             Diagnostics(),
             Separator(),
             Mode(),
             Separator(),
             Search(),
+            Spacer(),
             Location(),
+            Spacer(),
             GitFile(),
+            Spacer(),
             File(),
+            Spacer(),
             ModeRepeater(),
         })
     end

@@ -550,6 +550,7 @@ local pax = {
     PaxLinesModeOther = { fg = c.front, bg = c.statusYellow },
 
     -- Sections
+    PaxLinesSpacer = { fg = c.front, bg = c.back },
     PaxLinesWorkspace = { fg = c.front, bg = c.back },
     PaxLinesGitBranch = { fg = c.front, bg = c.back },
     PaxLinesGitProject = { fg = c.front, bg = c.back },
