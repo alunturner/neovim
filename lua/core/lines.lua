@@ -82,7 +82,7 @@ PaxLines.Workspace = function()
 end
 local function Workspace()
     local highlight = create_highlight("Workspace")
-    local call = "%{%v:lua.PaxLines.Workspace()%}"
+    local call = "%-20{%v:lua.PaxLines.Workspace()%}"
     local reset = get_global_highlight()
     return string.format("%s%s%s", highlight, call, reset)
 end
