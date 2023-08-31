@@ -89,24 +89,24 @@ end
 
 -- TODO
 PaxLines.GitBranch = function()
-    local hl_string = create_highlight("GitBranch")
-    local content = "GitBranch"
-    return string.format("%%%s%s", hl_string, content)
+    return "GitBranch"
 end
 local function GitBranch()
-    local call = "{%v:lua.PaxLines.GitBranch()%}"
-    return string.format("%%%s", call)
+    local highlight = create_highlight("GitBranch")
+    local call = "%-20{%v:lua.PaxLines.GitBranch()%}"
+    local reset = get_global_highlight()
+    return string.format("%s%s%s", highlight, call, reset)
 end
 
 -- TODO
 PaxLines.GitProject = function()
-    local hl_string = create_highlight("GitProject")
-    local content = "GitProject"
-    return string.format("%%%s%s", hl_string, content)
+    return "GitProject"
 end
 local function GitProject()
-    local call = "{%v:lua.PaxLines.GitProject()%}"
-    return string.format("%%%s", call)
+    local highlight = create_highlight("GitProject")
+    local call = "%-10{%v:lua.PaxLines.GitProject()%}"
+    local reset = get_global_highlight()
+    return string.format("%s%s%s", highlight, call, reset)
 end
 
 PaxLines.Diagnostics = function()
@@ -124,7 +124,7 @@ PaxLines.Diagnostics = function()
     -- `vim.lsp.buf_get_clients()` is empty
     local no_client_attached = next(vim.lsp.buf_get_clients()) == nil
     if no_client_attached then
-        return ""
+        return "[LSP]: Zzz"
     end
 
     -- Construct diagnostic info using predefined order
@@ -141,14 +141,13 @@ PaxLines.Diagnostics = function()
     if vim.tbl_count(t) == 0 then
         return ("%s -"):format(icon)
     end
-
-    local hl_string = create_highlight("Diagnostics")
-    local content = string.format("%s%s", icon, table.concat(t, ""))
-    return string.format("%%%s%s", hl_string, content)
+    return string.format("%s%s", icon, table.concat(t, ""))
 end
 local function Diagnostics()
-    local call = "{%v:lua.PaxLines.Diagnostics()%}"
-    return string.format("%%%s", call)
+    local highlight = create_highlight("Diagnostics")
+    local call = "%-10{%v:lua.PaxLines.Diagnostics()%}"
+    local reset = get_global_highlight()
+    return string.format("%s%s%s", highlight, call, reset)
 end
 
 PaxLines.Mode = function()
@@ -270,16 +269,19 @@ PaxLines.status = function()
             create_highlight(PaxLines.mode.hl_name),
             ModeRepeater(),
             Workspace(),
-            Separator(),
-            ModeRepeater(),
-            --[[Spacer(),
-            Workspace(),
             Spacer(),
             GitBranch(),
             Spacer(),
             GitProject(),
             Spacer(),
             Diagnostics(),
+            Separator(),
+
+            ModeRepeater(),
+            --[[Spacer(),
+            Spacer(),
+            Spacer(),
+
             Separator(),
             Mode(),
             Separator(),
