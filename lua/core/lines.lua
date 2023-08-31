@@ -46,9 +46,10 @@ local modes = {
 PaxLines.mode_repeater = function()
     local mode_code = vim.api.nvim_get_mode().mode
     local hl_name = modes[mode_code].hl_name
-    local hl_string = create_hl_string(hl_name)
 
-    return string.format("%%%s%s", hl_string, "  ")
+    local hl_string = create_hl_string(hl_name)
+    local content = "  "
+    return string.format("%%%s%s", hl_string, content)
 end
 local function mode_repeater()
     local call = "{%v:lua.PaxLines.mode_repeater()%}"
@@ -70,8 +71,8 @@ PaxLines.workspace = function()
     end
 
     local hl_string = create_hl_string("Workspace")
-    local workspace = path_parts[#path_parts]
-    return string.format("%%%s%s", hl_string, workspace)
+    local content = path_parts[#path_parts]
+    return string.format("%%%s%s", hl_string, content)
 end
 local function workspace()
     local call = "{%v:lua.PaxLines.workspace()%}"
@@ -80,7 +81,9 @@ end
 
 -- TODO
 PaxLines.git_branch = function()
-    return "GIT_BRANCH"
+    local hl_string = create_hl_string("GitBranch")
+    local content = "GitBranch"
+    return string.format("%%%s%s", hl_string, content)
 end
 local function git_branch()
     local call = "{%v:lua.PaxLines.git_branch()%}"
@@ -89,7 +92,9 @@ end
 
 -- TODO
 PaxLines.git_project = function()
-    return "GIT_PROJECT"
+    local hl_string = create_hl_string("GitProject")
+    local content = "GitProject"
+    return string.format("%%%s%s", hl_string, content)
 end
 local function git_project()
     local call = "{%v:lua.PaxLines.git_project()%}"
@@ -128,7 +133,10 @@ PaxLines.diagnostics = function()
     if vim.tbl_count(t) == 0 then
         return ("%s -"):format(icon)
     end
-    return string.format("%s%s", icon, table.concat(t, ""))
+
+    local hl_string = create_hl_string("Diagnostics")
+    local content = string.format("%s%s", icon, table.concat(t, ""))
+    return string.format("%%%s%s", hl_string, content)
 end
 local function diagnostics()
     local call = "{%v:lua.PaxLines.diagnostics()%}"
@@ -138,10 +146,10 @@ end
 PaxLines.mode = function()
     local mode_code = vim.api.nvim_get_mode().mode
     local hl_name = modes[mode_code].hl_name
-    local display_text = modes[mode_code].display_text
-    local hl_string = create_hl_string(hl_name)
 
-    return string.format("%%%s%s", hl_string, display_text)
+    local hl_string = create_hl_string(hl_name)
+    local content = modes[mode_code].display_text
+    return string.format("%%%s%s", hl_string, content)
 end
 local function mode()
     local call = "{%v:lua.PaxLines.mode()%}"
@@ -149,7 +157,28 @@ local function mode()
 end
 
 PaxLines.search = function()
-    return "search"
+    if vim.v.hlsearch == 0 then
+        return ""
+    end
+
+    -- making this pcall with { recompute = false } may help performance
+
+    local ok, s_count = pcall(vim.fn.searchcount, { recompute = true })
+    if not ok or s_count.current == nil or s_count.total == 0 then
+        return ""
+    end
+
+    if s_count.incomplete == 1 then
+        return "?/?"
+    end
+
+    local too_many = (">%d"):format(s_count.maxcount)
+    local current = s_count.current > s_count.maxcount and too_many or s_count.current
+    local total = s_count.total > s_count.maxcount and too_many or s_count.total
+
+    local hl_string = create_hl_string("Search")
+    local content = string.format("%s/%s", current, total)
+    return string.format("%%%s%s", hl_string, content)
 end
 local function search()
     local call = "{%v:lua.PaxLines.search()%}"
@@ -219,8 +248,8 @@ PaxLines.status = function()
             separator(),
             mode(),
             separator(),
-            location(),
             search(),
+            location(),
             git_file(),
             file(),
             mode_repeater(),
