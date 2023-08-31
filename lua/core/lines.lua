@@ -177,13 +177,13 @@ PaxLines.Search = function()
     local current = s_count.current > s_count.maxcount and too_many or s_count.current
     local total = s_count.total > s_count.maxcount and too_many or s_count.total
 
-    local hl_string = create_highlight("Search")
-    local content = string.format("%s/%s", current, total)
-    return string.format("%%%s%s", hl_string, content)
+    return string.format("%s/%s", current, total)
 end
 local function Search()
-    local call = "{%v:lua.PaxLines.Search()%}"
-    return string.format("%%%s", call)
+    local highlight = create_highlight("Search")
+    local call = "%-10{%v:lua.PaxLines.Search()%}"
+    local reset = get_global_highlight()
+    return string.format("%s%s%s", highlight, call, reset)
 end
 
 PaxLines.Location = function()
@@ -274,6 +274,8 @@ PaxLines.status = function()
             Mode(),
 
             Separator(),
+            Search(),
+            Spacer(),
             ModeRepeater(),
             --[[Spacer(),
             Spacer(),
@@ -281,8 +283,7 @@ PaxLines.status = function()
 
             Separator(),
             Separator(),
-            Search(),
-            Spacer(),
+    
             Location(),
             Spacer(),
             GitFile(),
