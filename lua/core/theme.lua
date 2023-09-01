@@ -80,6 +80,13 @@ local colors = {
     uiBlue = "#084671",
     uiOrange = "#f28b25",
     popupHighlightLightBlue = "#d7eafe",
+
+    -- copied from the previous lualine config for speed
+    statusRed = "#f44747",
+    statusGreen = "#4EC9B0",
+    statusBlue = "#0a7aca",
+    statusLightBlue = "#5CB6F8",
+    statusYellow = "#ffaf00",
 }
 
 -- I think that this clears anything that exists, which is perhaps redundant
@@ -531,3 +538,25 @@ local languages = {
     yamlConstant = { fg = c.blue },
 }
 set_highlights(languages)
+
+local pax = {
+    -- PaxLines
+    -- Modes
+    PaxLinesModeNormal = { fg = c.front, bg = c.back },
+    PaxLinesModeVisual = { fg = c.front, bg = c.green },
+    PaxLinesModeInsert = { fg = c.front, bg = c.statusBlue },
+    PaxLinesModeReplace = { fg = c.front, bg = c.statusRed },
+    PaxLinesModeCommand = { fg = c.front, bg = c.violet },
+    PaxLinesModeOther = { fg = c.front, bg = c.statusYellow },
+
+    -- Sections
+    PaxLinesWorkspace = { fg = c.front, bg = c.back },
+    PaxLinesGitBranch = { fg = c.front, bg = c.back },
+    PaxLinesGitProject = { fg = c.front, bg = c.back },
+    PaxLinesDiagnostics = { fg = c.front, bg = c.back },
+    PaxLinesSearch = { fg = c.front, bg = c.back },
+    PaxLinesLocation = { fg = c.front, bg = c.back },
+    PaxLinesGitFile = { fg = c.front, bg = c.back },
+    PaxLinesFile = { fg = c.front, bg = c.back },
+}
+set_highlights(pax)
