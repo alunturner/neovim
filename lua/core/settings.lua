@@ -24,6 +24,7 @@ local options = {
     breakindent = true,
     scrolloff = 8,
     colorcolumn = "80",
+    signcolumn = "yes",
 
     -- Cursor display
     cursorline = true,
