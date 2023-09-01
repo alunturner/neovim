@@ -1,6 +1,4 @@
 -- TODO
--- figure out how on earth the sizing works
--- then make the sizes work for narrow, nornmal, wide
 PaxLines = {}
 local prefix = "PaxLines"
 local function create_highlight(highlight)
