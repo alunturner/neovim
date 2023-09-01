@@ -1,4 +1,8 @@
 -- TODO
+-- sort out window width calculation
+-- sort out layout
+-- sort out colouring
+-- add nice dividers
 PaxLines = {}
 local prefix = "PaxLines"
 local function create_highlight(highlight)
