@@ -23,15 +23,13 @@ local options = {
     -- Text display
     breakindent = true,
     scrolloff = 8,
-    colorcolumn = "120",
-    signcolumn = "yes",
+    colorcolumn = "80",
 
     -- Cursor display
     cursorline = true,
 
     -- Numbers
     number = true,
-    relativenumber = true,
 
     -- Theme display
     termguicolors = true,
