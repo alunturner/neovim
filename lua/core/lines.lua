@@ -86,7 +86,8 @@ local function Workspace()
     local highlight = create_highlight("Workspace")
     local call = "%-20{%v:lua.PaxLines.Workspace()%}"
     local reset = get_global_highlight()
-    return string.format("%s%s%s", highlight, call, reset)
+    return "%-{%v:lua.PaxLines.Workspace()%}"
+    --return string.format("%s%s%s", highlight, call, reset)
 end
 
 -- TODO
@@ -211,13 +212,14 @@ end
 
 -- TODO
 PaxLines.File = function()
-    return "%f"
+    return "%m %f"
 end
 local function File()
     local highlight = create_highlight("File")
     local call = "%-20{%v:lua.PaxLines.File()%}"
     local reset = get_global_highlight()
-    return string.format("%s%s%s", highlight, call, reset)
+    return "%m %f"
+    --return string.format("%s%s%s", highlight, call, reset)
 end
 local function Spacer()
     return " "
@@ -229,6 +231,19 @@ end
 -- TODO make this actually work, for now use it to dummy the content for prototyping
 local function get_terminal_width()
     return 168
+end
+
+-- TODO sort out active vs inactive windows, but this is great!
+PaxLines.window = function()
+    set_global_mode()
+    return table.concat({
+        get_global_highlight(),
+        Workspace(),
+        Separator(),
+        Mode(),
+        Separator(),
+        File(),
+    })
 end
 
 PaxLines.status = function()
@@ -295,4 +310,7 @@ end
 
 -- may become the autocmd from here
 -- https://nuxsh.is-a.dev/blog/custom-nvim-statusline.html
-vim.opt.statusline = "%!v:lua.PaxLines.status()"
+--vim.opt.statusline = "%!v:lua.PaxLines.status()"
+vim.opt.laststatus = 0
+vim.opt.cmdheight = 0
+vim.opt.winbar = "%!v:lua.PaxLines.window()"
