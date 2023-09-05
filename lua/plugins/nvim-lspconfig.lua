@@ -10,6 +10,9 @@ Plugin.config = function()
     -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#tsserver
     lspconfig.tsserver.setup({})
 
+    -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#jsonls
+    lspconfig.jsonls.setup({})
+
     -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#eslint
     lspconfig.eslint.setup({
         on_attach = function(client, bufnr)
