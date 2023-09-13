@@ -1,8 +1,3 @@
--- TODO
--- sort out window width calculation
--- sort out layout
--- sort out colouring
--- add nice dividers
 PaxLines = {}
 local prefix = "PaxLines"
 local function create_highlight(highlight)
@@ -57,15 +52,6 @@ local function get_global_highlight()
     return create_highlight(current_mode_hl_name)
 end
 
-PaxLines.ModeRepeater = function()
-    local content = " "
-    return string.format("%s", content)
-end
-local function ModeRepeater()
-    local call = "{%v:lua.PaxLines.ModeRepeater()%}"
-    return string.format("%%%s", call)
-end
-
 PaxLines.Workspace = function()
     local workspace_path = vim.lsp.buf.list_workspace_folders()[1]
     local no_workspace = workspace_path == nil
@@ -84,71 +70,18 @@ PaxLines.Workspace = function()
 end
 local function Workspace()
     local highlight = create_highlight("Workspace")
-    local call = "%-20{%v:lua.PaxLines.Workspace()%}"
+    local call = "%{%v:lua.PaxLines.Workspace()%}"
     local reset = get_global_highlight()
-    return "%-{%v:lua.PaxLines.Workspace()%}"
-    --return string.format("%s%s%s", highlight, call, reset)
+    return string.format("%s%s%s ", highlight, call, reset)
 end
 
 -- TODO
 PaxLines.GitBranch = function()
-    return "GitBranch"
+    return " GitBranch"
 end
 local function GitBranch()
     local highlight = create_highlight("GitBranch")
-    local call = "%-20{%v:lua.PaxLines.GitBranch()%}"
-    local reset = get_global_highlight()
-    return string.format("%s%s%s", highlight, call, reset)
-end
-
--- TODO
-PaxLines.GitProject = function()
-    return "GitProject"
-end
-local function GitProject()
-    local highlight = create_highlight("GitProject")
-    local call = "%-10{%v:lua.PaxLines.GitProject()%}"
-    local reset = get_global_highlight()
-    return string.format("%s%s%s", highlight, call, reset)
-end
-
-PaxLines.Diagnostics = function()
-    local diagnostic_levels = {
-        { id = vim.diagnostic.severity.ERROR, sign = "E" },
-        { id = vim.diagnostic.severity.WARN, sign = "W" },
-        { id = vim.diagnostic.severity.INFO, sign = "I" },
-        { id = vim.diagnostic.severity.HINT, sign = "H" },
-    }
-
-    local get_diagnostic_count = function(id)
-        return #vim.diagnostic.get(0, { severity = id })
-    end
-    -- Assumption: there are no attached clients if table
-    -- `vim.lsp.buf_get_clients()` is empty
-    local no_client_attached = next(vim.lsp.buf_get_clients()) == nil
-    if no_client_attached then
-        return "[LSP]: Zzz"
-    end
-
-    -- Construct diagnostic info using predefined order
-    local t = {}
-    for _, level in ipairs(diagnostic_levels) do
-        local n = get_diagnostic_count(level.id)
-        -- Add level info only if diagnostic is present
-        if n > 0 then
-            table.insert(t, string.format(" %s%s", level.sign, n))
-        end
-    end
-
-    local icon = ""
-    if vim.tbl_count(t) == 0 then
-        return ("%s -"):format(icon)
-    end
-    return string.format("%s%s", icon, table.concat(t, ""))
-end
-local function Diagnostics()
-    local highlight = create_highlight("Diagnostics")
-    local call = "%-10{%v:lua.PaxLines.Diagnostics()%}"
+    local call = "%{%v:lua.PaxLines.GitBranch()%}"
     local reset = get_global_highlight()
     return string.format("%s%s%s", highlight, call, reset)
 end
@@ -189,28 +122,6 @@ local function Search()
     return string.format("%s%s%s", highlight, call, reset)
 end
 
-PaxLines.Location = function()
-    return '%l:%-2{virtcol(".") - 1}'
-end
-local function Location()
-    local highlight = create_highlight("Location")
-    local call = "%-10{%v:lua.PaxLines.Location()%}"
-    local reset = get_global_highlight()
-    return string.format("%s%s%s", highlight, call, reset)
-end
-
--- TODO
-PaxLines.GitFile = function()
-    return "GitFile"
-end
-local function GitFile()
-    local highlight = create_highlight("GitFile")
-    local call = "%-20{%v:lua.PaxLines.GitFile()%}"
-    local reset = get_global_highlight()
-    return string.format("%s%s%s", highlight, call, reset)
-end
-
--- TODO
 PaxLines.File = function()
     return "%m %f"
 end
@@ -218,99 +129,38 @@ local function File()
     local highlight = create_highlight("File")
     local call = "%-20{%v:lua.PaxLines.File()%}"
     local reset = get_global_highlight()
-    return "%m %f"
-    --return string.format("%s%s%s", highlight, call, reset)
+    return string.format("%s%s%s", highlight, call, reset)
 end
-local function Spacer()
-    return " "
-end
+
 local function Separator()
     return "%="
 end
 
--- TODO make this actually work, for now use it to dummy the content for prototyping
-local function get_terminal_width()
-    return 168
+local function RightChevron()
+    return ""
 end
 
--- TODO sort out active vs inactive windows, but this is great!
-PaxLines.window = function()
+PaxLines.active = function()
     set_global_mode()
     return table.concat({
         get_global_highlight(),
         Workspace(),
+        RightChevron(),
+        GitBranch(),
         Separator(),
         Mode(),
+        Search(),
         Separator(),
         File(),
     })
 end
 
-PaxLines.status = function()
-    local current_width = get_terminal_width()
-    local medium_breakpoint = 100
-    local wide_breakpoint = 140
-
-    set_global_mode()
-
-    if current_width < medium_breakpoint then
-        return table.concat({
-            GitProject(),
-            Spacer(),
-            Diagnostics(),
-            Separator(),
-            Mode(),
-            Separator(),
-            Location(),
-            Spacer(),
-            Search(),
-        })
-    elseif current_width < wide_breakpoint then
-        return table.concat({
-            Workspace(),
-            Spacer(),
-            GitProject(),
-            Spacer(),
-            Diagnostics(),
-            Separator(),
-            Mode(),
-            Separator(),
-            Location(),
-            Spacer(),
-            Search(),
-            Spacer(),
-            File(),
-        })
-    else
-        return table.concat({
-            create_highlight(PaxLines.mode.hl_name),
-            ModeRepeater(),
-            Workspace(),
-            Spacer(),
-            GitBranch(),
-            Spacer(),
-            GitProject(),
-            Spacer(),
-            Diagnostics(),
-            Separator(),
-            Mode(),
-            Separator(),
-            Search(),
-            Spacer(),
-            Location(),
-            Spacer(),
-            GitFile(),
-            Spacer(),
-            File(),
-            Spacer(),
-            ModeRepeater(),
-        })
-    end
+PaxLines.inactive = function()
+    return table.concat({
+        Separator(),
+        File(),
+    })
 end
 
--- may become the autocmd from here
--- https://nuxsh.is-a.dev/blog/custom-nvim-statusline.html
---vim.opt.statusline = "%!v:lua.PaxLines.status()"
-vim.opt.laststatus = 0
-vim.opt.cmdheight = 0
-vim.opt.winbar = "%!v:lua.PaxLines.window()"
+-- ref: https://nuxsh.is-a.dev/blog/custom-nvim-statusline.html
+vim.opt.statusline = "%!v:lua.PaxLines.active()"
