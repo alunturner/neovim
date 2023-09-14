@@ -81,10 +81,10 @@ local colors = {
     uiOrange = "#f28b25",
     popupHighlightLightBlue = "#d7eafe",
 
-    -- copied from the previous lualine config for speed
+    statusPurple = "#541067", -- status bar (not in a folder)
     statusRed = "#f44747",
-    statusGreen = "#4EC9B0",
-    statusBlue = "#0a7aca",
+    statusGreen = "#354a2c", -- outer edge of a comment
+    statusBlue = "#0c64c1", -- status bar (in a folder)
     statusLightBlue = "#5CB6F8",
     statusYellow = "#ffaf00",
 }
@@ -544,10 +544,10 @@ local pax = {
     -- Modes
     PaxLinesModeNormal = { fg = c.back, bg = c.front },
     PaxLinesModePending = { fg = c.back, bg = c.front },
-    PaxLinesModeVisual = { fg = c.front, bg = c.green },
+    PaxLinesModeVisual = { fg = c.front, bg = c.statusGreen },
     PaxLinesModeInsert = { fg = c.front, bg = c.statusBlue },
     PaxLinesModeReplace = { fg = c.front, bg = c.statusRed },
-    PaxLinesModeCommand = { fg = c.front, bg = c.violet },
+    PaxLinesModeCommand = { fg = c.front, bg = c.statusPurple },
     PaxLinesModeEx = { fg = c.front, bg = c.violet },
     PaxLinesModeSelect = { fg = c.front, bg = c.violet },
     PaxLinesModeOther = { fg = c.front, bg = c.statusYellow },

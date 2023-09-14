@@ -1,4 +1,3 @@
--- Import Lazy and then all the plugins.
 require("core.loader")
 
 -- Set key remappings.
