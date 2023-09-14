@@ -75,7 +75,11 @@ local function Search()
 end
 
 local function ModifiedAndFile()
-    return "%-m %-f"
+    return "%m %f"
+end
+
+local function Padding()
+    return " "
 end
 
 local function Separator()
@@ -87,11 +91,13 @@ PaxLines.winbar = function()
 
     return table.concat({
         create_highlight(mode.hl_name),
+        Padding(),
         mode.display_text,
         Separator(),
         Search(),
         Separator(),
         ModifiedAndFile(),
+        Padding(),
     })
 end
 
