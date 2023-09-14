@@ -42,8 +42,8 @@ local options = {
     -- Mapped sequence timing
     timeoutlen = 500,
 
-    -- Statusline off, command line on
-    laststatus = 0,
+    -- Statusline global, command line on
+    laststatus = 3,
     cmdheight = 1,
 }
 

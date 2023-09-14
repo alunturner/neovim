@@ -101,5 +101,24 @@ PaxLines.active = function()
     })
 end
 
--- ref: https://nuxsh.is-a.dev/blog/custom-nvim-statusline.html
-vim.opt.winbar = "%!v:lua.PaxLines.active()"
+PaxLines.inactive = function()
+    return "%=%f%="
+end
+
+local statusline = vim.api.nvim_create_augroup("StatusLine", { clear = true })
+-- Set statusline to active variant for focused buffer
+vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
+    desc = "show active statusline with details",
+    callback = function()
+        vim.wo.statusline = "%!v:lua.PaxLines.active()"
+    end,
+    group = statusline,
+})
+-- Set statusline to inactive variant for buffers without focus
+vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
+    desc = "show muted statusline without additional details",
+    callback = function()
+        vim.wo.statusline = "%!v:lua.PaxLines.inactive()"
+    end,
+    group = statusline,
+})
