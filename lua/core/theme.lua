@@ -543,10 +543,13 @@ local pax = {
     -- PaxLines
     -- Modes
     PaxLinesModeNormal = { fg = c.back, bg = c.front },
+    PaxLinesModePending = { fg = c.back, bg = c.front },
     PaxLinesModeVisual = { fg = c.front, bg = c.green },
     PaxLinesModeInsert = { fg = c.front, bg = c.statusBlue },
     PaxLinesModeReplace = { fg = c.front, bg = c.statusRed },
     PaxLinesModeCommand = { fg = c.front, bg = c.violet },
+    PaxLinesModeEx = { fg = c.front, bg = c.violet },
+    PaxLinesModeSelect = { fg = c.front, bg = c.violet },
     PaxLinesModeOther = { fg = c.front, bg = c.statusYellow },
 }
 set_highlights(pax)
