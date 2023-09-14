@@ -43,8 +43,8 @@ local options = {
     timeoutlen = 500,
 
     -- Statusline
-    laststatus = 3,
-    cmdheight = 1,
+    laststatus = 0,
+    cmdheight = 0,
 }
 
 -- set options from table
