@@ -1,9 +1,5 @@
 PaxLines = {}
 local prefix = "PaxLines"
-local function create_highlight(highlight)
-    return string.format("%%#%s%s#", prefix, highlight)
-end
-
 local modes = {
     ["n"] = { display_text = "NORMAL", hl_name = "ModeNormal" },
     ["no"] = { display_text = "O-PENDING", hl_name = "ModePending" },
@@ -43,55 +39,14 @@ local modes = {
     ["t"] = { display_text = "TERMINAL", hl_name = "ModeOther" },
 }
 
-local function set_global_mode()
+local function get_current_mode()
     local current_mode = vim.api.nvim_get_mode().mode
-    PaxLines.mode = modes[current_mode]
-end
-local function get_global_highlight()
-    local current_mode_hl_name = PaxLines.mode.hl_name
-    return create_highlight(current_mode_hl_name)
+    return modes[current_mode]
 end
 
-PaxLines.Workspace = function()
-    local workspace_path = vim.lsp.buf.list_workspace_folders()[1]
-    local no_workspace = workspace_path == nil
-
-    if no_workspace then
-        return "[LSP]: Zzz"
-    end
-
-    -- clunky, but not sure how to do this cleanly
-    local path_parts = {}
-    for part in string.gmatch(workspace_path, "[^/]+") do
-        table.insert(path_parts, part)
-    end
-
-    return path_parts[#path_parts]
-end
-local function Workspace()
-    local highlight = create_highlight("Workspace")
-    local call = "%{%v:lua.PaxLines.Workspace()%}"
-    local reset = get_global_highlight()
-    return string.format("%s%s%s ", highlight, call, reset)
-end
-
--- TODO
-PaxLines.GitBranch = function()
-    return " GitBranch"
-end
-local function GitBranch()
-    local highlight = create_highlight("GitBranch")
-    local call = "%{%v:lua.PaxLines.GitBranch()%}"
-    local reset = get_global_highlight()
-    return string.format("%s%s%s", highlight, call, reset)
-end
-
-PaxLines.Mode = function()
-    return PaxLines.mode.display_text
-end
-local function Mode()
-    local call = "%{%v:lua.PaxLines.Mode()%}"
-    return string.format("%s", call)
+-- util function to create a highlight string
+local function create_highlight(highlight)
+    return string.format("%%#%s%s#", prefix, highlight)
 end
 
 PaxLines.Search = function()
@@ -116,51 +71,29 @@ PaxLines.Search = function()
     return string.format("%s/%s", current, total)
 end
 local function Search()
-    local highlight = create_highlight("Search")
-    local call = "%-10{%v:lua.PaxLines.Search()%}"
-    local reset = get_global_highlight()
-    return string.format("%s%s%s", highlight, call, reset)
+    return " %-10{%v:lua.PaxLines.Search()%}"
 end
 
-PaxLines.File = function()
-    return "%m %f"
-end
-local function File()
-    local highlight = create_highlight("File")
-    local call = "%-20{%v:lua.PaxLines.File()%}"
-    local reset = get_global_highlight()
-    return string.format("%s%s%s", highlight, call, reset)
+local function ModifiedAndFile()
+    return "%-m %-f"
 end
 
 local function Separator()
     return "%="
 end
 
-local function RightChevron()
-    return ""
-end
+PaxLines.status = function()
+    local mode = get_current_mode()
 
-PaxLines.active = function()
-    set_global_mode()
     return table.concat({
-        get_global_highlight(),
-        Workspace(),
-        RightChevron(),
-        GitBranch(),
+        create_highlight(mode.hl_name),
+        mode.display_text,
         Separator(),
-        Mode(),
         Search(),
         Separator(),
-        File(),
-    })
-end
-
-PaxLines.inactive = function()
-    return table.concat({
-        Separator(),
-        File(),
+        ModifiedAndFile(),
     })
 end
 
 -- ref: https://nuxsh.is-a.dev/blog/custom-nvim-statusline.html
-vim.opt.statusline = "%!v:lua.PaxLines.active()"
+vim.opt.statusline = "%!v:lua.PaxLines.status()"
