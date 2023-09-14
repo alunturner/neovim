@@ -22,7 +22,8 @@ local options = {
 
     -- Text display
     breakindent = true,
-    scrolloff = 8,
+    scrolloff = 5,
+    sidescrolloff = 5,
     colorcolumn = "80",
     signcolumn = "yes",
 
