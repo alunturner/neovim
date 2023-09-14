@@ -86,7 +86,7 @@ local function Separator()
     return "%="
 end
 
-PaxLines.winbar = function()
+PaxLines.active = function()
     local mode = get_current_mode()
 
     return table.concat({
@@ -102,4 +102,4 @@ PaxLines.winbar = function()
 end
 
 -- ref: https://nuxsh.is-a.dev/blog/custom-nvim-statusline.html
-vim.opt.winbar = "%!v:lua.PaxLines.winbar()"
+vim.opt.winbar = "%!v:lua.PaxLines.active()"

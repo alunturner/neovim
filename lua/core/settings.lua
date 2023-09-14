@@ -42,9 +42,9 @@ local options = {
     -- Mapped sequence timing
     timeoutlen = 500,
 
-    -- Statusline and command line off
+    -- Statusline off, command line on
     laststatus = 0,
-    cmdheight = 0,
+    cmdheight = 1,
 }
 
 -- set options from table
