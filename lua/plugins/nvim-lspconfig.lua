@@ -59,6 +59,7 @@ Plugin.config = function()
 
             -- Buffer local mappings.
             -- See `:help vim.lsp.*` for documentation on any of the below functions
+            -- TODO: move over to only use Telescope for the lsp stuff for consistency
             local opts = { buffer = ev.buf }
             vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
             vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
