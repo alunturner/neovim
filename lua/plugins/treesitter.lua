@@ -1,9 +1,9 @@
---!structure::better highlighting and navigation
 local Plugin = {
     "nvim-treesitter/nvim-treesitter",
     lazy = false,
     dependencies = {
         "nvim-treesitter/nvim-treesitter-textobjects",
+        "nvim-treesitter/nvim-treesitter-context",
     },
     build = ":TSUpdate",
 }
@@ -70,6 +70,11 @@ Plugin.config = function()
                 },
             },
         },
+    })
+    require("treesitter-context").setup({
+        max_lines = 1,
+        trim_scope = "inner",
+        mode = "topline",
     })
 end
 

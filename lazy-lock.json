@@ -1,11 +1,11 @@
 {
   "lazy.nvim": { "branch": "main", "commit": "dac844ed617dda4f9ec85eb88e9629ad2add5e05" },
   "mini.completion": { "branch": "main", "commit": "bae2f44ef05dbc50c5d0dd2bd5d325c5055dfd33" },
-  "no-neck-pain.nvim": { "branch": "main", "commit": "fb27d3bff0834d9178250b439d46bfa04b4e1ae2" },
   "nvim-autopairs": { "branch": "master", "commit": "ae5b41ce880a6d850055e262d6dfebd362bb276e" },
   "nvim-lspconfig": { "branch": "master", "commit": "0d29cad8de3b2c654315203fc1fe12fde722a18a" },
   "nvim-surround": { "branch": "main", "commit": "0d6882635817a2677749a330127d12ac30a4f3c8" },
   "nvim-treesitter": { "branch": "master", "commit": "7c27beddda182a178eafd978a96cc35738d6be98" },
+  "nvim-treesitter-context": { "branch": "master", "commit": "44d270e9d1647088de596a2e04fdc806a50cd838" },
   "nvim-treesitter-textobjects": { "branch": "master", "commit": "9e519b6146512c8e2e702faf8ac48420f4f5deec" },
   "plenary.nvim": { "branch": "master", "commit": "267282a9ce242bbb0c5dc31445b6d353bed978bb" },
   "stylua-nvim": { "branch": "main", "commit": "ce59a353f02938cba3e0285e662fcd3901cd270f" },
