@@ -1,5 +1,3 @@
---!structure::setup a loader and load plugins
-
 -- Install lazy if not installed
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -7,7 +5,7 @@ if not vim.loop.fs_stat(lazypath) then
         "git",
         "clone",
         "--filter=blob:none",
-        "https://github.com/folke/lazy.nvim.git", --!uses::lazy
+        "https://github.com/folke/lazy.nvim.git",
         "--branch=stable", -- latest stable release
         lazypath,
     })

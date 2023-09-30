@@ -47,6 +47,9 @@ local options = {
     laststatus = 3,
     cmdheight = 1,
     showmode = false,
+
+    -- Misc
+    jumpoptions = "stack",
 }
 
 -- set options from table
