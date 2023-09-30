@@ -1,10 +1,6 @@
 ## Description
 
-Minimalist and organised neovim config inspired by:
-
--   [tokieory/neovim-boilerplate](https://github.com/tokiory/neovim-boilerplate)
--   [franz-johansson/lazy-nvim-starter](https://github.com/frans-johansson/lazy-nvim-starter)
--   [ThePrimeagen/init.lua](https://github.com/ThePrimeagen/init.lua)
+Minimalist and organised neovim config taking inspiration from many areas.
 
 Designed for use with a moonlander keyboard [current layout](https://configure.zsa.io/moonlander/layouts/d7lan/latest/0) but should be usable on any regular keyboard.
 
@@ -23,6 +19,7 @@ Designed for use with a moonlander keyboard [current layout](https://configure.z
     -   [StyLua](https://github.com/JohnnyMorganz/StyLua)
     -   [prettierd](https://github.com/fsouza/prettierd)
     -   [shfmt](https://formulae.brew.sh/formula/shfmt)
+-   Language servers as required for lsp use
 
 ## Use it
 
