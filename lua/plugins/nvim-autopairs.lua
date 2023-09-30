@@ -1,12 +1,12 @@
---!structure::character pair matching
+-- TODO: go over to minipairs: https://github.com/echasnovski/mini.pairs
 
 local Plugin = {
-    'windwp/nvim-autopairs',
+    "windwp/nvim-autopairs",
     event = "InsertEnter",
 }
 
 Plugin.config = function()
-    require("nvim-autopairs").setup({map_cr = true})
+    require("nvim-autopairs").setup({ map_cr = true })
 end
 
 return { Plugin }
