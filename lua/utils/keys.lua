@@ -1,5 +1,3 @@
---!structure::for setting keys
-
 local Util = {}
 
 -- Map a key for a mode from left to right with a description
