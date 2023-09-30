@@ -28,6 +28,7 @@ Plugin.config = function()
     map("n", "<leader>fc", builtin.grep_string, "[f]ind at [c]ursor")
     map("n", "<leader>fh", builtin.help_tags, "[f]ind [h]elp")
 
+    -- TODO: move over to only use Telescope for the lsp stuff for consistency
     -- LSP
     map("n", "<leader>fo", builtin.lsp_document_symbols, "[f]ind [o]bject in buffer")
     map("n", "<leader>fO", builtin.lsp_dynamic_workspace_symbols, "[f]ind [O]bject in repo")
