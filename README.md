@@ -23,7 +23,6 @@ Designed for use with a moonlander keyboard [current layout](https://configure.z
     -   [StyLua](https://github.com/JohnnyMorganz/StyLua)
     -   [prettierd](https://github.com/fsouza/prettierd)
     -   [shfmt](https://formulae.brew.sh/formula/shfmt)
-    -   [eslint_d](https://github.com/mantoni/eslint_d.js/) 
 
 ## Use it
 
