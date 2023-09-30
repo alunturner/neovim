@@ -44,33 +44,18 @@ local function get_current_mode()
     return modes[current_mode]
 end
 
--- util function to create a highlight string
-local function create_highlight(highlight)
-    return string.format("%%#%s%s#", prefix, highlight)
-end
-
-local function ModifiedAndFile()
-    return "%m %f"
-end
-
-local function Padding()
-    return " "
-end
-
-local function Separator()
-    return "%="
-end
-
 PaxLines.active = function()
-    local mode = get_current_mode()
+    local current_mode = get_current_mode()
+    -- use the highlight for the whole bar
+    local highlight = string.format("%%#%s%s#", prefix, current_mode.hl_name)
+    -- add a leading space to the mode
+    local display_mode = " " .. current_mode.display_text
 
     return table.concat({
-        create_highlight(mode.hl_name),
-        Padding(),
-        mode.display_text,
-        Separator(),
-        ModifiedAndFile(),
-        Padding(),
+        highlight,
+        display_mode,
+        "%=", -- separator for left/right sections
+        "%m %f ", -- modified indicator plus filename with post space
     })
 end
 
