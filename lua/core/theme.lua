@@ -1,5 +1,5 @@
 -- PAX scheme, influenced heavily by the vs code dark plus theme,
--- shamelessly pillaged from https://github.com/Mofiqul/ode.nvim/tree/main
+-- shamelessly pillaged from Mofiqul vscode.nvim repo
 
 -- CONFIG
 local use_italic_comments = true
