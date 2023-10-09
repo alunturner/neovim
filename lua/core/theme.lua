@@ -306,8 +306,7 @@ local plugins = {
     TelescopeMatching = { fg = c.mediumBlue, bold = true },
     TelescopePromptPrefix = { fg = c.front },
 
-    -- ...Lualine?
-    -- symbols-outline
+    -- ...not sure what these are for?
     -- white fg and lualine blue bg
     FocusedSymbol = { fg = "#ffffff", bg = c.uiBlue },
     SymbolsOutlineConnector = { fg = c.lineNumber },
