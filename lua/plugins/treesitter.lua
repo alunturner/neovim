@@ -63,10 +63,10 @@ Plugin.config = function()
             swap = {
                 enable = true,
                 swap_next = {
-                    ["<leader>p"] = "@parameter.inner",
+                    ["<leader>a"] = "@parameter.inner",
                 },
                 swap_previous = {
-                    ["<leader>P"] = "@parameter.inner",
+                    ["<leader>A"] = "@parameter.inner",
                 },
             },
         },

@@ -47,7 +47,7 @@ Plugin.config = function()
     vim.keymap.set("n", "<space>d", vim.diagnostic.open_float)
     vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
     vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
-    vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist)
+    vim.keymap.set("n", "<space>dq", vim.diagnostic.setloclist)
 
     -- Use LspAttach autocommand to only map the following keys
     -- after the language server attaches to the current buffer
