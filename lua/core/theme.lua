@@ -21,7 +21,7 @@ local colors = {
 
     popupFront = "#BBBBBB",
     popupBack = "#272727",
-    popupHighlightBlue = "#004b72",
+    popupHighlightBlue = "#004B72",
     popupHighlightGray = "#343B41",
 
     splitLight = "#898989",
@@ -39,24 +39,24 @@ local colors = {
     diffRedLightLight = "#FB0101",
     diffGreenDark = "#373D29",
     diffGreenLight = "#4B5632",
-    searchCurrent = "#515c6a",
+    searchCurrent = "#515C6A",
     search = "#613315",
 
-    gitAdded = "#81b88b",
-    gitModified = "#e2c08d",
-    gitDeleted = "#c74e39",
-    gitRenamed = "#73c991",
-    gitUntracked = "#73c991",
-    gitIgnored = "#8c8c8c",
-    gitStageModified = "#e2c08d",
-    gitStageDeleted = "#c74e39",
-    gitConflicting = "#e4676b",
-    gitSubmodule = "#8db9e2",
+    gitAdded = "#81B88B",
+    gitModified = "#E2C08D",
+    gitDeleted = "#C74E39",
+    gitRenamed = "#73C991",
+    gitUntracked = "#73C991",
+    gitIgnored = "#8C8C8C",
+    gitStageModified = "#E2C08D",
+    gitStageDeleted = "#C74E39",
+    gitConflicting = "#E4676B",
+    gitSubmodule = "#8DB9E2",
 
     context = "#404040",
     contextCurrent = "#707070",
 
-    foldBackground = "#202d39",
+    foldBackground = "#202D39",
 
     -- Syntax colors
     gray = "#808080",
@@ -64,7 +64,7 @@ local colors = {
     blue = "#569CD6",
     accentBlue = "#4FC1FE",
     darkBlue = "#223E55",
-    mediumBlue = "#18a2fe",
+    mediumBlue = "#18A2FE",
     lightBlue = "#9CDCFE",
     green = "#6A9955",
     blueGreen = "#4EC9B0",
@@ -78,15 +78,15 @@ local colors = {
     pink = "#C586C0",
     -- colours below were constant between light/dark themes
     uiBlue = "#084671",
-    uiOrange = "#f28b25",
-    popupHighlightLightBlue = "#d7eafe",
+    uiOrange = "#F28B25",
+    popupHighlightLightBlue = "#D7EAFE",
 
     statusPurple = "#541067", -- status bar (not in a folder)
-    statusRed = "#f44747",
-    statusGreen = "#354a2c", -- outer edge of a comment
-    statusBlue = "#0c64c1", -- status bar (in a folder)
+    statusRed = "#F44747",
+    statusGreen = "#354A2C", -- outer edge of a comment
+    statusBlue = "#0C64C1", -- status bar (in a folder)
     statusLightBlue = "#5CB6F8",
-    statusYellow = "#ffaf00",
+    statusYellow = "#FFAF00",
 }
 
 -- I think that this clears anything that exists, which is perhaps redundant
@@ -306,7 +306,8 @@ local plugins = {
     TelescopeMatching = { fg = c.mediumBlue, bold = true },
     TelescopePromptPrefix = { fg = c.front },
 
-    -- ...not sure what these are for?
+    -- ...Lualine?
+    -- symbols-outline
     -- white fg and lualine blue bg
     FocusedSymbol = { fg = "#ffffff", bg = c.uiBlue },
     SymbolsOutlineConnector = { fg = c.lineNumber },
