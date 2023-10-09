@@ -5,9 +5,7 @@
 local use_italic_comments = true
 
 -- COLORS
--- TODO see if there is any consolidation that can be done here (if we have repeated of any
--- strings, also we have a mixture of cases)
-local colors = {
+local c = {
     front = "#D4D4D4",
     back = "#1E1E1E",
 
@@ -17,16 +15,13 @@ local colors = {
 
     leftDark = "#252526",
     leftMid = "#373737",
-    leftLight = "#636369",
 
     popupFront = "#BBBBBB",
     popupBack = "#272727",
     popupHighlightBlue = "#004B72",
     popupHighlightGray = "#343B41",
 
-    splitLight = "#898989",
     splitDark = "#444444",
-    splitThumb = "#424242",
 
     cursorDarkDark = "#222222",
     cursorDark = "#51504F",
@@ -36,29 +31,13 @@ local colors = {
 
     diffRedDark = "#4B1818",
     diffRedLight = "#6F1313",
-    diffRedLightLight = "#FB0101",
-    diffGreenDark = "#373D29",
-    diffGreenLight = "#4B5632",
+    diffGreen = "#4B5632",
+
     searchCurrent = "#515C6A",
     search = "#613315",
-
-    gitAdded = "#81B88B",
-    gitModified = "#E2C08D",
-    gitDeleted = "#C74E39",
-    gitRenamed = "#73C991",
-    gitUntracked = "#73C991",
-    gitIgnored = "#8C8C8C",
-    gitStageModified = "#E2C08D",
-    gitStageDeleted = "#C74E39",
-    gitConflicting = "#E4676B",
-    gitSubmodule = "#8DB9E2",
-
-    context = "#404040",
-    contextCurrent = "#707070",
-
     foldBackground = "#202D39",
 
-    -- Syntax colors
+    -- Syntax
     gray = "#808080",
     violet = "#646695",
     blue = "#569CD6",
@@ -76,23 +55,15 @@ local colors = {
     yellow = "#DCDCAA",
     darkYellow = "#FFD602",
     pink = "#C586C0",
-    -- colours below were constant between light/dark themes
-    uiBlue = "#084671",
-    uiOrange = "#F28B25",
-    popupHighlightLightBlue = "#D7EAFE",
 
+    -- Status bar
     statusPurple = "#541067", -- status bar (not in a folder)
     statusRed = "#F44747",
     statusGreen = "#354A2C", -- outer edge of a comment
     statusBlue = "#0C64C1", -- status bar (in a folder)
-    statusLightBlue = "#5CB6F8",
     statusYellow = "#FFAF00",
 }
 
--- I think that this clears anything that exists, which is perhaps redundant
--- given that I think the way hl() is called blasts existing config away.
--- Probably sensible to keep this though as I'd hope it would make it clear
--- when we have items that need a bit of attention in new plugins.
 vim.cmd("hi clear")
 if vim.fn.exists("syntax_on") then
     vim.cmd("syntax reset")
@@ -107,11 +78,7 @@ local function set_highlights(highlights)
     end
 end
 
--- HIGHLIGHT GROUPS
-local c = colors
-
--- We split by area here - expect these will be pulled out into separate files
--- when the overall structure is decided.
+-- TODO pull out into separate files
 local builtins = {
     -- General
     Normal = { fg = c.front, bg = c.back },
@@ -120,7 +87,7 @@ local builtins = {
     CursorLine = { bg = c.cursorDarkDark },
     CursorColumn = { bg = c.cursorDarkDark },
     Directory = { fg = c.blue, bg = c.back },
-    DiffAdd = { bg = c.diffGreenLight },
+    DiffAdd = { bg = c.diffGreen },
     DiffChange = { bg = c.diffRedDark },
     DiffDelete = { bg = c.diffRedLight },
     DiffText = { bg = c.diffRedLight },
@@ -207,8 +174,6 @@ local builtins = {
     LspReferenceText = { bg = c.popupHighlightGray },
     LspReferenceRead = { bg = c.popupHighlightGray },
     LspReferenceWrite = { bg = c.popupHighlightGray },
-    -- find out if this is an internal, I think it probably is, or perhaps
-    -- it is used by nvim lsp config? who knows
     LspFloatWinNormal = { fg = c.front },
     LspFloatWinBorder = { fg = c.lineNumber },
 
@@ -309,7 +274,7 @@ local plugins = {
     -- ...Lualine?
     -- symbols-outline
     -- white fg and lualine blue bg
-    FocusedSymbol = { fg = "#ffffff", bg = c.uiBlue },
+    FocusedSymbol = { fg = "#FFFFFF", bg = "#084671" },
     SymbolsOutlineConnector = { fg = c.lineNumber },
 }
 set_highlights(plugins)
@@ -546,8 +511,8 @@ local pax = {
     PaxLinesModeInsert = { fg = c.front, bg = c.statusBlue },
     PaxLinesModeReplace = { fg = c.front, bg = c.statusRed },
     PaxLinesModeCommand = { fg = c.front, bg = c.statusPurple },
-    PaxLinesModeEx = { fg = c.front, bg = c.violet },
-    PaxLinesModeSelect = { fg = c.front, bg = c.violet },
-    PaxLinesModeOther = { fg = c.front, bg = c.statusYellow },
+    PaxLinesModeEx = { fg = c.front, bg = c.statusYellow },
+    PaxLinesModeSelect = { fg = c.back, bg = c.statusYellow },
+    PaxLinesModeOther = { fg = c.back, bg = c.statusYellow },
 }
 set_highlights(pax)
