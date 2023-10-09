@@ -14,6 +14,7 @@ Plugin.config = function()
             file_browser = {
                 theme = "dropdown",
                 hijack_netrw = true,
+                previewer = false,
             },
         },
     })
