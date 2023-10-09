@@ -28,11 +28,13 @@ Plugin.config = function()
     map("n", "<leader>fc", builtin.grep_string, "[f]ind at [c]ursor")
     map("n", "<leader>fh", builtin.help_tags, "[f]ind [h]elp")
 
-    -- TODO: move over to only use Telescope for the lsp stuff for consistency
     -- LSP
     map("n", "<leader>fo", builtin.lsp_document_symbols, "[f]ind [o]bject in buffer")
     map("n", "<leader>fO", builtin.lsp_dynamic_workspace_symbols, "[f]ind [O]bject in repo")
     map("n", "<leader>fr", builtin.lsp_references, "[f]ind [r]eferences")
+    map("n", "<leader>fd", builtin.lsp_definitions, "[f]ind [d]efinition")
+    map("n", "<leader>ft", builtin.lsp_type_definitions, "[f]ind [t]ype")
+    map("n", "<leader>fi", builtin.lsp_implementations, "[f]ind [i]mplementations")
 
     -- Plugins
     map("n", "<leader>e", "<cmd>Telescope file_browser path=%:p:h select_buffer=true<CR>", "[e]xplore files")
