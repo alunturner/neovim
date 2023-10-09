@@ -108,8 +108,6 @@ local function set_highlights(highlights)
 end
 
 -- HIGHLIGHT GROUPS
--- nb a _lot_ of stuff was deleted from here. original ref is at
--- https://github.com/Mofiqul/vscode.nvim/blob/main/lua.vscode/theme.lua
 local c = colors
 
 -- We split by area here - expect these will be pulled out into separate files
