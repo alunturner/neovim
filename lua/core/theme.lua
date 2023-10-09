@@ -78,7 +78,6 @@ local function set_highlights(highlights)
     end
 end
 
--- TODO pull out into separate files
 local builtins = {
     -- General
     Normal = { fg = c.front, bg = c.back },
@@ -154,12 +153,12 @@ local builtins = {
     Underlined = { underline = true },
     Conceal = { fg = c.front, bg = c.back },
     Ignore = { fg = c.front },
-    Error = { fg = c.red, bg = c.back, undercurl = true, sp = c.vscRed },
+    Error = { fg = c.red, bg = c.back, undercurl = true, sp = c.red },
     Todo = { fg = c.yellowOrange, bg = c.back, bold = true },
-    SpellBad = { fg = c.red, bg = c.back, undercurl = true, sp = c.vscRed },
-    SpellCap = { fg = c.red, bg = c.back, undercurl = true, sp = c.vscRed },
-    SpellRare = { fg = c.red, bg = c.back, undercurl = true, sp = c.vscRed },
-    SpellLocal = { fg = c.red, bg = c.back, undercurl = true, sp = c.vscRed },
+    SpellBad = { fg = c.red, bg = c.back, undercurl = true, sp = c.red },
+    SpellCap = { fg = c.red, bg = c.back, undercurl = true, sp = c.red },
+    SpellRare = { fg = c.red, bg = c.back, undercurl = true, sp = c.red },
+    SpellLocal = { fg = c.red, bg = c.back, undercurl = true, sp = c.red },
     Whitespace = { fg = c.lineNumber },
 
     -- LSP
@@ -271,9 +270,7 @@ local plugins = {
     TelescopeMatching = { fg = c.mediumBlue, bold = true },
     TelescopePromptPrefix = { fg = c.front },
 
-    -- ...Lualine?
-    -- symbols-outline
-    -- white fg and lualine blue bg
+    -- TODO find where these come from/are used
     FocusedSymbol = { fg = "#FFFFFF", bg = "#084671" },
     SymbolsOutlineConnector = { fg = c.lineNumber },
 }
@@ -291,7 +288,6 @@ local languages = {
     markdownUrl = { fg = c.front, underline = true },
     markdownLinkText = { fg = c.orange },
     markdownEscape = { fg = c.orange },
-
     -- Asciidoc
     asciidocAttributeEntry = { fg = c.yellowOrange },
     asciidocAttributeList = { fg = c.pink },
@@ -314,20 +310,17 @@ local languages = {
     asciidocQuotedUnconstrainedBold = { link = "asciidocQuotedBold" },
     asciidocQuotedUnconstrainedEmphasized = { link = "asciidocQuotedEmphasized" },
     asciidocURL = { link = "markdownUrl" },
-
     -- JSON
     jsonKeyword = { fg = c.lightBlue },
     jsonEscape = { fg = c.yellowOrange },
     jsonNull = { fg = c.blue },
     jsonBoolean = { fg = c.blue },
-
     -- HTML
     htmlTag = { fg = c.gray },
     htmlEndTag = { fg = c.gray },
     htmlTagName = { fg = c.blue },
     htmlSpecialTagName = { fg = c.blue },
     htmlArg = { fg = c.lightBlue },
-
     -- CSS
     cssBraces = { fg = c.front },
     cssInclude = { fg = c.pink },
@@ -350,7 +343,6 @@ local languages = {
     cssUnitDecorators = { fg = c.orange },
     cssStyle = { fg = c.lightBlue },
     cssImportant = { fg = c.blue },
-
     -- JavaScript
     jsVariableDef = { fg = c.lightBlue },
     jsFuncArgs = { fg = c.lightBlue },
@@ -374,7 +366,6 @@ local languages = {
     jsParenIfElse = { fg = c.lightBlue },
     jsSpreadOperator = { fg = c.lightBlue },
     jsSpreadExpression = { fg = c.lightBlue },
-
     -- Typescript
     typescriptLabel = { fg = c.lightBlue },
     typescriptExceptions = { fg = c.lightBlue },
@@ -439,12 +430,10 @@ local languages = {
     typescriptFuncKeyword = { fg = c.blue },
     typescriptGlobalMethod = { fg = c.yellow },
     typescriptPromiseMethod = { fg = c.yellow },
-
     -- XML
     xmlTag = { fg = c.blue },
     xmlTagName = { fg = c.blue },
     xmlEndTag = { fg = c.blue },
-
     -- Python
     pythonStatement = { fg = c.blue },
     pythonOperator = { fg = c.blue },
@@ -457,7 +446,6 @@ local languages = {
     pythonTodo = { fg = c.blue },
     pythonClassVar = { fg = c.blue },
     pythonClassDef = { fg = c.blueGreen },
-
     -- TeX
     texStatement = { fg = c.blue },
     texBeginEnd = { fg = c.yellow },
@@ -466,7 +454,6 @@ local languages = {
     texBeginEndModifier = { fg = c.lightBlue },
     texDocType = { fg = c.pink },
     texDocTypeArgs = { fg = c.lightBlue },
-
     -- Git
     gitcommitHeader = { fg = c.gray },
     gitcommitOnBranch = { fg = c.gray },
@@ -479,23 +466,19 @@ local languages = {
     gitcommitOverflow = { fg = c.red },
     gitcommitSummary = { fg = c.pink },
     gitcommitBlank = { fg = c.pink },
-
     -- Lua
     luaFuncCall = { fg = c.yellow },
     luaFuncArgName = { fg = c.lightBlue },
     luaFuncKeyword = { fg = c.pink },
     luaLocal = { fg = c.pink },
     luaBuiltIn = { fg = c.blue },
-
     -- SH
     shDeref = { fg = c.lightBlue },
     shVariable = { fg = c.lightBlue },
-
     -- SQL
     sqlKeyword = { fg = c.pink },
     sqlFunction = { fg = c.yellowOrange },
     sqlOperator = { fg = c.pink },
-
     -- YAML
     yamlKey = { fg = c.blue },
     yamlConstant = { fg = c.blue },
@@ -504,7 +487,6 @@ set_highlights(languages)
 
 local pax = {
     -- PaxLines
-    -- Modes
     PaxLinesModeNormal = { fg = c.back, bg = c.front },
     PaxLinesModePending = { fg = c.back, bg = c.front },
     PaxLinesModeVisual = { fg = c.front, bg = c.statusGreen },
