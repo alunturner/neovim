@@ -1,6 +1,4 @@
--- PAX scheme, influenced heavily by the vs code dark plus theme,
--- shamelessly pillaged from Mofiqul vscode.nvim repo
-
+-- PAX scheme modelled on Mofiqul vscode.nvim
 -- CONFIG
 local use_italic_comments = true
 
@@ -8,35 +6,27 @@ local use_italic_comments = true
 local c = {
     front = "#D4D4D4",
     back = "#1E1E1E",
-
     tabCurrent = "#1E1E1E",
     tabOther = "#2D2D2D",
     tabOutside = "#252526",
-
     leftDark = "#252526",
     leftMid = "#373737",
-
     popupFront = "#BBBBBB",
     popupBack = "#272727",
     popupHighlightBlue = "#004B72",
     popupHighlightGray = "#343B41",
-
     splitDark = "#444444",
-
     cursorDarkDark = "#222222",
     cursorDark = "#51504F",
     cursorLight = "#AEAFAD",
     selection = "#264F78",
     lineNumber = "#5A5A5A",
-
     diffRedDark = "#4B1818",
     diffRedLight = "#6F1313",
     diffGreen = "#4B5632",
-
     searchCurrent = "#515C6A",
     search = "#613315",
     foldBackground = "#202D39",
-
     -- Syntax
     gray = "#808080",
     violet = "#646695",
@@ -55,7 +45,6 @@ local c = {
     yellow = "#DCDCAA",
     darkYellow = "#FFD602",
     pink = "#C586C0",
-
     -- Status bar
     statusPurple = "#541067", -- status bar (not in a folder)
     statusRed = "#F44747",
@@ -70,13 +59,7 @@ if vim.fn.exists("syntax_on") then
 end
 
 vim.g.colors_name = "pax"
-
--- HELPER
-local function set_highlights(highlights)
-    for hl_name, hl_val in pairs(highlights) do
-        vim.api.nvim_set_hl(0, hl_name, hl_val)
-    end
-end
+local set_highlights = require("utils.colors").set_highlights
 
 local builtins = {
     -- General
@@ -160,7 +143,6 @@ local builtins = {
     SpellRare = { fg = c.red, bg = c.back, undercurl = true, sp = c.red },
     SpellLocal = { fg = c.red, bg = c.back, undercurl = true, sp = c.red },
     Whitespace = { fg = c.lineNumber },
-
     -- LSP
     DiagnosticError = { fg = c.red },
     DiagnosticWarn = { fg = c.yellow },
@@ -175,7 +157,6 @@ local builtins = {
     LspReferenceWrite = { bg = c.popupHighlightGray },
     LspFloatWinNormal = { fg = c.front },
     LspFloatWinBorder = { fg = c.lineNumber },
-
     -- Legacy groups for official git.vim and diff.vim syntax
     diffAdded = { link = "DiffAdd" },
     diffChanged = { link = "DiffChange" },
@@ -247,7 +228,6 @@ local plugins = {
     ["@text.danger"] = { fg = c.red, bold = true },
     ["@text.diff.add"] = { link = "DiffAdd" },
     ["@text.diff.delete"] = { link = "DiffDelete" },
-
     -- LSP semantic tokens
     ["@lsp.typemod.type.defaultLibrary"] = { link = "@type.builtin" },
     ["@lsp.type.type"] = { link = "@type" },
@@ -259,7 +239,6 @@ local plugins = {
     ["@modifier"] = { link = "Identifier" },
     ["@regexp"] = { fg = c.red },
     ["@decorator"] = { link = "Identifier" },
-
     -- Telescope
     TelescopePromptBorder = { fg = c.lineNumber },
     TelescopeResultsBorder = { fg = c.lineNumber },
@@ -269,7 +248,6 @@ local plugins = {
     TelescopeMultiSelection = { fg = c.front, bg = c.popupHighlightBlue },
     TelescopeMatching = { fg = c.mediumBlue, bold = true },
     TelescopePromptPrefix = { fg = c.front },
-
     -- TODO find where these come from/are used
     FocusedSymbol = { fg = "#FFFFFF", bg = "#084671" },
     SymbolsOutlineConnector = { fg = c.lineNumber },
